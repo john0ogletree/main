@@ -1,4 +1,6 @@
-⚠️ Infrastructure Update ⚠️I’m performing scheduled DNS maintenance today to open additional ports on my root domain and deploy locale-specific load balancers.🕒 Window: 5 PM – 9 PM+ PDT (8 PM – 12 AM+ EDT / 00:00 UTC)Expect brief, intermittent connectivity delays while these network updates propagate globally. Appreciate your patience, and feel free to ping me directly if you hit any persistent issues after the window
+⚠️ Infrastructure Update ⚠️
+
+I’m postponing today's scheduled DNS and load balancer maintenance to a future date to ensure a smoother rollout. The root domain will remain fully active with no disruptions tonight. I'll share the rescheduled window as soon as it's locked in!
 
 Official link-in-bio.
 
