@@ -14,5 +14,5 @@ Official link-in-bio.
 - [YouTube](https://youtube.com/@john0ogletree)
 - [GoFundMe](https://gofundme.com/u/john0ogletree)
 - [Twitch](https://twitch.tv/john0ogletree)
-- [Infinite-depth project](http://jao.life/infinite-depth/)
+- [Infinite-depth project](https://infinite-depth.jao.life/)
 - http://tdc.jao.life/
