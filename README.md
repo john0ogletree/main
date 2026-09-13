@@ -1,6 +1,8 @@
-⚠️ Infrastructure Update ⚠️
+⚠️ Rescheduled: Infrastructure Update ⚠️
 
-I’m postponing today's scheduled DNS and load balancer maintenance to a future date to ensure a smoother rollout. The root domain will remain fully active with no disruptions tonight. I'll share the rescheduled window as soon as it's locked in!
+DNS maintenance is now an all-day window tomorrow. I'll be opening extra ports on my root domain and deploying locale-specific load balancers.
+
+🕒 Sunday, Sept 13 (All Day) | Global Propagation
 
 Official link-in-bio.
 
