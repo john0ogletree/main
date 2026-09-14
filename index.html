@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-    /* ── reset & base ─────────────────────────────────────────── */
     * {
       margin: 0;
       padding: 0;
@@ -46,7 +45,6 @@
       position: relative;
     }
 
-    /* ── animated aurora background (pure CSS, no JS, no external) ── */
     .aurora {
       position: fixed;
       inset: 0;
@@ -112,7 +110,6 @@
       100% { transform: translate(-5vmax, 5vmax) scale(0.95); }
     }
 
-    /* ── main card ────────────────────────────────────────────── */
     .link-card {
       position: relative;
       z-index: 2;
@@ -137,7 +134,7 @@
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ── live clock (surprise #1) ─────────────────────────────── */
+    /* ── live clock ── */
     .live-clock {
       display: flex;
       align-items: center;
@@ -162,7 +159,7 @@
       50%      { opacity: 0.35; }
     }
 
-    /* ── privacy banner ───────────────────────────────────────── */
+    /* ── privacy banner ── */
     .privacy-banner {
       background: rgba(24, 32, 43, 0.9);
       border-radius: 1.4rem;
@@ -194,7 +191,7 @@
       font-weight: 500;
     }
 
-    /* ── update banner ────────────────────────────────────────── */
+    /* ── update banner ── */
     .update-banner {
       background: rgba(31, 42, 54, 0.92);
       border-radius: 1.4rem;
@@ -248,7 +245,7 @@
       gap: 0.4rem;
     }
 
-    /* ── profile section ──────────────────────────────────────── */
+    /* ── profile section ── */
     .profile-section {
       display: flex;
       flex-direction: column;
@@ -304,7 +301,6 @@
       color: #5f8ab0;
     }
 
-    /* ── link list ────────────────────────────────────────────── */
     .link-list {
       display: flex;
       flex-direction: column;
@@ -377,6 +373,7 @@
     }
 
     /* brand colors on hover */
+    .link-item[data-brand="resume"]:hover i     { color: #38bdf8; }
     .link-item[data-brand="github"]:hover i     { color: #ffffff; }
     .link-item[data-brand="bluesky"]:hover i    { color: #4a9eff; }
     .link-item[data-brand="facebook"]:hover i   { color: #1877f2; }
@@ -393,7 +390,6 @@
     .link-item[data-brand="silent"]:hover i     { color: #7dd3fc; }
     .link-item[data-brand="dnslens"]:hover i    { color: #c084fc; }
 
-    /* ── footer ───────────────────────────────────────────────── */
     .link-footer {
       text-align: center;
       font-size: 0.72rem;
@@ -413,7 +409,6 @@
       font-size: 0.78rem;
     }
 
-    /* ── easter egg: konami-style hidden message (surprise #2) ── */
     .easter-egg {
       position: fixed;
       bottom: 1.2rem;
@@ -443,7 +438,6 @@
       margin-right: 0.35rem;
     }
 
-    /* ── responsive ───────────────────────────────────────────── */
     @media (max-width: 520px) {
       .link-card {
         padding: 1.6rem 1.2rem 1.5rem;
@@ -496,7 +490,6 @@
       color: #fff;
     }
 
-    /* accessibility: respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .aurora span,
       .live-clock i,
@@ -512,7 +505,6 @@
 </head>
 <body>
 
-  <!-- ═══════════ ANIMATED AURORA BACKGROUND (surprise #3) ═══════════ -->
   <div class="aurora" aria-hidden="true">
     <span></span>
     <span></span>
@@ -522,14 +514,12 @@
 
   <div class="link-card">
 
-    <!-- ═══════════ LIVE CLOCK (surprise #1) ═══════════ -->
     <div class="live-clock">
       <i class="fas fa-circle"></i>
       <span id="clock">--:--:--</span>
       <i class="fas fa-circle"></i>
     </div>
 
-    <!-- ═══════════ PRIVACY NOTICE ═══════════ -->
     <div class="privacy-banner">
       <i class="fas fa-shield-halved"></i>
       <div>
@@ -540,7 +530,6 @@
       </div>
     </div>
 
-    <!-- ═══════════ UPDATE BANNER ═══════════ -->
     <div class="update-banner">
       <div class="banner-title">
         <i class="fas fa-triangle-exclamation"></i>
@@ -561,7 +550,6 @@
       </div>
     </div>
 
-    <!-- ═══════════ PROFILE ═══════════ -->
     <div class="profile-section">
       <div class="profile-avatar">
         <i class="fas fa-user-astronaut"></i>
@@ -573,8 +561,14 @@
       </div>
     </div>
 
-    <!-- ═══════════ LINKS ═══════════ -->
     <ul class="link-list">
+      <!-- Resume -->
+      <li>
+        <a class="link-item" data-brand="resume" href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer">
+          <i class="fa-solid fa-file-lines"></i>
+          <span>Resume</span>
+        </a>
+      </li>
       <!-- GitHub -->
       <li>
         <a class="link-item" data-brand="github" href="https://github.com/john-ogletree" target="_blank" rel="noopener noreferrer">
@@ -673,7 +667,7 @@
           <span>Silent — privacy-focused ping tester</span>
         </a>
       </li>
-      <!-- DNSLens — DNS checker (NEW) -->
+      <!-- DNSLens — DNS checker -->
       <li>
         <a class="link-item" data-brand="dnslens" href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-magnifying-glass-location"></i>
@@ -682,7 +676,6 @@
       </li>
     </ul>
 
-    <!-- ═══════════ FOOTER ═══════════ -->
     <div class="link-footer">
       <i class="fa-regular fa-circle-check"></i>
       <span>link-in-bio · official</span>
@@ -691,13 +684,11 @@
     </div>
   </div>
 
-  <!-- ═══════════ EASTER EGG (surprise #2) ═══════════ -->
   <div class="easter-egg" id="easterEgg">
     <i class="fas fa-star"></i> You found the hidden message. Built with care, no trackers. ✨
   </div>
 
   <script>
-    // ── live clock (privacy-respecting: local time only, no network) ──
     (function updateClock() {
       const el = document.getElementById('clock');
       const now = new Date();
@@ -715,14 +706,13 @@
       el.textContent = `${h}:${m}:${s}`;
     }, 1000);
 
-    // ── easter egg: type "j" three times, or tap avatar 5 times ──
+    // easter egg listener
     (function () {
       const egg = document.getElementById('easterEgg');
       let keyBuffer = '';
       let tapCount = 0;
       let tapTimer = null;
 
-      // keyboard: press "j" 3 times quickly
       document.addEventListener('keydown', function (e) {
         if (e.key.toLowerCase() === 'j') {
           keyBuffer += 'j';
@@ -737,7 +727,6 @@
         }
       });
 
-      // tap avatar 5 times
       const avatar = document.querySelector('.profile-avatar');
       if (avatar) {
         avatar.addEventListener('click', function () {
