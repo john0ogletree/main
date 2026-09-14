@@ -13,4 +13,4 @@ Official link-in-bio.
 - [GoFundMe](https://gofundme.com/u/john0ogletree)
 - [Twitch](https://twitch.tv/john0ogletree)
 - [Infinite-depth project](https://infinite-depth.jao.life/)
-- http://tdc.jao.life/
+- [The Panopticon Eagle Button](https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986)
