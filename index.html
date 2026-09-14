@@ -3,119 +3,314 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>John Ogletree · link in bio</title>
-  <!-- Font Awesome 6 (free) for icons -->
+  <title>John Ogletree · Links</title>
+
+  <!--
+    ═══════════════════════════════════════════════════════════════
+    PRIVACY-FOCUSED LINK-IN-BIO · "AURORA" EDITION
+    ═══════════════════════════════════════════════════════════════
+    • No trackers, no analytics, no cookies, no external calls
+      except Font Awesome (for icons) — until custom icons are ready.
+    • All links open in a new tab with rel="noopener noreferrer".
+    • No infinite scroll. Just a clean, static page.
+    • Surprise features: animated aurora, live clock, easter egg.
+    ═══════════════════════════════════════════════════════════════
+  -->
+
+  <!-- Font Awesome (only external resource — temporary until custom icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <style>
-    /* minimal, clean, responsive */
+    /* ── reset & base ─────────────────────────────────────────── */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
-      background: #0b0f14;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #070a0f;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       min-height: 100vh;
-      padding: 2rem 1rem;
-      color: #e6edf3;
+      padding: 2.5rem 1rem 3rem;
+      color: #fff;
+      overflow-y: auto;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    .bio-card {
-      max-width: 680px;
+    /* ── animated aurora background (pure CSS, no JS, no external) ── */
+    .aurora {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    .aurora span {
+      position: absolute;
+      display: block;
+      border-radius: 50%;
+      filter: blur(80px);
+      will-change: transform;
+      animation: drift 28s infinite alternate ease-in-out;
+    }
+
+    .aurora span:nth-child(1) {
+      width: 55vmax;
+      height: 55vmax;
+      background: radial-gradient(circle at 30% 30%, #2d6cdf, transparent 70%);
+      top: -18vmax;
+      left: -12vmax;
+      animation-duration: 32s;
+    }
+
+    .aurora span:nth-child(2) {
+      width: 48vmax;
+      height: 48vmax;
+      background: radial-gradient(circle at 70% 40%, #9b4dff, transparent 70%);
+      bottom: -20vmax;
+      right: -14vmax;
+      animation-duration: 38s;
+      animation-delay: -6s;
+    }
+
+    .aurora span:nth-child(3) {
+      width: 42vmax;
+      height: 42vmax;
+      background: radial-gradient(circle at 50% 60%, #00d4b1, transparent 70%);
+      top: 35%;
+      left: 45%;
+      animation-duration: 44s;
+      animation-delay: -12s;
+      opacity: 0.75;
+    }
+
+    .aurora span:nth-child(4) {
+      width: 36vmax;
+      height: 36vmax;
+      background: radial-gradient(circle at 20% 70%, #ff6b9d, transparent 70%);
+      bottom: 5%;
+      left: -8vmax;
+      animation-duration: 34s;
+      animation-delay: -18s;
+      opacity: 0.6;
+    }
+
+    @keyframes drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(6vmax, -4vmax) scale(1.15); }
+      100% { transform: translate(-5vmax, 5vmax) scale(0.95); }
+    }
+
+    /* ── main card ────────────────────────────────────────────── */
+    .link-card {
+      position: relative;
+      z-index: 2;
+      max-width: 580px;
       width: 100%;
-      background: #11181f;
-      border-radius: 2rem;
-      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.03);
-      padding: 2.2rem 1.8rem;
-      transition: all 0.2s ease;
+      background: rgba(16, 22, 30, 0.78);
+      backdrop-filter: blur(22px) saturate(140%);
+      -webkit-backdrop-filter: blur(22px) saturate(140%);
+      border-radius: 2.5rem;
+      box-shadow:
+        0 40px 70px -24px rgba(0, 0, 0, 0.95),
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      padding: 2.2rem 1.8rem 2rem;
+      height: auto;
+      margin: 0 auto;
+      animation: cardIn 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) both;
     }
 
-    /* update banner – stands out but stays calm */
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(18px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ── live clock (surprise #1) ─────────────────────────────── */
+    .live-clock {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #8fa6bd;
+      margin-bottom: 1.4rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .live-clock i {
+      color: #4ade80;
+      font-size: 0.7rem;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.35; }
+    }
+
+    /* ── privacy banner ───────────────────────────────────────── */
+    .privacy-banner {
+      background: rgba(24, 32, 43, 0.9);
+      border-radius: 1.4rem;
+      padding: 1.2rem 1.4rem;
+      margin-bottom: 1.6rem;
+      border: 1px solid #2a3644;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: #9eb0c4;
+    }
+
+    .privacy-banner i {
+      color: #4ade80;
+      font-size: 1.3rem;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+
+    .privacy-banner strong {
+      color: #d1e0ef;
+      font-weight: 600;
+    }
+
+    .privacy-banner .highlight {
+      color: #86efac;
+      font-weight: 500;
+    }
+
+    /* ── update banner ────────────────────────────────────────── */
     .update-banner {
-      background: #1e2a36;
-      border-left: 6px solid #f0b34b;
-      border-radius: 1rem;
-      padding: 1.5rem 1.4rem;
-      margin-bottom: 2.2rem;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+      background: rgba(31, 42, 54, 0.92);
+      border-radius: 1.4rem;
+      padding: 1.4rem 1.4rem 1.2rem;
+      margin-bottom: 2rem;
+      border: 1px solid #2c3a48;
+      position: relative;
+      overflow: hidden;
     }
 
-    .update-banner .warning-icon {
-      font-size: 1.8rem;
-      line-height: 1;
-      margin-right: 0.5rem;
-      color: #f0b34b;
-      vertical-align: middle;
+    .update-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: #f0b34b;
     }
 
-    .update-banner strong {
+    .update-banner .banner-title {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       font-weight: 600;
       color: #f5e3c1;
-      letter-spacing: -0.01em;
+      font-size: 1rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .update-banner .banner-title i {
+      color: #f0b34b;
+      font-size: 1.2rem;
     }
 
     .update-banner p {
-      font-size: 1rem;
+      font-size: 0.92rem;
       line-height: 1.6;
-      color: #cdd9e5;
-      margin-top: 0.75rem;
+      color: #cbd5e1;
+      margin-bottom: 0.5rem;
     }
 
-    .update-banner .note {
-      font-size: 0.9rem;
-      color: #9aa9b9;
-      margin-top: 1rem;
+    .update-banner .banner-footer {
+      margin-top: 0.9rem;
+      padding-top: 0.8rem;
       border-top: 1px solid #2f3d4c;
-      padding-top: 0.9rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
       display: flex;
       align-items: center;
       gap: 0.4rem;
     }
 
-    .update-banner .note i {
-      color: #6f8fa5;
-    }
-
-    /* heading / title */
-    .bio-title {
-      margin-bottom: 1.6rem;
-      padding-left: 0.25rem;
+    /* ── profile section ──────────────────────────────────────── */
+    .profile-section {
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
-    .bio-title h1 {
-      font-size: 1.5rem;
-      font-weight: 500;
+    .profile-avatar {
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #263445, #17212e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      border: 3px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 28px rgba(80, 160, 255, 0.15);
+      font-size: 2.6rem;
+      color: #b9cadb;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7), 0 0 40px rgba(120, 180, 255, 0.35);
+    }
+
+    .profile-name {
+      font-size: 1.55rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
       color: #f0f6fc;
     }
 
-    .bio-title .handle {
-      font-size: 0.9rem;
-      background: #1c262f;
-      padding: 0.2rem 0.8rem;
+    .profile-handle {
+      font-size: 0.92rem;
+      color: #8da1b5;
+      font-weight: 450;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.2rem 1rem;
       border-radius: 40px;
-      color: #b1c2d3;
-      font-weight: 400;
-      border: 1px solid #2a3643;
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* link list */
+    .profile-handle i {
+      font-size: 0.72rem;
+      color: #5f8ab0;
+    }
+
+    /* ── link list ────────────────────────────────────────────── */
     .link-list {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
       list-style: none;
+      margin-bottom: 1.6rem;
     }
 
     .link-list li {
@@ -126,101 +321,229 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      background: #0f161d;
-      border: 1px solid #232e3a;
+      background: rgba(18, 26, 35, 0.92);
+      border: 1px solid #232f3c;
       border-radius: 1.2rem;
       padding: 0.9rem 1.3rem;
       text-decoration: none;
-      color: #e6edf3;
-      font-size: 1.05rem;
-      font-weight: 460;
-      transition: all 0.18s ease;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      color: #e9f0f8;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.18s cubic-bezier(0.2, 0, 0, 1);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
       word-break: break-word;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .link-item:hover::after {
+      transform: translateX(120%);
     }
 
     .link-item i {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       width: 1.8rem;
       text-align: center;
       color: #a0b8cf;
-      transition: color 0.15s ease, transform 0.1s ease;
+      transition: color 0.18s ease, transform 0.18s ease;
       flex-shrink: 0;
     }
 
     .link-item span {
       flex: 1;
+      letter-spacing: -0.01em;
     }
 
     .link-item:hover {
-      background: #1a2530;
+      background: rgba(28, 40, 54, 0.98);
       border-color: #3f5266;
       transform: translateY(-2px);
-      box-shadow: 0 12px 20px -10px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.8);
       color: #ffffff;
     }
 
     .link-item:hover i {
-      color: #ffffff;
+      transform: scale(1.1);
     }
 
-    /* specific brand colors on hover for a bit of delight (optional) */
-    .link-item[data-brand="github"]:hover i { color: #ffffff; }
-    .link-item[data-brand="bluesky"]:hover i { color: #4a9eff; }
-    .link-item[data-brand="facebook"]:hover i { color: #1877f2; }
-    .link-item[data-brand="instagram"]:hover i { color: #e4405f; }
-    .link-item[data-brand="substack"]:hover i { color: #ff6719; }
-    .link-item[data-brand="threads"]:hover i { color: #ffffff; }
-    .link-item[data-brand="tiktok"]:hover i { color: #ffffff; }
-    .link-item[data-brand="youtube"]:hover i { color: #ff0000; }
-    .link-item[data-brand="gofundme"]:hover i { color: #02a95c; }
-    .link-item[data-brand="twitch"]:hover i { color: #9146ff; }
+    /* brand colors on hover */
+    .link-item[data-brand="github"]:hover i     { color: #ffffff; }
+    .link-item[data-brand="bluesky"]:hover i    { color: #4a9eff; }
+    .link-item[data-brand="facebook"]:hover i   { color: #1877f2; }
+    .link-item[data-brand="instagram"]:hover i  { color: #e4405f; }
+    .link-item[data-brand="substack"]:hover i   { color: #ff6719; }
+    .link-item[data-brand="threads"]:hover i    { color: #ffffff; }
+    .link-item[data-brand="tiktok"]:hover i     { color: #ffffff; }
+    .link-item[data-brand="youtube"]:hover i    { color: #ff0000; }
+    .link-item[data-brand="gofundme"]:hover i   { color: #02a95c; }
+    .link-item[data-brand="twitch"]:hover i     { color: #9146ff; }
     .link-item[data-brand="infinite-depth"]:hover i { color: #b48cff; }
-    .link-item[data-brand="zazzle"]:hover i { color: #e6a020; }
+    .link-item[data-brand="zazzle"]:hover i     { color: #e6a020; }
     .link-item[data-brand="ai-checker"]:hover i { color: #38d9a9; }
 
-    /* small separators / footer */
-    .footer-note {
-      margin-top: 1.6rem;
-      font-size: 0.75rem;
+    /* ── footer ───────────────────────────────────────────────── */
+    .link-footer {
       text-align: center;
-      color: #5f7488;
-      border-top: 1px solid #1e2a34;
-      padding-top: 1.5rem;
+      font-size: 0.72rem;
+      color: #5b7085;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      flex-wrap: wrap;
+    }
+
+    .link-footer i {
+      color: #4a6e8c;
+      font-size: 0.78rem;
+    }
+
+    /* ── easter egg: konami-style hidden message (surprise #2) ── */
+    .easter-egg {
+      position: fixed;
+      bottom: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(140%);
+      background: linear-gradient(135deg, #1e2b3a, #15202b);
+      color: #b9d4f0;
+      padding: 0.9rem 1.6rem;
+      border-radius: 2rem;
+      font-size: 0.85rem;
+      border: 1px solid #3a5570;
+      box-shadow: 0 18px 36px -12px black;
+      z-index: 999;
+      transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
+      pointer-events: none;
+      max-width: 90vw;
+      text-align: center;
       letter-spacing: 0.02em;
     }
 
-    /* responsiveness */
-    @media (max-width: 480px) {
-      .bio-card {
-        padding: 1.6rem 1.2rem;
-        border-radius: 1.5rem;
+    .easter-egg.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .easter-egg i {
+      color: #f0b34b;
+      margin-right: 0.35rem;
+    }
+
+    /* ── responsive ───────────────────────────────────────────── */
+    @media (max-width: 520px) {
+      .link-card {
+        padding: 1.6rem 1.2rem 1.5rem;
+        border-radius: 2rem;
+      }
+      .privacy-banner {
+        padding: 1rem 1.1rem;
+        font-size: 0.8rem;
       }
       .update-banner {
-        padding: 1.2rem 1rem;
+        padding: 1.1rem 1rem;
+      }
+      .update-banner p {
+        font-size: 0.88rem;
+      }
+      .profile-avatar {
+        width: 78px;
+        height: 78px;
+        font-size: 2.2rem;
+      }
+      .profile-name {
+        font-size: 1.35rem;
       }
       .link-item {
-        padding: 0.8rem 1rem;
-        font-size: 0.98rem;
+        padding: 0.78rem 1rem;
+        font-size: 0.94rem;
+        gap: 0.85rem;
       }
       .link-item i {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
         width: 1.6rem;
       }
-      .bio-title h1 {
-        font-size: 1.3rem;
+      .aurora span {
+        filter: blur(60px);
+      }
+    }
+
+    @media (max-width: 380px) {
+      .link-item {
+        padding: 0.7rem 0.9rem;
+        gap: 0.75rem;
+      }
+      .link-item span {
+        font-size: 0.88rem;
+      }
+    }
+
+    ::selection {
+      background: #2a4b6e;
+      color: #fff;
+    }
+
+    /* accessibility: respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .aurora span,
+      .live-clock i,
+      .profile-avatar,
+      .link-item,
+      .link-item::after,
+      .easter-egg {
+        animation: none !important;
+        transition: none !important;
       }
     }
   </style>
 </head>
 <body>
-  <div class="bio-card">
-    <!-- ⚠️ Infrastructure Update notice (exactly as described) -->
-    <div class="update-banner">
+
+  <!-- ═══════════ ANIMATED AURORA BACKGROUND (surprise #3) ═══════════ -->
+  <div class="aurora" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="link-card">
+
+    <!-- ═══════════ LIVE CLOCK (surprise #1) ═══════════ -->
+    <div class="live-clock">
+      <i class="fas fa-circle"></i>
+      <span id="clock">--:--:--</span>
+      <i class="fas fa-circle"></i>
+    </div>
+
+    <!-- ═══════════ PRIVACY NOTICE ═══════════ -->
+    <div class="privacy-banner">
+      <i class="fas fa-shield-halved"></i>
       <div>
-        <span class="warning-icon">⚠️</span>
-        <strong>Infrastructure Update</strong>
-        <span class="warning-icon" style="margin-left: 0.2rem;">⚠️</span>
+        <strong>Privacy-focused.</strong>
+        This page has <span class="highlight">no trackers, no analytics, no cookies</span>, and no third‑party scripts.
+        The only external resource is <span class="highlight">Font Awesome</span> for icons — temporarily, until I make my own.
+        Everything else is self‑contained.
+      </div>
+    </div>
+
+    <!-- ═══════════ UPDATE BANNER ═══════════ -->
+    <div class="update-banner">
+      <div class="banner-title">
+        <i class="fas fa-triangle-exclamation"></i>
+        <span>Infrastructure Update</span>
+        <i class="fas fa-triangle-exclamation" style="margin-left: auto; opacity: 0.7; font-size: 0.95rem;"></i>
       </div>
       <p>
         I won't be able to finish the scheduled DNS and load balancer maintenance today.
@@ -230,18 +553,25 @@
         As you can see, most of my GitHub repos are hidden while I work through these infrastructure changes behind the scenes.
         I'll provide another update once a new maintenance window is scheduled. Thanks for your patience!
       </p>
-      <div class="note">
-        <i class="fas fa-clock"></i> <span>Official link-in-bio · status: paused</span>
+      <div class="banner-footer">
+        <i class="fas fa-clock"></i>
+        <span>Official link-in-bio · status: paused</span>
       </div>
     </div>
 
-    <!-- Title / identity -->
-    <div class="bio-title">
-      <h1>John Ogletree</h1>
-      <span class="handle">@john0ogletree</span>
+    <!-- ═══════════ PROFILE ═══════════ -->
+    <div class="profile-section">
+      <div class="profile-avatar">
+        <i class="fas fa-user-astronaut"></i>
+      </div>
+      <div class="profile-name">John Ogletree</div>
+      <div class="profile-handle">
+        <i class="fas fa-at"></i>
+        <span>john0ogletree</span>
+      </div>
     </div>
 
-    <!-- All links -->
+    <!-- ═══════════ LINKS ═══════════ -->
     <ul class="link-list">
       <!-- GitHub -->
       <li>
@@ -327,7 +657,7 @@
           <span>The Panopticon Eagle Button</span>
         </a>
       </li>
-      <!-- NEW: AI Checker (added) -->
+      <!-- AI Checker -->
       <li>
         <a class="link-item" data-brand="ai-checker" href="https://ai-checker.jao.life/" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-robot"></i>
@@ -336,10 +666,76 @@
       </li>
     </ul>
 
-    <!-- small footer (optional, but keeps consistent) -->
-    <div class="footer-note">
-      <i class="fa-regular fa-circle-check" style="margin-right: 0.3rem;"></i> link-in-bio · official
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <div class="link-footer">
+      <i class="fa-regular fa-circle-check"></i>
+      <span>link-in-bio · official</span>
+      <span style="opacity: 0.3; margin: 0 0.2rem;">|</span>
+      <span><i class="fas fa-shield-halved" style="font-size: 0.68rem; margin-right: 0.15rem;"></i>privacy-focused</span>
     </div>
   </div>
+
+  <!-- ═══════════ EASTER EGG (surprise #2) ═══════════ -->
+  <div class="easter-egg" id="easterEgg">
+    <i class="fas fa-star"></i> You found the hidden message. Built with care, no trackers. ✨
+  </div>
+
+  <script>
+    // ── live clock (privacy-respecting: local time only, no network) ──
+    (function updateClock() {
+      const el = document.getElementById('clock');
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      el.textContent = `${h}:${m}:${s}`;
+    })();
+    setInterval(function () {
+      const el = document.getElementById('clock');
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      el.textContent = `${h}:${m}:${s}`;
+    }, 1000);
+
+    // ── easter egg: type "j" three times, or tap avatar 5 times ──
+    (function () {
+      const egg = document.getElementById('easterEgg');
+      let keyBuffer = '';
+      let tapCount = 0;
+      let tapTimer = null;
+
+      // keyboard: press "j" 3 times quickly
+      document.addEventListener('keydown', function (e) {
+        if (e.key.toLowerCase() === 'j') {
+          keyBuffer += 'j';
+          if (keyBuffer.length > 3) keyBuffer = keyBuffer.slice(-3);
+          if (keyBuffer === 'jjj') {
+            egg.classList.add('show');
+            setTimeout(function () { egg.classList.remove('show'); }, 4000);
+            keyBuffer = '';
+          }
+        } else {
+          keyBuffer = '';
+        }
+      });
+
+      // tap avatar 5 times
+      const avatar = document.querySelector('.profile-avatar');
+      if (avatar) {
+        avatar.addEventListener('click', function () {
+          tapCount++;
+          clearTimeout(tapTimer);
+          tapTimer = setTimeout(function () { tapCount = 0; }, 1200);
+          if (tapCount >= 5) {
+            egg.classList.add('show');
+            setTimeout(function () { egg.classList.remove('show'); }, 4000);
+            tapCount = 0;
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
