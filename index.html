@@ -14,6 +14,7 @@
     • All links open in a new tab with rel="noopener noreferrer".
     • No infinite scroll. Just a clean, static page.
     • Surprise features: animated aurora, live clock, easter egg.
+    • Every link now shows its full endpoint URL underneath the label.
     ═══════════════════════════════════════════════════════════════
   -->
 
@@ -21,6 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
+    /* ── reset & base ─────────────────────────────────────────── */
     * {
       margin: 0;
       padding: 0;
@@ -45,6 +47,7 @@
       position: relative;
     }
 
+    /* ── animated aurora background ───────────────────────────── */
     .aurora {
       position: fixed;
       inset: 0;
@@ -110,6 +113,7 @@
       100% { transform: translate(-5vmax, 5vmax) scale(0.95); }
     }
 
+    /* ── main card ────────────────────────────────────────────── */
     .link-card {
       position: relative;
       z-index: 2;
@@ -134,7 +138,7 @@
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ── live clock ── */
+    /* ── live clock ───────────────────────────────────────────── */
     .live-clock {
       display: flex;
       align-items: center;
@@ -159,7 +163,7 @@
       50%      { opacity: 0.35; }
     }
 
-    /* ── privacy banner ── */
+    /* ── privacy banner ───────────────────────────────────────── */
     .privacy-banner {
       background: rgba(24, 32, 43, 0.9);
       border-radius: 1.4rem;
@@ -191,7 +195,7 @@
       font-weight: 500;
     }
 
-    /* ── update banner ── */
+    /* ── update banner ────────────────────────────────────────── */
     .update-banner {
       background: rgba(31, 42, 54, 0.92);
       border-radius: 1.4rem;
@@ -245,7 +249,7 @@
       gap: 0.4rem;
     }
 
-    /* ── profile section ── */
+    /* ── profile section ──────────────────────────────────────── */
     .profile-section {
       display: flex;
       flex-direction: column;
@@ -301,6 +305,7 @@
       color: #5f8ab0;
     }
 
+    /* ── link list ────────────────────────────────────────────── */
     .link-list {
       display: flex;
       flex-direction: column;
@@ -320,7 +325,7 @@
       background: rgba(18, 26, 35, 0.92);
       border: 1px solid #232f3c;
       border-radius: 1.2rem;
-      padding: 0.9rem 1.3rem;
+      padding: 0.85rem 1.3rem;
       text-decoration: none;
       color: #e9f0f8;
       font-size: 1rem;
@@ -355,9 +360,35 @@
       flex-shrink: 0;
     }
 
-    .link-item span {
+    /* NEW: text wrapper for label + endpoint */
+    .link-text {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+
+    .link-label {
       letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    /* NEW: visible endpoint URL */
+    .link-endpoint {
+      font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: #64798e;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.18s ease;
+    }
+
+    .link-item:hover .link-endpoint {
+      color: #9fc6e8;
     }
 
     .link-item:hover {
@@ -373,23 +404,24 @@
     }
 
     /* brand colors on hover */
-    .link-item[data-brand="resume"]:hover i     { color: #38bdf8; }
-    .link-item[data-brand="github"]:hover i     { color: #ffffff; }
-    .link-item[data-brand="bluesky"]:hover i    { color: #4a9eff; }
-    .link-item[data-brand="facebook"]:hover i   { color: #1877f2; }
-    .link-item[data-brand="instagram"]:hover i  { color: #e4405f; }
-    .link-item[data-brand="substack"]:hover i   { color: #ff6719; }
-    .link-item[data-brand="threads"]:hover i    { color: #ffffff; }
-    .link-item[data-brand="tiktok"]:hover i     { color: #ffffff; }
-    .link-item[data-brand="youtube"]:hover i    { color: #ff0000; }
-    .link-item[data-brand="gofundme"]:hover i   { color: #02a95c; }
-    .link-item[data-brand="twitch"]:hover i     { color: #9146ff; }
-    .link-item[data-brand="infinite-depth"]:hover i { color: #b48cff; }
-    .link-item[data-brand="zazzle"]:hover i     { color: #e6a020; }
-    .link-item[data-brand="ai-checker"]:hover i { color: #38d9a9; }
-    .link-item[data-brand="silent"]:hover i     { color: #7dd3fc; }
-    .link-item[data-brand="dnslens"]:hover i    { color: #c084fc; }
+    .link-item[data-brand="resume"]:hover i        { color: #fcd34d; }
+    .link-item[data-brand="github"]:hover i        { color: #ffffff; }
+    .link-item[data-brand="bluesky"]:hover i       { color: #4a9eff; }
+    .link-item[data-brand="facebook"]:hover i      { color: #1877f2; }
+    .link-item[data-brand="instagram"]:hover i     { color: #e4405f; }
+    .link-item[data-brand="substack"]:hover i      { color: #ff6719; }
+    .link-item[data-brand="threads"]:hover i       { color: #ffffff; }
+    .link-item[data-brand="tiktok"]:hover i        { color: #ffffff; }
+    .link-item[data-brand="youtube"]:hover i       { color: #ff0000; }
+    .link-item[data-brand="gofundme"]:hover i      { color: #02a95c; }
+    .link-item[data-brand="twitch"]:hover i        { color: #9146ff; }
+    .link-item[data-brand="infinite-depth"]:hover i{ color: #b48cff; }
+    .link-item[data-brand="zazzle"]:hover i        { color: #e6a020; }
+    .link-item[data-brand="ai-checker"]:hover i    { color: #38d9a9; }
+    .link-item[data-brand="silent"]:hover i        { color: #7dd3fc; }
+    .link-item[data-brand="dnslens"]:hover i       { color: #c084fc; }
 
+    /* ── footer ───────────────────────────────────────────────── */
     .link-footer {
       text-align: center;
       font-size: 0.72rem;
@@ -409,6 +441,7 @@
       font-size: 0.78rem;
     }
 
+    /* ── easter egg ───────────────────────────────────────────── */
     .easter-egg {
       position: fixed;
       bottom: 1.2rem;
@@ -438,6 +471,7 @@
       margin-right: 0.35rem;
     }
 
+    /* ── responsive ───────────────────────────────────────────── */
     @media (max-width: 520px) {
       .link-card {
         padding: 1.6rem 1.2rem 1.5rem;
@@ -462,13 +496,16 @@
         font-size: 1.35rem;
       }
       .link-item {
-        padding: 0.78rem 1rem;
+        padding: 0.75rem 1rem;
         font-size: 0.94rem;
         gap: 0.85rem;
       }
       .link-item i {
         font-size: 1.2rem;
         width: 1.6rem;
+      }
+      .link-endpoint {
+        font-size: 0.63rem;
       }
       .aurora span {
         filter: blur(60px);
@@ -480,8 +517,11 @@
         padding: 0.7rem 0.9rem;
         gap: 0.75rem;
       }
-      .link-item span {
+      .link-label {
         font-size: 0.88rem;
+      }
+      .link-endpoint {
+        font-size: 0.6rem;
       }
     }
 
@@ -490,6 +530,7 @@
       color: #fff;
     }
 
+    /* accessibility: respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .aurora span,
       .live-clock i,
@@ -505,6 +546,7 @@
 </head>
 <body>
 
+  <!-- ═══════════ ANIMATED AURORA BACKGROUND ═══════════ -->
   <div class="aurora" aria-hidden="true">
     <span></span>
     <span></span>
@@ -514,12 +556,14 @@
 
   <div class="link-card">
 
+    <!-- ═══════════ LIVE CLOCK ═══════════ -->
     <div class="live-clock">
       <i class="fas fa-circle"></i>
       <span id="clock">--:--:--</span>
       <i class="fas fa-circle"></i>
     </div>
 
+    <!-- ═══════════ PRIVACY NOTICE ═══════════ -->
     <div class="privacy-banner">
       <i class="fas fa-shield-halved"></i>
       <div>
@@ -530,6 +574,7 @@
       </div>
     </div>
 
+    <!-- ═══════════ UPDATE BANNER ═══════════ -->
     <div class="update-banner">
       <div class="banner-title">
         <i class="fas fa-triangle-exclamation"></i>
@@ -550,6 +595,7 @@
       </div>
     </div>
 
+    <!-- ═══════════ PROFILE ═══════════ -->
     <div class="profile-section">
       <div class="profile-avatar">
         <i class="fas fa-user-astronaut"></i>
@@ -561,121 +607,188 @@
       </div>
     </div>
 
+    <!-- ═══════════ LINKS ═══════════ -->
     <ul class="link-list">
+
       <!-- Resume -->
       <li>
         <a class="link-item" data-brand="resume" href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-file-lines"></i>
-          <span>Resume</span>
+          <div class="link-text">
+            <span class="link-label">Resume</span>
+            <span class="link-endpoint">resume.jao.life</span>
+          </div>
         </a>
       </li>
+
       <!-- GitHub -->
       <li>
         <a class="link-item" data-brand="github" href="https://github.com/john-ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-github"></i>
-          <span>GitHub</span>
+          <div class="link-text">
+            <span class="link-label">GitHub</span>
+            <span class="link-endpoint">github.com/john-ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- Bluesky -->
       <li>
         <a class="link-item" data-brand="bluesky" href="https://bsky.app/profile/john0ogletree.bsky.social" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-cloud"></i>
-          <span>Bluesky</span>
+          <div class="link-text">
+            <span class="link-label">Bluesky</span>
+            <span class="link-endpoint">bsky.app/profile/john0ogletree.bsky.social</span>
+          </div>
         </a>
       </li>
+
       <!-- Facebook -->
       <li>
         <a class="link-item" data-brand="facebook" href="https://facebook.com/john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-facebook-f"></i>
-          <span>Facebook</span>
+          <div class="link-text">
+            <span class="link-label">Facebook</span>
+            <span class="link-endpoint">facebook.com/john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- Instagram -->
       <li>
         <a class="link-item" data-brand="instagram" href="https://instagram.com/john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-instagram"></i>
-          <span>Instagram</span>
+          <div class="link-text">
+            <span class="link-label">Instagram</span>
+            <span class="link-endpoint">instagram.com/john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- Substack -->
       <li>
         <a class="link-item" data-brand="substack" href="https://substack.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-newspaper"></i>
-          <span>Substack</span>
+          <div class="link-text">
+            <span class="link-label">Substack</span>
+            <span class="link-endpoint">substack.com/@john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- Threads -->
       <li>
         <a class="link-item" data-brand="threads" href="https://threads.net/@john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-threads"></i>
-          <span>Threads</span>
+          <div class="link-text">
+            <span class="link-label">Threads</span>
+            <span class="link-endpoint">threads.net/@john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- TikTok -->
       <li>
         <a class="link-item" data-brand="tiktok" href="https://tiktok.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-tiktok"></i>
-          <span>TikTok</span>
+          <div class="link-text">
+            <span class="link-label">TikTok</span>
+            <span class="link-endpoint">tiktok.com/@john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- YouTube -->
       <li>
         <a class="link-item" data-brand="youtube" href="https://youtube.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-youtube"></i>
-          <span>YouTube</span>
+          <div class="link-text">
+            <span class="link-label">YouTube</span>
+            <span class="link-endpoint">youtube.com/@john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- GoFundMe -->
       <li>
         <a class="link-item" data-brand="gofundme" href="https://gofundme.com/u/john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-hand-holding-heart"></i>
-          <span>GoFundMe</span>
+          <div class="link-text">
+            <span class="link-label">GoFundMe</span>
+            <span class="link-endpoint">gofundme.com/u/john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- Twitch -->
       <li>
         <a class="link-item" data-brand="twitch" href="https://twitch.tv/john0ogletree" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-twitch"></i>
-          <span>Twitch</span>
+          <div class="link-text">
+            <span class="link-label">Twitch</span>
+            <span class="link-endpoint">twitch.tv/john0ogletree</span>
+          </div>
         </a>
       </li>
+
       <!-- Infinite-depth project -->
       <li>
         <a class="link-item" data-brand="infinite-depth" href="https://infinite-depth.jao.life/" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-water"></i>
-          <span>Infinite-depth project</span>
+          <div class="link-text">
+            <span class="link-label">Infinite-depth project</span>
+            <span class="link-endpoint">infinite-depth.jao.life</span>
+          </div>
         </a>
       </li>
+
       <!-- The Panopticon Eagle Button (Zazzle) -->
       <li>
         <a class="link-item" data-brand="zazzle" href="https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-shirt"></i>
-          <span>The Panopticon Eagle Button</span>
+          <div class="link-text">
+            <span class="link-label">The Panopticon Eagle Button</span>
+            <span class="link-endpoint">zazzle.com/the_panopticon_eagle_button</span>
+          </div>
         </a>
       </li>
+
       <!-- AI Checker -->
       <li>
         <a class="link-item" data-brand="ai-checker" href="https://ai-checker.jao.life/" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-robot"></i>
-          <span>AI Checker</span>
+          <div class="link-text">
+            <span class="link-label">AI Checker</span>
+            <span class="link-endpoint">ai-checker.jao.life</span>
+          </div>
         </a>
       </li>
+
       <!-- Silent — privacy-focused ping tester -->
       <li>
         <a class="link-item" data-brand="silent" href="https://silent.jao.life/" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-wifi"></i>
-          <span>Silent — privacy-focused ping tester</span>
+          <div class="link-text">
+            <span class="link-label">Silent — privacy-focused ping tester</span>
+            <span class="link-endpoint">silent.jao.life</span>
+          </div>
         </a>
       </li>
+
       <!-- DNSLens — DNS checker -->
       <li>
         <a class="link-item" data-brand="dnslens" href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer">
           <i class="fa-solid fa-magnifying-glass-location"></i>
-          <span>DNSLens — DNS checker</span>
+          <div class="link-text">
+            <span class="link-label">DNSLens — DNS checker</span>
+            <span class="link-endpoint">dnslens.jao.life</span>
+          </div>
         </a>
       </li>
+
     </ul>
 
+    <!-- ═══════════ FOOTER ═══════════ -->
     <div class="link-footer">
       <i class="fa-regular fa-circle-check"></i>
       <span>link-in-bio · official</span>
@@ -684,11 +797,13 @@
     </div>
   </div>
 
+  <!-- ═══════════ EASTER EGG ═══════════ -->
   <div class="easter-egg" id="easterEgg">
     <i class="fas fa-star"></i> You found the hidden message. Built with care, no trackers. ✨
   </div>
 
   <script>
+    // ── live clock (privacy-respecting: local time only, no network) ──
     (function updateClock() {
       const el = document.getElementById('clock');
       const now = new Date();
@@ -706,13 +821,14 @@
       el.textContent = `${h}:${m}:${s}`;
     }, 1000);
 
-    // easter egg listener
+    // ── easter egg: type "j" three times, or tap avatar 5 times ──
     (function () {
       const egg = document.getElementById('easterEgg');
       let keyBuffer = '';
       let tapCount = 0;
       let tapTimer = null;
 
+      // keyboard: press "j" 3 times quickly
       document.addEventListener('keydown', function (e) {
         if (e.key.toLowerCase() === 'j') {
           keyBuffer += 'j';
@@ -727,6 +843,7 @@
         }
       });
 
+      // tap avatar 5 times
       const avatar = document.querySelector('.profile-avatar');
       if (avatar) {
         avatar.addEventListener('click', function () {
