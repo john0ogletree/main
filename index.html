@@ -14,7 +14,8 @@
     • All links open in a new tab with rel="noopener noreferrer".
     • No infinite scroll. Just a clean, static page.
     • Surprise features: animated aurora, live clock, easter egg.
-    • Every link now shows its full endpoint URL underneath the label.
+    • Every link shows its full endpoint URL underneath the label.
+    • Links are grouped into clear categories.
     ═══════════════════════════════════════════════════════════════
   -->
 
@@ -305,13 +306,52 @@
       color: #5f8ab0;
     }
 
+    /* ── group headers ────────────────────────────────────────── */
+    .link-group {
+      margin-bottom: 1.8rem;
+    }
+
+    .link-group:last-of-type {
+      margin-bottom: 0.4rem;
+    }
+
+    .group-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7c93a9;
+      padding: 0 0.3rem 0.7rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .group-header i {
+      font-size: 0.85rem;
+      color: #5f8ab0;
+    }
+
+    .group-header .group-count {
+      margin-left: auto;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #55697c;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 0.1rem 0.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
     /* ── link list ────────────────────────────────────────────── */
     .link-list {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
       list-style: none;
-      margin-bottom: 1.6rem;
     }
 
     .link-list li {
@@ -433,7 +473,8 @@
       align-items: center;
       justify-content: center;
       gap: 0.35rem;
-      padding-top: 0.5rem;
+      padding-top: 0.9rem;
+      margin-top: 1.2rem;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       flex-wrap: wrap;
     }
@@ -496,6 +537,9 @@
       }
       .profile-name {
         font-size: 1.35rem;
+      }
+      .group-header {
+        font-size: 0.68rem;
       }
       .link-item {
         padding: 0.75rem 1rem;
@@ -609,208 +653,218 @@
       </div>
     </div>
 
-    <!-- ═══════════ LINKS ═══════════ -->
-    <ul class="link-list">
+    <!-- ═══════════ GROUP 1 · SOCIAL ═══════════ -->
+    <div class="link-group">
+      <div class="group-header">
+        <i class="fas fa-hashtag"></i>
+        <span>Social</span>
+        <span class="group-count">8</span>
+      </div>
+      <ul class="link-list">
+        <!-- GitHub -->
+        <li>
+          <a class="link-item" data-brand="github" href="https://github.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i>
+            <div class="link-text">
+              <span class="link-label">GitHub</span>
+              <span class="link-endpoint">github.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Bluesky -->
+        <li>
+          <a class="link-item" data-brand="bluesky" href="https://bsky.app/profile/john0ogletree.bsky.social" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-cloud"></i>
+            <div class="link-text">
+              <span class="link-label">Bluesky</span>
+              <span class="link-endpoint">bsky.app/profile/john0ogletree.bsky.social</span>
+            </div>
+          </a>
+        </li>
+        <!-- Facebook -->
+        <li>
+          <a class="link-item" data-brand="facebook" href="https://facebook.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook-f"></i>
+            <div class="link-text">
+              <span class="link-label">Facebook</span>
+              <span class="link-endpoint">facebook.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Instagram -->
+        <li>
+          <a class="link-item" data-brand="instagram" href="https://instagram.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i>
+            <div class="link-text">
+              <span class="link-label">Instagram</span>
+              <span class="link-endpoint">instagram.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Threads -->
+        <li>
+          <a class="link-item" data-brand="threads" href="https://threads.net/@john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-threads"></i>
+            <div class="link-text">
+              <span class="link-label">Threads</span>
+              <span class="link-endpoint">threads.net/@john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- TikTok -->
+        <li>
+          <a class="link-item" data-brand="tiktok" href="https://tiktok.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-tiktok"></i>
+            <div class="link-text">
+              <span class="link-label">TikTok</span>
+              <span class="link-endpoint">tiktok.com/@john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- YouTube -->
+        <li>
+          <a class="link-item" data-brand="youtube" href="https://youtube.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-youtube"></i>
+            <div class="link-text">
+              <span class="link-label">YouTube</span>
+              <span class="link-endpoint">youtube.com/@john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Twitch -->
+        <li>
+          <a class="link-item" data-brand="twitch" href="https://twitch.tv/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-twitch"></i>
+            <div class="link-text">
+              <span class="link-label">Twitch</span>
+              <span class="link-endpoint">twitch.tv/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
 
-      <!-- Resume -->
-      <li>
-        <a class="link-item" data-brand="resume" href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-file-lines"></i>
-          <div class="link-text">
-            <span class="link-label">Resume</span>
-            <span class="link-endpoint">resume.jao.life</span>
-          </div>
-        </a>
-      </li>
+    <!-- ═══════════ GROUP 2 · PROJECTS & TOOLS ═══════════ -->
+    <div class="link-group">
+      <div class="group-header">
+        <i class="fas fa-toolbox"></i>
+        <span>Projects &amp; Tools</span>
+        <span class="group-count">7</span>
+      </div>
+      <ul class="link-list">
+        <!-- Infinite-depth project -->
+        <li>
+          <a class="link-item" data-brand="infinite-depth" href="https://infinite-depth.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-water"></i>
+            <div class="link-text">
+              <span class="link-label">Infinite-depth project</span>
+              <span class="link-endpoint">infinite-depth.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- AI Checker -->
+        <li>
+          <a class="link-item" data-brand="ai-checker" href="https://ai-checker.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-robot"></i>
+            <div class="link-text">
+              <span class="link-label">AI Checker</span>
+              <span class="link-endpoint">ai-checker.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- Silent — privacy-focused ping tester -->
+        <li>
+          <a class="link-item" data-brand="silent" href="https://silent.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-wifi"></i>
+            <div class="link-text">
+              <span class="link-label">Silent — privacy-focused ping tester</span>
+              <span class="link-endpoint">silent.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- DNSLens — DNS checker -->
+        <li>
+          <a class="link-item" data-brand="dnslens" href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-magnifying-glass-location"></i>
+            <div class="link-text">
+              <span class="link-label">DNSLens — DNS checker</span>
+              <span class="link-endpoint">dnslens.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- GlobeBin — language to binary converter -->
+        <li>
+          <a class="link-item" data-brand="globebin" href="https://globebin.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-language"></i>
+            <div class="link-text">
+              <span class="link-label">GlobeBin — language to binary converter</span>
+              <span class="link-endpoint">globebin.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- UnBin — binary to text converter -->
+        <li>
+          <a class="link-item" data-brand="unbin" href="https://unbin.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-code"></i>
+            <div class="link-text">
+              <span class="link-label">UnBin — binary to text converter</span>
+              <span class="link-endpoint">unbin.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- OmniPost — community-driven social media post creator -->
+        <li>
+          <a class="link-item" data-brand="omnipost" href="https://omnipost.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-bullhorn"></i>
+            <div class="link-text">
+              <span class="link-label">OmniPost — community-driven social media post creator</span>
+              <span class="link-endpoint">omnipost.jao.life</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
 
-      <!-- GitHub -->
-      <li>
-        <a class="link-item" data-brand="github" href="https://github.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-github"></i>
-          <div class="link-text">
-            <span class="link-label">GitHub</span>
-            <span class="link-endpoint">github.com/john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Bluesky -->
-      <li>
-        <a class="link-item" data-brand="bluesky" href="https://bsky.app/profile/john0ogletree.bsky.social" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-cloud"></i>
-          <div class="link-text">
-            <span class="link-label">Bluesky</span>
-            <span class="link-endpoint">bsky.app/profile/john0ogletree.bsky.social</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Facebook -->
-      <li>
-        <a class="link-item" data-brand="facebook" href="https://facebook.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-facebook-f"></i>
-          <div class="link-text">
-            <span class="link-label">Facebook</span>
-            <span class="link-endpoint">facebook.com/john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Instagram -->
-      <li>
-        <a class="link-item" data-brand="instagram" href="https://instagram.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-instagram"></i>
-          <div class="link-text">
-            <span class="link-label">Instagram</span>
-            <span class="link-endpoint">instagram.com/john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Substack -->
-      <li>
-        <a class="link-item" data-brand="substack" href="https://substack.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-newspaper"></i>
-          <div class="link-text">
-            <span class="link-label">Substack</span>
-            <span class="link-endpoint">substack.com/@john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Threads -->
-      <li>
-        <a class="link-item" data-brand="threads" href="https://threads.net/@john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-threads"></i>
-          <div class="link-text">
-            <span class="link-label">Threads</span>
-            <span class="link-endpoint">threads.net/@john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- TikTok -->
-      <li>
-        <a class="link-item" data-brand="tiktok" href="https://tiktok.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-tiktok"></i>
-          <div class="link-text">
-            <span class="link-label">TikTok</span>
-            <span class="link-endpoint">tiktok.com/@john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- YouTube -->
-      <li>
-        <a class="link-item" data-brand="youtube" href="https://youtube.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-youtube"></i>
-          <div class="link-text">
-            <span class="link-label">YouTube</span>
-            <span class="link-endpoint">youtube.com/@john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Twitch -->
-      <li>
-        <a class="link-item" data-brand="twitch" href="https://twitch.tv/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-twitch"></i>
-          <div class="link-text">
-            <span class="link-label">Twitch</span>
-            <span class="link-endpoint">twitch.tv/john0ogletree</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Infinite-depth project -->
-      <li>
-        <a class="link-item" data-brand="infinite-depth" href="https://infinite-depth.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-water"></i>
-          <div class="link-text">
-            <span class="link-label">Infinite-depth project</span>
-            <span class="link-endpoint">infinite-depth.jao.life</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- The Panopticon Eagle Button (Zazzle) -->
-      <li>
-        <a class="link-item" data-brand="zazzle" href="https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-shirt"></i>
-          <div class="link-text">
-            <span class="link-label">The Panopticon Eagle Button</span>
-            <span class="link-endpoint">zazzle.com/the_panopticon_eagle_button</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- AI Checker -->
-      <li>
-        <a class="link-item" data-brand="ai-checker" href="https://ai-checker.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-robot"></i>
-          <div class="link-text">
-            <span class="link-label">AI Checker</span>
-            <span class="link-endpoint">ai-checker.jao.life</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- Silent — privacy-focused ping tester -->
-      <li>
-        <a class="link-item" data-brand="silent" href="https://silent.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-wifi"></i>
-          <div class="link-text">
-            <span class="link-label">Silent — privacy-focused ping tester</span>
-            <span class="link-endpoint">silent.jao.life</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- DNSLens — DNS checker -->
-      <li>
-        <a class="link-item" data-brand="dnslens" href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-magnifying-glass-location"></i>
-          <div class="link-text">
-            <span class="link-label">DNSLens — DNS checker</span>
-            <span class="link-endpoint">dnslens.jao.life</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- GlobeBin — language to binary converter -->
-      <li>
-        <a class="link-item" data-brand="globebin" href="https://globebin.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-language"></i>
-          <div class="link-text">
-            <span class="link-label">GlobeBin — language to binary converter</span>
-            <span class="link-endpoint">globebin.jao.life</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- UnBin — binary to text converter -->
-      <li>
-        <a class="link-item" data-brand="unbin" href="https://unbin.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-code"></i>
-          <div class="link-text">
-            <span class="link-label">UnBin — binary to text converter</span>
-            <span class="link-endpoint">unbin.jao.life</span>
-          </div>
-        </a>
-      </li>
-
-      <!-- OmniPost — community-driven social media post creator (NEW) -->
-      <li>
-        <a class="link-item" data-brand="omnipost" href="https://omnipost.jao.life/" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-bullhorn"></i>
-          <div class="link-text">
-            <span class="link-label">OmniPost — community-driven social media post creator</span>
-            <span class="link-endpoint">omnipost.jao.life</span>
-          </div>
-        </a>
-      </li>
-
-    </ul>
+    <!-- ═══════════ GROUP 3 · WRITING & OTHER ═══════════ -->
+    <div class="link-group">
+      <div class="group-header">
+        <i class="fas fa-pen-fancy"></i>
+        <span>Writing &amp; Other</span>
+        <span class="group-count">3</span>
+      </div>
+      <ul class="link-list">
+        <!-- Resume -->
+        <li>
+          <a class="link-item" data-brand="resume" href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-file-lines"></i>
+            <div class="link-text">
+              <span class="link-label">Resume</span>
+              <span class="link-endpoint">resume.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- Substack -->
+        <li>
+          <a class="link-item" data-brand="substack" href="https://substack.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-newspaper"></i>
+            <div class="link-text">
+              <span class="link-label">Substack</span>
+              <span class="link-endpoint">substack.com/@john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- The Panopticon Eagle Button (Zazzle) -->
+        <li>
+          <a class="link-item" data-brand="zazzle" href="https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-shirt"></i>
+            <div class="link-text">
+              <span class="link-label">The Panopticon Eagle Button</span>
+              <span class="link-endpoint">zazzle.com/the_panopticon_eagle_button</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
 
     <!-- ═══════════ FOOTER ═══════════ -->
     <div class="link-footer">
