@@ -9,8 +9,10 @@
     ═══════════════════════════════════════════════════════════════
     PRIVACY-FOCUSED LINK-IN-BIO · "AURORA" EDITION
     ═══════════════════════════════════════════════════════════════
-    • No trackers, no analytics, no cookies, no external calls
-      except Font Awesome (for icons) — until custom icons are ready.
+    • No trackers, no analytics, no cookies, no third-party scripts.
+    • Two external resources only, both first-party or icon-only:
+        1. Font Awesome (icons) — temporary until custom icons.
+        2. support.jao.life/support.js — own subdomain, no tracking.
     • All links open in a new tab with rel="noopener noreferrer".
     • No infinite scroll. Just a clean, static page.
     • Surprise features: animated aurora, live clock, easter egg.
@@ -19,12 +21,12 @@
     • EXPLAINERS now live in one hub: explained.jao.life
       (individual explainer subdomains still resolve, but the hub
        is the front door.)
-    • Chime is NOT a link — it's a $ChimeSign shown as plain text.
-      Search "$john0ogletree" inside the Chime app to send.
+    • SUPPORT is loaded entirely from support.jao.life/support.js
+      (replaces the old inline Support group).
     ═══════════════════════════════════════════════════════════════
   -->
 
-  <!-- Font Awesome (only external resource — temporary until custom icons) -->
+  <!-- Font Awesome (icons only — temporary until custom icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
@@ -199,6 +201,10 @@
     .privacy-banner .highlight {
       color: #86efac;
       font-weight: 500;
+    }
+
+    .privacy-banner .subtle {
+      color: #7c93a9;
     }
 
     /* ── update banner ────────────────────────────────────────── */
@@ -448,44 +454,6 @@
       transform: scale(1.1);
     }
 
-    /* ── non-clickable info card (Chime $ChimeSign) ───────────── */
-    .link-item-static {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: rgba(18, 26, 35, 0.92);
-      border: 1px solid #232f3c;
-      border-radius: 1.2rem;
-      padding: 0.85rem 1.3rem;
-      color: #e9f0f8;
-      font-size: 1rem;
-      font-weight: 500;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-      word-break: break-word;
-      position: relative;
-      cursor: default;
-    }
-
-    .link-item-static i {
-      font-size: 1.35rem;
-      width: 1.8rem;
-      text-align: center;
-      color: #1ec677;
-      flex-shrink: 0;
-    }
-
-    .link-item-static .link-endpoint {
-      color: #7fae94;
-    }
-
-    .static-hint {
-      font-size: 0.62rem;
-      color: #55697c;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-top: 0.1rem;
-    }
-
     /* featured link (explainer hub) */
     .link-item.featured {
       border-color: #3b5a7a;
@@ -512,11 +480,6 @@
     .link-item[data-brand="unbin"]:hover i         { color: #facc15; }
     .link-item[data-brand="omnipost"]:hover i      { color: #34d399; }
     .link-item[data-brand="explained"]:hover i     { color: #22d3ee; }
-    .link-item[data-brand="coffee"]:hover i        { color: #ffdd00; }
-    .link-item[data-brand="cashapp"]:hover i       { color: #00d632; }
-    .link-item[data-brand="venmo"]:hover i         { color: #3d95ce; }
-    .link-item[data-brand="paypal"]:hover i        { color: #0070ba; }
-    .link-item[data-brand="liberapay"]:hover i     { color: #f6c915; }
 
     /* ── footer ───────────────────────────────────────────────── */
     .link-footer {
@@ -596,14 +559,12 @@
       .group-header {
         font-size: 0.68rem;
       }
-      .link-item,
-      .link-item-static {
+      .link-item {
         padding: 0.75rem 1rem;
         font-size: 0.94rem;
         gap: 0.85rem;
       }
-      .link-item i,
-      .link-item-static i {
+      .link-item i {
         font-size: 1.2rem;
         width: 1.6rem;
       }
@@ -616,8 +577,7 @@
     }
 
     @media (max-width: 380px) {
-      .link-item,
-      .link-item-static {
+      .link-item {
         padding: 0.7rem 0.9rem;
         gap: 0.75rem;
       }
@@ -667,14 +627,16 @@
       <i class="fas fa-circle"></i>
     </div>
 
-    <!-- ═══════════ PRIVACY NOTICE ═══════════ -->
+    <!-- ═══════════ PRIVACY NOTICE (UPDATED) ═══════════ -->
     <div class="privacy-banner">
       <i class="fas fa-shield-halved"></i>
       <div>
         <strong>Privacy-focused.</strong>
-        This page has <span class="highlight">no trackers, no analytics, no cookies</span>, and no third‑party scripts.
-        The only external resource is <span class="highlight">Font Awesome</span> for icons — temporarily, until I make my own.
+        No trackers, no analytics, no cookies, no third‑party scripts.
+        Two external resources only: <span class="highlight">Font Awesome</span> for icons (temporary, until I make my own)
+        and <span class="highlight">support.jao.life/support.js</span> — my own subdomain, served without tracking.
         Everything else is self‑contained.
+        <span class="subtle">Full explanation at privacy.jao.life.</span>
       </div>
     </div>
 
@@ -934,76 +896,17 @@
       </ul>
     </div>
 
-    <!-- ═══════════ GROUP 4 · SUPPORT ═══════════ -->
+    <!-- ═══════════ GROUP 4 · SUPPORT (external script) ═══════════ -->
     <div class="link-group">
       <div class="group-header">
         <i class="fas fa-heart"></i>
         <span>Support</span>
         <span class="group-count">6</span>
       </div>
-      <ul class="link-list">
-        <!-- Buy Me a Coffee -->
-        <li>
-          <a class="link-item" data-brand="coffee" href="https://buymeacoffee.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-mug-hot"></i>
-            <div class="link-text">
-              <span class="link-label">Buy me a coffee</span>
-              <span class="link-endpoint">buymeacoffee.com/john0ogletree</span>
-            </div>
-          </a>
-        </li>
-        <!-- Cash App -->
-        <li>
-          <a class="link-item" data-brand="cashapp" href="https://cash.app/$john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-dollar-sign"></i>
-            <div class="link-text">
-              <span class="link-label">Cash App</span>
-              <span class="link-endpoint">cash.app/$john0ogletree</span>
-            </div>
-          </a>
-        </li>
-        <!-- Venmo -->
-        <li>
-          <a class="link-item" data-brand="venmo" href="https://venmo.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-money-bill-transfer"></i>
-            <div class="link-text">
-              <span class="link-label">Venmo</span>
-              <span class="link-endpoint">venmo.com/john0ogletree</span>
-            </div>
-          </a>
-        </li>
-        <!-- PayPal -->
-        <li>
-          <a class="link-item" data-brand="paypal" href="https://paypal.me/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-paypal"></i>
-            <div class="link-text">
-              <span class="link-label">PayPal</span>
-              <span class="link-endpoint">paypal.me/john0ogletree</span>
-            </div>
-          </a>
-        </li>
-        <!-- Liberapay -->
-        <li>
-          <a class="link-item" data-brand="liberapay" href="https://liberapay.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-heart-circle-dollar"></i>
-            <div class="link-text">
-              <span class="link-label">Liberapay</span>
-              <span class="link-endpoint">liberapay.com/john0ogletree</span>
-            </div>
-          </a>
-        </li>
-        <!-- Chime — NOT a link, plain-text $ChimeSign -->
-        <li>
-          <div class="link-item-static" data-brand="chime">
-            <i class="fa-solid fa-building-columns"></i>
-            <div class="link-text">
-              <span class="link-label">Chime — $ChimeSign</span>
-              <span class="link-endpoint">$john0ogletree</span>
-              <span class="static-hint">search inside the Chime app to send</span>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <!-- The support widget mounts here (inline mode) -->
+      <div id="jao-support"></div>
+      <!-- External support widget -->
+      <script src="https://support.jao.life/support.js" defer></script>
     </div>
 
     <!-- ═══════════ FOOTER ═══════════ -->
