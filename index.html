@@ -18,8 +18,12 @@
     • Surprise features: animated aurora, live clock, easter egg.
     • Every link shows its full endpoint URL underneath the label.
     • Links are grouped into clear categories.
-    • SUPPORT is loaded entirely from support.jao.life/support.js
-      (replaces the old inline Support group).
+    • SUPPORT is currently inlined statically (temporary) — the
+      external support.jao.life/support.js script has been removed
+      for now. Restore the <div id="jao-support"> mount point and
+      the script tag to switch back.
+    • PRIVACY BANNER is temporarily hidden. CSS is kept (commented
+      below) so it can be restored without rewriting styles.
     ═══════════════════════════════════════════════════════════════
   -->
 
@@ -168,7 +172,7 @@
       50%      { opacity: 0.35; }
     }
 
-    /* ── privacy banner ───────────────────────────────────────── */
+    /* ── privacy banner (TEMPORARILY UNUSED — kept for restoration) ──
     .privacy-banner {
       background: rgba(24, 32, 43, 0.9);
       border-radius: 1.4rem;
@@ -203,6 +207,7 @@
     .privacy-banner .subtle {
       color: #7c93a9;
     }
+    ── end privacy banner styles ── */
 
     /* ── profile section ──────────────────────────────────────── */
     .profile-section {
@@ -423,6 +428,14 @@
     .link-item[data-brand="unbin"]:hover i         { color: #facc15; }
     .link-item[data-brand="omnipost"]:hover i      { color: #34d399; }
 
+    /* support-specific brand colors */
+    .link-item[data-brand="ko-fi"]:hover i         { color: #ff5e5b; }
+    .link-item[data-brand="buymeacoffee"]:hover i  { color: #ffdd00; }
+    .link-item[data-brand="patreon"]:hover i       { color: #f96854; }
+    .link-item[data-brand="github-sponsors"]:hover i { color: #ea4aaa; }
+    .link-item[data-brand="paypal"]:hover i        { color: #0070ba; }
+    .link-item[data-brand="liberapay"]:hover i     { color: #f6c915; }
+
     /* ── footer ───────────────────────────────────────────────── */
     .link-footer {
       text-align: center;
@@ -480,10 +493,10 @@
         padding: 1.6rem 1.2rem 1.5rem;
         border-radius: 2rem;
       }
-      .privacy-banner {
+      /* .privacy-banner {
         padding: 1rem 1.1rem;
         font-size: 0.8rem;
-      }
+      } */
       .profile-avatar {
         width: 78px;
         height: 78px;
@@ -563,18 +576,20 @@
       <i class="fas fa-circle"></i>
     </div>
 
-    <!-- ═══════════ PRIVACY NOTICE ═══════════ -->
+    <!-- ═══════════ PRIVACY NOTICE — TEMPORARILY REMOVED ═══════════
     <div class="privacy-banner">
       <i class="fas fa-shield-halved"></i>
       <div>
-        <strong>Privacy-focused.</strong>
+        <strong>Nothing here watches you.</strong>
         No trackers, no analytics, no cookies, no third‑party scripts.
-        Two external resources only: <span class="highlight">Font Awesome</span> for icons (temporary, until I make my own)
-        and <span class="highlight">support.jao.life/support.js</span> — my own subdomain, served without tracking.
-        Everything else is self‑contained.
-        <span class="subtle">Full explanation at privacy.jao.life.</span>
+        Two external resources, both accounted for: <span class="highlight">Font Awesome</span>
+        for icons (temporary, until I draw my own) and
+        <span class="highlight">support.jao.life/support.js</span> — my own subdomain,
+        served without logging. Everything else is self‑contained.
+        <span class="subtle">The full accounting lives at privacy.jao.life.</span>
       </div>
     </div>
+    ═══════════ end privacy notice ═══════════ -->
 
     <!-- ═══════════ PROFILE ═══════════ -->
     <div class="profile-section">
@@ -801,17 +816,75 @@
       </ul>
     </div>
 
-    <!-- ═══════════ GROUP 4 · SUPPORT (external script) ═══════════ -->
+    <!-- ═══════════ GROUP 4 · SUPPORT (static, temporary) ═══════════ -->
     <div class="link-group">
       <div class="group-header">
         <i class="fas fa-heart"></i>
         <span>Support</span>
         <span class="group-count">6</span>
       </div>
-      <!-- The support widget mounts here (inline mode) -->
-      <div id="jao-support"></div>
-      <!-- External support widget -->
-      <script src="https://support.jao.life/support.js" defer></script>
+      <ul class="link-list">
+        <!-- Ko-fi -->
+        <li>
+          <a class="link-item" data-brand="ko-fi" href="https://ko-fi.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-mug-hot"></i>
+            <div class="link-text">
+              <span class="link-label">Ko-fi</span>
+              <span class="link-endpoint">ko-fi.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Buy Me a Coffee -->
+        <li>
+          <a class="link-item" data-brand="buymeacoffee" href="https://buymeacoffee.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-coffee"></i>
+            <div class="link-text">
+              <span class="link-label">Buy Me a Coffee</span>
+              <span class="link-endpoint">buymeacoffee.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Patreon -->
+        <li>
+          <a class="link-item" data-brand="patreon" href="https://patreon.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-patreon"></i>
+            <div class="link-text">
+              <span class="link-label">Patreon</span>
+              <span class="link-endpoint">patreon.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- GitHub Sponsors -->
+        <li>
+          <a class="link-item" data-brand="github-sponsors" href="https://github.com/sponsors/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-heart"></i>
+            <div class="link-text">
+              <span class="link-label">GitHub Sponsors</span>
+              <span class="link-endpoint">github.com/sponsors/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- PayPal -->
+        <li>
+          <a class="link-item" data-brand="paypal" href="https://paypal.me/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-paypal"></i>
+            <div class="link-text">
+              <span class="link-label">PayPal</span>
+              <span class="link-endpoint">paypal.me/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Liberapay -->
+        <li>
+          <a class="link-item" data-brand="liberapay" href="https://liberapay.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-hand-holding-heart"></i>
+            <div class="link-text">
+              <span class="link-label">Liberapay</span>
+              <span class="link-endpoint">liberapay.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+      </ul>
     </div>
 
     <!-- ═══════════ FOOTER ═══════════ -->
@@ -830,22 +903,18 @@
 
   <script>
     // ── live clock (privacy-respecting: local time only, no network) ──
-    (function updateClock() {
+    (function () {
       const el = document.getElementById('clock');
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const s = String(now.getSeconds()).padStart(2, '0');
-      el.textContent = `${h}:${m}:${s}`;
+      function tick() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        el.textContent = `${h}:${m}:${s}`;
+      }
+      tick();
+      setInterval(tick, 1000);
     })();
-    setInterval(function () {
-      const el = document.getElementById('clock');
-      const now = new Date();
-      const h = String(now.getHours()).padStart(2, '0');
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const s = String(now.getSeconds()).padStart(2, '0');
-      el.textContent = `${h}:${m}:${s}`;
-    }, 1000);
 
     // ── easter egg: type "j" three times, or tap avatar 5 times ──
     (function () {
