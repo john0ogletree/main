@@ -10,10 +10,9 @@
     PRIVACY-FOCUSED LINK-IN-BIO · "AURORA" EDITION
     ═══════════════════════════════════════════════════════════════
     • No trackers, no analytics, no cookies, no third-party scripts.
-    • ZERO external resources. Font Awesome is self-hosted under
-      ./assets/fontawesome/. All JavaScript is in ./app.js, served
-      from this same origin. Nothing on this page loads from a
-      domain you don't control.
+    • ZERO external resources. No icon font, no CDN, no webfonts.
+      The only files are this HTML document and ./app.js, both
+      served from this origin.
     • All links open in a new tab with rel="noopener noreferrer".
     • No infinite scroll. Just a clean, static page.
     • Surprise features: animated aurora, live clock, easter egg.
@@ -24,51 +23,42 @@
       have been stripped from this file.
     • PRIVACY BANNER is temporarily hidden. CSS is kept (commented
       below) so it can be restored without rewriting styles. The
-      banner text has been rewritten to reflect the new zero-
-      external-resource posture.
+      banner text has been rewritten to reflect the zero-external-
+      resource posture.
     • AI CHECKER has been removed from Projects & Tools.
     • EXPLAINED (explained.jao.life) added as the featured link at
       the top of Projects & Tools.
     • BITCOIN added as a seventh Support option. The address is
       shown first-8 / last-8 by default; a "show full address"
       toggle reveals the entire string on demand.
+    • ALL ICONS REMOVED. No Font Awesome, no inline SVG, no icon
+      font. The page is now purely typographic.
     • CSP is set via meta tag below AND should be set as an HTTP
-      header by the host (headers take precedence). See the setup
-      notes accompanying this file.
+      header by the host (headers take precedence).
     ═══════════════════════════════════════════════════════════════
   -->
 
   <!--
     Content Security Policy (meta-tag layer).
 
-    Notes on this policy:
       • default-src 'none' — deny everything not explicitly allowed.
-      • style-src 'self' 'unsafe-inline' — 'self' for the local
-        Font Awesome stylesheet; 'unsafe-inline' because this page
-        uses a large inline <style> block and inline style="" attrs.
-        Removing 'unsafe-inline' would require externalizing the
-        CSS, which is a separate refactor.
-      • font-src 'self' — Font Awesome webfonts load from ./assets/.
-      • script-src 'self' — app.js loads from this origin. No
-        inline scripts remain on this page.
-      • img-src 'self' data: — no images currently, but data: is
-        allowed for future inline SVGs.
-      • connect-src 'none' — blocks fetch, XHR, WebSocket, and
-        EventSource. Nothing on this page needs them.
-      • form-action 'none' — no forms exist; blocks any injected
-        form from submitting anywhere.
-      • base-uri 'none' — blocks <base> tag injection, which would
-        otherwise let an attacker redirect every relative URL.
-      • frame-ancestors 'none' — ignored in meta tags per spec, but
-        included for completeness; set it as a header to be
-        effective.
-      • upgrade-insecure-requests — rewrites any accidental http://
-        subresource to https://.
+      • style-src 'self' 'unsafe-inline' — 'unsafe-inline' is
+        required because this page uses a large inline <style>
+        block and inline style="" attributes. No external styles.
+      • font-src 'none' — no webfonts. System fonts only.
+      • script-src 'self' — app.js loads from this origin.
+      • img-src 'self' data: — no images currently.
+      • connect-src 'none' — blocks fetch, XHR, WebSocket.
+      • form-action 'none' — no forms exist.
+      • base-uri 'none' — blocks <base> tag injection.
+      • frame-ancestors 'none' — ignored in meta tags per spec;
+        set it as a header to be effective.
+      • upgrade-insecure-requests — rewrites accidental http://.
   -->
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'none';
                  style-src 'self' 'unsafe-inline';
-                 font-src 'self';
+                 font-src 'none';
                  script-src 'self';
                  img-src 'self' data:;
                  connect-src 'none';
@@ -78,9 +68,6 @@
                  upgrade-insecure-requests;">
 
   <title>John Ogletree · Links</title>
-
-  <!-- Font Awesome (self-hosted — see setup notes) -->
-  <link rel="stylesheet" href="./assets/fontawesome/css/all.min.css">
 
   <style>
     /* ── reset & base ─────────────────────────────────────────── */
@@ -204,19 +191,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.6rem;
       font-size: 0.78rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #8fa6bd;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.6rem;
       font-variant-numeric: tabular-nums;
     }
 
-    .live-clock i {
-      color: #4ade80;
-      font-size: 0.7rem;
+    /* small dot indicators flanking the clock */
+    .live-clock::before,
+    .live-clock::after {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #4ade80;
       animation: pulse 2s infinite ease-in-out;
+      flex-shrink: 0;
     }
 
     @keyframes pulse {
@@ -237,13 +230,6 @@
       font-size: 0.85rem;
       line-height: 1.55;
       color: #9eb0c4;
-    }
-
-    .privacy-banner i {
-      color: #4ade80;
-      font-size: 1.3rem;
-      margin-top: 0.1rem;
-      flex-shrink: 0;
     }
 
     .privacy-banner strong {
@@ -271,8 +257,8 @@
     }
 
     .profile-avatar {
-      width: 92px;
-      height: 92px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
       background: linear-gradient(135deg, #263445, #17212e);
       display: flex;
@@ -281,9 +267,14 @@
       margin-bottom: 1rem;
       border: 3px solid rgba(255, 255, 255, 0.12);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 28px rgba(80, 160, 255, 0.15);
-      font-size: 2.6rem;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
       color: #b9cadb;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .profile-avatar:hover {
@@ -295,7 +286,7 @@
       font-size: 1.55rem;
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.4rem;
       color: #f0f6fc;
     }
 
@@ -303,18 +294,11 @@
       font-size: 0.92rem;
       color: #8da1b5;
       font-weight: 450;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
       background: rgba(255, 255, 255, 0.04);
-      padding: 0.2rem 1rem;
+      padding: 0.25rem 1rem;
       border-radius: 40px;
       border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .profile-handle i {
-      font-size: 0.72rem;
-      color: #5f8ab0;
+      font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
     }
 
     /* ── group headers ────────────────────────────────────────── */
@@ -338,11 +322,6 @@
       padding: 0 0.3rem 0.7rem;
       margin-bottom: 0.5rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .group-header i {
-      font-size: 0.85rem;
-      color: #5f8ab0;
     }
 
     .group-header .group-count {
@@ -376,7 +355,7 @@
       background: rgba(18, 26, 35, 0.92);
       border: 1px solid #232f3c;
       border-radius: 1.2rem;
-      padding: 0.85rem 1.3rem;
+      padding: 0.9rem 1.3rem;
       text-decoration: none;
       color: #e9f0f8;
       font-size: 1rem;
@@ -386,6 +365,10 @@
       word-break: break-word;
       position: relative;
       overflow: hidden;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+      cursor: pointer;
     }
 
     .link-item::after {
@@ -400,15 +383,6 @@
 
     .link-item:hover::after {
       transform: translateX(120%);
-    }
-
-    .link-item i {
-      font-size: 1.35rem;
-      width: 1.8rem;
-      text-align: center;
-      color: #a0b8cf;
-      transition: color 0.18s ease, transform 0.18s ease;
-      flex-shrink: 0;
     }
 
     /* text wrapper for label + endpoint */
@@ -450,44 +424,26 @@
       color: #ffffff;
     }
 
-    .link-item:hover i {
-      transform: scale(1.1);
-    }
-
     /* featured link (explainer hub) */
     .link-item.featured {
       border-color: #3b5a7a;
       background: linear-gradient(135deg, rgba(28, 42, 58, 0.95), rgba(18, 26, 35, 0.95));
     }
 
-    /* brand colors on hover */
-    .link-item[data-brand="resume"]:hover i        { color: #fcd34d; }
-    .link-item[data-brand="github"]:hover i        { color: #ffffff; }
-    .link-item[data-brand="bluesky"]:hover i       { color: #4a9eff; }
-    .link-item[data-brand="facebook"]:hover i      { color: #1877f2; }
-    .link-item[data-brand="instagram"]:hover i     { color: #e4405f; }
-    .link-item[data-brand="substack"]:hover i      { color: #ff6719; }
-    .link-item[data-brand="threads"]:hover i       { color: #ffffff; }
-    .link-item[data-brand="tiktok"]:hover i        { color: #ffffff; }
-    .link-item[data-brand="youtube"]:hover i       { color: #ff0000; }
-    .link-item[data-brand="twitch"]:hover i        { color: #9146ff; }
-    .link-item[data-brand="explained"]:hover i     { color: #7dd3fc; }
-    .link-item[data-brand="infinite-depth"]:hover i{ color: #b48cff; }
-    .link-item[data-brand="zazzle"]:hover i        { color: #e6a020; }
-    .link-item[data-brand="silent"]:hover i        { color: #7dd3fc; }
-    .link-item[data-brand="dnslens"]:hover i       { color: #c084fc; }
-    .link-item[data-brand="globebin"]:hover i      { color: #f472b6; }
-    .link-item[data-brand="unbin"]:hover i         { color: #facc15; }
-    .link-item[data-brand="omnipost"]:hover i      { color: #34d399; }
+    /* Bitcoin expand chevron — text glyph, no icon font */
+    .link-chevron {
+      width: auto;
+      font-size: 0.75rem;
+      color: #64798e;
+      transition: transform 0.25s ease, color 0.18s ease;
+      flex-shrink: 0;
+      margin-left: auto;
+      line-height: 1;
+    }
 
-    /* support-specific brand colors */
-    .link-item[data-brand="ko-fi"]:hover i         { color: #ff5e5b; }
-    .link-item[data-brand="buymeacoffee"]:hover i  { color: #ffdd00; }
-    .link-item[data-brand="patreon"]:hover i       { color: #f96854; }
-    .link-item[data-brand="github-sponsors"]:hover i { color: #ea4aaa; }
-    .link-item[data-brand="paypal"]:hover i        { color: #0070ba; }
-    .link-item[data-brand="liberapay"]:hover i     { color: #f6c915; }
-    .link-item[data-brand="bitcoin"]:hover i       { color: #f7931a; }
+    .link-item:hover .link-chevron {
+      color: #9fc6e8;
+    }
 
     /* ── bitcoin panel ────────────────────────────────────────── */
     .bitcoin-panel {
@@ -554,7 +510,7 @@
       padding: 0 0.15rem;
     }
 
-    /* Full-address reveal toggle — small link-style button */
+    /* Full-address reveal toggle */
     .bitcoin-reveal {
       background: none;
       border: none;
@@ -579,14 +535,14 @@
       background: rgba(247, 147, 26, 0.1);
     }
 
-    .bitcoin-reveal i {
-      font-size: 0.65rem;
-      width: auto;
+    .bitcoin-reveal .reveal-chevron {
+      font-size: 0.6rem;
       color: inherit;
       transition: transform 0.18s ease;
+      line-height: 1;
     }
 
-    .bitcoin-reveal[aria-expanded="true"] i {
+    .bitcoin-reveal[aria-expanded="true"] .reveal-chevron {
       transform: rotate(180deg);
     }
 
@@ -599,7 +555,7 @@
       font-weight: 600;
       font-family: inherit;
       letter-spacing: 0.02em;
-      padding: 0.7rem 1rem;
+      padding: 0.75rem 1rem;
       border-radius: 0.7rem;
       cursor: pointer;
       display: flex;
@@ -622,21 +578,16 @@
       color: #86efac;
     }
 
-    .bitcoin-copy i {
-      font-size: 0.9rem;
-      width: auto;
-      color: inherit;
-    }
-
     /* bitcoin: URI link — secondary, subdued */
     .bitcoin-uri {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.6rem;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 0.7rem;
-      padding: 0.6rem 0.9rem;
+      padding: 0.65rem 0.9rem;
       text-decoration: none;
       color: #a0b8cf;
       font-size: 0.78rem;
@@ -650,29 +601,32 @@
       color: #d1e0ef;
     }
 
-    .bitcoin-uri i {
-      font-size: 0.9rem;
-      width: auto;
-      color: inherit;
-      flex-shrink: 0;
-    }
-
     /* warning line */
     .bitcoin-warning {
       display: flex;
       align-items: flex-start;
-      gap: 0.5rem;
+      gap: 0.55rem;
       font-size: 0.72rem;
       line-height: 1.55;
       color: #8a9cb0;
     }
 
-    .bitcoin-warning i {
+    /* Warning marker: a small text bullet instead of a triangle glyph */
+    .bitcoin-warning::before {
+      content: '!';
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      border: 1px solid #f0b34b;
       color: #f0b34b;
-      font-size: 0.8rem;
-      width: auto;
-      margin-top: 0.15rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      line-height: 1;
       flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
     .bitcoin-warning code {
@@ -693,16 +647,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.35rem;
+      gap: 0.6rem;
       padding-top: 0.9rem;
       margin-top: 1.2rem;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
       flex-wrap: wrap;
     }
 
-    .link-footer i {
-      color: #4a6e8c;
-      font-size: 0.78rem;
+    .link-footer .footer-sep {
+      opacity: 0.3;
     }
 
     /* ── easter egg ───────────────────────────────────────────── */
@@ -730,11 +683,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    .easter-egg i {
-      color: #f0b34b;
-      margin-right: 0.35rem;
-    }
-
     /* ── responsive ───────────────────────────────────────────── */
     @media (max-width: 520px) {
       .link-card {
@@ -746,9 +694,9 @@
         font-size: 0.8rem;
       } */
       .profile-avatar {
-        width: 78px;
-        height: 78px;
-        font-size: 2.2rem;
+        width: 74px;
+        height: 74px;
+        font-size: 1.9rem;
       }
       .profile-name {
         font-size: 1.35rem;
@@ -757,13 +705,8 @@
         font-size: 0.68rem;
       }
       .link-item {
-        padding: 0.75rem 1rem;
+        padding: 0.8rem 1.05rem;
         font-size: 0.94rem;
-        gap: 0.85rem;
-      }
-      .link-item i {
-        font-size: 1.2rem;
-        width: 1.6rem;
       }
       .link-endpoint {
         font-size: 0.63rem;
@@ -795,8 +738,7 @@
 
     @media (max-width: 380px) {
       .link-item {
-        padding: 0.7rem 0.9rem;
-        gap: 0.75rem;
+        padding: 0.75rem 0.95rem;
       }
       .link-label {
         font-size: 0.88rem;
@@ -814,7 +756,8 @@
     /* accessibility: respect reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .aurora span,
-      .live-clock i,
+      .live-clock::before,
+      .live-clock::after,
       .profile-avatar,
       .link-item,
       .link-item::after,
@@ -840,21 +783,17 @@
 
     <!-- ═══════════ LIVE CLOCK ═══════════ -->
     <div class="live-clock">
-      <i class="fas fa-circle"></i>
       <span id="clock">--:--:--</span>
-      <i class="fas fa-circle"></i>
     </div>
 
     <!-- ═══════════ PRIVACY NOTICE — TEMPORARILY REMOVED ═══════════
          Text below has been updated to reflect the zero-external-
          resource posture. When restored, it will be accurate.
     <div class="privacy-banner">
-      <i class="fas fa-shield-halved"></i>
       <div>
         <strong>Nothing here watches you.</strong>
         No trackers, no analytics, no cookies, no third‑party scripts.
-        Nothing on this page loads from a domain I don't control —
-        the icon font is self‑hosted and all code ships with the page.
+        Nothing on this page loads from a domain I don't control.
         No network requests leave this origin except the links you
         choose to click.
         <span class="subtle">The full accounting lives at privacy.jao.life.</span>
@@ -864,28 +803,21 @@
 
     <!-- ═══════════ PROFILE ═══════════ -->
     <div class="profile-section">
-      <div class="profile-avatar">
-        <i class="fas fa-user-astronaut"></i>
-      </div>
+      <div class="profile-avatar" aria-hidden="true">JO</div>
       <div class="profile-name">John Ogletree</div>
-      <div class="profile-handle">
-        <i class="fas fa-at"></i>
-        <span>john0ogletree</span>
-      </div>
+      <div class="profile-handle">@john0ogletree</div>
     </div>
 
     <!-- ═══════════ GROUP 1 · SOCIAL ═══════════ -->
     <div class="link-group">
       <div class="group-header">
-        <i class="fas fa-hashtag"></i>
         <span>Social</span>
         <span class="group-count">8</span>
       </div>
       <ul class="link-list">
         <!-- GitHub -->
         <li>
-          <a class="link-item" data-brand="github" href="https://github.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-github"></i>
+          <a class="link-item" href="https://github.com/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">GitHub</span>
               <span class="link-endpoint">github.com/john0ogletree</span>
@@ -894,8 +826,7 @@
         </li>
         <!-- Bluesky -->
         <li>
-          <a class="link-item" data-brand="bluesky" href="https://bsky.app/profile/john0ogletree.bsky.social" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-cloud"></i>
+          <a class="link-item" href="https://bsky.app/profile/john0ogletree.bsky.social" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Bluesky</span>
               <span class="link-endpoint">bsky.app/profile/john0ogletree.bsky.social</span>
@@ -904,8 +835,7 @@
         </li>
         <!-- Facebook -->
         <li>
-          <a class="link-item" data-brand="facebook" href="https://facebook.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-facebook-f"></i>
+          <a class="link-item" href="https://facebook.com/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Facebook</span>
               <span class="link-endpoint">facebook.com/john0ogletree</span>
@@ -914,8 +844,7 @@
         </li>
         <!-- Instagram -->
         <li>
-          <a class="link-item" data-brand="instagram" href="https://instagram.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-instagram"></i>
+          <a class="link-item" href="https://instagram.com/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Instagram</span>
               <span class="link-endpoint">instagram.com/john0ogletree</span>
@@ -924,8 +853,7 @@
         </li>
         <!-- Threads -->
         <li>
-          <a class="link-item" data-brand="threads" href="https://threads.net/@john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-threads"></i>
+          <a class="link-item" href="https://threads.net/@john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Threads</span>
               <span class="link-endpoint">threads.net/@john0ogletree</span>
@@ -934,8 +862,7 @@
         </li>
         <!-- TikTok -->
         <li>
-          <a class="link-item" data-brand="tiktok" href="https://tiktok.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-tiktok"></i>
+          <a class="link-item" href="https://tiktok.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">TikTok</span>
               <span class="link-endpoint">tiktok.com/@john0ogletree</span>
@@ -944,8 +871,7 @@
         </li>
         <!-- YouTube -->
         <li>
-          <a class="link-item" data-brand="youtube" href="https://youtube.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-youtube"></i>
+          <a class="link-item" href="https://youtube.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">YouTube</span>
               <span class="link-endpoint">youtube.com/@john0ogletree</span>
@@ -954,8 +880,7 @@
         </li>
         <!-- Twitch -->
         <li>
-          <a class="link-item" data-brand="twitch" href="https://twitch.tv/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-twitch"></i>
+          <a class="link-item" href="https://twitch.tv/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Twitch</span>
               <span class="link-endpoint">twitch.tv/john0ogletree</span>
@@ -968,15 +893,13 @@
     <!-- ═══════════ GROUP 2 · PROJECTS & TOOLS ═══════════ -->
     <div class="link-group">
       <div class="group-header">
-        <i class="fas fa-toolbox"></i>
         <span>Projects &amp; Tools</span>
         <span class="group-count">7</span>
       </div>
       <ul class="link-list">
         <!-- Explained — featured hub -->
         <li>
-          <a class="link-item featured" data-brand="explained" href="https://explained.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-lightbulb"></i>
+          <a class="link-item featured" href="https://explained.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Explained — topics I've broken down</span>
               <span class="link-endpoint">explained.jao.life</span>
@@ -985,8 +908,7 @@
         </li>
         <!-- Infinite-depth project -->
         <li>
-          <a class="link-item" data-brand="infinite-depth" href="https://infinite-depth.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-water"></i>
+          <a class="link-item" href="https://infinite-depth.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Infinite-depth project</span>
               <span class="link-endpoint">infinite-depth.jao.life</span>
@@ -995,8 +917,7 @@
         </li>
         <!-- Silent — privacy-focused ping tester -->
         <li>
-          <a class="link-item" data-brand="silent" href="https://silent.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-wifi"></i>
+          <a class="link-item" href="https://silent.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Silent — privacy-focused ping tester</span>
               <span class="link-endpoint">silent.jao.life</span>
@@ -1005,8 +926,7 @@
         </li>
         <!-- DNSLens — DNS checker -->
         <li>
-          <a class="link-item" data-brand="dnslens" href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-magnifying-glass-location"></i>
+          <a class="link-item" href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">DNSLens — DNS checker</span>
               <span class="link-endpoint">dnslens.jao.life</span>
@@ -1015,8 +935,7 @@
         </li>
         <!-- GlobeBin — language to binary converter -->
         <li>
-          <a class="link-item" data-brand="globebin" href="https://globebin.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-language"></i>
+          <a class="link-item" href="https://globebin.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">GlobeBin — language to binary converter</span>
               <span class="link-endpoint">globebin.jao.life</span>
@@ -1025,8 +944,7 @@
         </li>
         <!-- UnBin — binary to text converter -->
         <li>
-          <a class="link-item" data-brand="unbin" href="https://unbin.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-code"></i>
+          <a class="link-item" href="https://unbin.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">UnBin — binary to text converter</span>
               <span class="link-endpoint">unbin.jao.life</span>
@@ -1035,8 +953,7 @@
         </li>
         <!-- OmniPost — community-driven social media post creator -->
         <li>
-          <a class="link-item" data-brand="omnipost" href="https://omnipost.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-bullhorn"></i>
+          <a class="link-item" href="https://omnipost.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">OmniPost — community-driven social media post creator</span>
               <span class="link-endpoint">omnipost.jao.life</span>
@@ -1049,15 +966,13 @@
     <!-- ═══════════ GROUP 3 · WRITING & OTHER ═══════════ -->
     <div class="link-group">
       <div class="group-header">
-        <i class="fas fa-pen-fancy"></i>
         <span>Writing &amp; Other</span>
         <span class="group-count">3</span>
       </div>
       <ul class="link-list">
         <!-- Resume -->
         <li>
-          <a class="link-item" data-brand="resume" href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-file-lines"></i>
+          <a class="link-item" href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Resume</span>
               <span class="link-endpoint">resume.jao.life</span>
@@ -1066,8 +981,7 @@
         </li>
         <!-- Substack -->
         <li>
-          <a class="link-item" data-brand="substack" href="https://substack.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-newspaper"></i>
+          <a class="link-item" href="https://substack.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Substack</span>
               <span class="link-endpoint">substack.com/@john0ogletree</span>
@@ -1076,8 +990,7 @@
         </li>
         <!-- The Panopticon Eagle Button (Zazzle) -->
         <li>
-          <a class="link-item" data-brand="zazzle" href="https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-shirt"></i>
+          <a class="link-item" href="https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">The Panopticon Eagle Button</span>
               <span class="link-endpoint">zazzle.com/the_panopticon_eagle_button</span>
@@ -1090,15 +1003,13 @@
     <!-- ═══════════ GROUP 4 · SUPPORT (static, temporary) ═══════════ -->
     <div class="link-group">
       <div class="group-header">
-        <i class="fas fa-heart"></i>
         <span>Support</span>
         <span class="group-count">7</span>
       </div>
       <ul class="link-list">
         <!-- Ko-fi -->
         <li>
-          <a class="link-item" data-brand="ko-fi" href="https://ko-fi.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-mug-hot"></i>
+          <a class="link-item" href="https://ko-fi.com/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Ko-fi</span>
               <span class="link-endpoint">ko-fi.com/john0ogletree</span>
@@ -1107,8 +1018,7 @@
         </li>
         <!-- Buy Me a Coffee -->
         <li>
-          <a class="link-item" data-brand="buymeacoffee" href="https://buymeacoffee.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-coffee"></i>
+          <a class="link-item" href="https://buymeacoffee.com/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Buy Me a Coffee</span>
               <span class="link-endpoint">buymeacoffee.com/john0ogletree</span>
@@ -1117,8 +1027,7 @@
         </li>
         <!-- Patreon -->
         <li>
-          <a class="link-item" data-brand="patreon" href="https://patreon.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-patreon"></i>
+          <a class="link-item" href="https://patreon.com/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Patreon</span>
               <span class="link-endpoint">patreon.com/john0ogletree</span>
@@ -1127,8 +1036,7 @@
         </li>
         <!-- GitHub Sponsors -->
         <li>
-          <a class="link-item" data-brand="github-sponsors" href="https://github.com/sponsors/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-heart"></i>
+          <a class="link-item" href="https://github.com/sponsors/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">GitHub Sponsors</span>
               <span class="link-endpoint">github.com/sponsors/john0ogletree</span>
@@ -1137,8 +1045,7 @@
         </li>
         <!-- PayPal -->
         <li>
-          <a class="link-item" data-brand="paypal" href="https://paypal.me/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-paypal"></i>
+          <a class="link-item" href="https://paypal.me/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">PayPal</span>
               <span class="link-endpoint">paypal.me/john0ogletree</span>
@@ -1147,8 +1054,7 @@
         </li>
         <!-- Liberapay -->
         <li>
-          <a class="link-item" data-brand="liberapay" href="https://liberapay.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-            <i class="fa-solid fa-hand-holding-heart"></i>
+          <a class="link-item" href="https://liberapay.com/john0ogletree" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
               <span class="link-label">Liberapay</span>
               <span class="link-endpoint">liberapay.com/john0ogletree</span>
@@ -1158,28 +1064,25 @@
         <!-- Bitcoin — expands to panel; address shown first-8 / last-8
              by default, full on reveal via the toggle. -->
         <li>
-          <button class="link-item" data-brand="bitcoin" type="button" id="bitcoinToggle" aria-expanded="false" aria-controls="bitcoinPanel" style="width: 100%; text-align: left; font-family: inherit; cursor: pointer;">
-            <i class="fa-brands fa-bitcoin"></i>
+          <button class="link-item" type="button" id="bitcoinToggle" aria-expanded="false" aria-controls="bitcoinPanel">
             <div class="link-text">
               <span class="link-label">Bitcoin</span>
               <span class="link-endpoint">bc1qhwes…3afmgq5</span>
             </div>
-            <i class="fa-solid fa-chevron-down" id="bitcoinChevron" style="width: auto; font-size: 0.85rem; color: #64798e; transition: transform 0.25s ease;"></i>
+            <span class="link-chevron" id="bitcoinChevron" aria-hidden="true">▼</span>
           </button>
 
           <div class="bitcoin-panel" id="bitcoinPanel">
             <!-- Address display: first-8 / last-8 by default; full on demand -->
             <div class="bitcoin-address" id="bitcoinAddress">
               <span class="addr-label">Address</span>
-              <span class="addr-value" id="bitcoinAddrValue">
-                bc1qhwes<span class="addr-ellipsis">…</span>3afmgq5
-              </span>
+              <span class="addr-value" id="bitcoinAddrValue">bc1qhwes<span class="addr-ellipsis">…</span>3afmgq5</span>
               <button class="bitcoin-reveal" type="button" id="bitcoinReveal"
                       aria-expanded="false" aria-controls="bitcoinAddrValue"
                       data-full="bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5"
                       data-short="bc1qhwes…3afmgq5">
-                <i class="fa-solid fa-chevron-down"></i>
                 <span id="bitcoinRevealLabel">Show full</span>
+                <span class="reveal-chevron" aria-hidden="true">▼</span>
               </button>
             </div>
 
@@ -1187,18 +1090,15 @@
             <button class="bitcoin-copy" type="button" id="bitcoinCopy"
                     data-address="bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5"
                     aria-label="Copy full Bitcoin address to clipboard">
-              <i class="fa-regular fa-copy"></i>
               <span>Copy full address</span>
             </button>
 
             <!-- bitcoin: URI link — secondary, subdued -->
             <a class="bitcoin-uri" href="bitcoin:bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5" rel="noopener noreferrer">
-              <i class="fa-brands fa-bitcoin"></i>
               <span>Open in wallet (bitcoin: URI)</span>
             </a>
 
             <div class="bitcoin-warning">
-              <i class="fa-solid fa-triangle-exclamation"></i>
               <span>
                 Bitcoin transfers are <strong>irreversible</strong>. After copying,
                 verify the full address in your wallet before sending — check that it starts with
@@ -1215,16 +1115,15 @@
 
     <!-- ═══════════ FOOTER ═══════════ -->
     <div class="link-footer">
-      <i class="fa-regular fa-circle-check"></i>
       <span>link-in-bio · official</span>
-      <span style="opacity: 0.3; margin: 0 0.2rem;">|</span>
-      <span><i class="fas fa-shield-halved" style="font-size: 0.68rem; margin-right: 0.15rem;"></i>privacy-focused</span>
+      <span class="footer-sep">|</span>
+      <span>privacy-focused</span>
     </div>
   </div>
 
   <!-- ═══════════ EASTER EGG ═══════════ -->
   <div class="easter-egg" id="easterEgg">
-    <i class="fas fa-star"></i> You found the hidden message. Built with care, no trackers. ✨
+    You found the hidden message. Built with care, no trackers. ✨
   </div>
 
   <!-- All JavaScript lives in app.js (same origin). No inline JS. -->
