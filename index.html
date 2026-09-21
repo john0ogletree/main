@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
   <title>John Ogletree · Links</title>
 
   <!--
@@ -27,15 +28,19 @@
     • AI CHECKER has been removed from Projects & Tools.
     • EXPLAINED (explained.jao.life) added as the featured link at
       the top of Projects & Tools.
-    • BITCOIN added as a seventh Support option with three access
-      methods: plain-text display, bitcoin: URI link with warning,
-      and copy-to-clipboard. QR code approach was considered and
-      removed per preference.
+    • BITCOIN added as a seventh Support option. The address is
+      shown first-8 / last-8 by default; a "show full address"
+      toggle reveals the entire string on demand. Full address is
+      otherwise never rendered as visible page text — it lives in
+      the copy button's data-address attribute and the bitcoin:
+      URI href. QR code approach was considered and removed per
+      preference.
     ═══════════════════════════════════════════════════════════════
   -->
 
   <!-- Font Awesome (icons only — temporary until custom icons) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        referrerpolicy="no-referrer">
 
   <style>
     /* ── reset & base ─────────────────────────────────────────── */
@@ -466,54 +471,108 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .bitcoin-panel .panel-row {
+    /* Address display: first-8 / last-8 by default; full on reveal. */
+    .bitcoin-address {
       display: flex;
       align-items: center;
-      gap: 0.7rem;
-    }
-
-    /* address display — truncated visually, full value in clipboard */
-    .bitcoin-address {
-      font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
-      font-size: 0.78rem;
-      color: #c8d8e8;
+      gap: 0.6rem;
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid #2a3644;
       border-radius: 0.7rem;
-      padding: 0.55rem 0.8rem;
-      flex: 1;
-      min-width: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      user-select: all;
-      cursor: text;
+      padding: 0.6rem 0.9rem;
+      transition: border-color 0.18s ease;
     }
 
-    /* copy button */
+    .bitcoin-address.revealed {
+      border-color: rgba(247, 147, 26, 0.4);
+    }
+
+    .bitcoin-address .addr-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5f7388;
+      flex-shrink: 0;
+    }
+
+    .bitcoin-address .addr-value {
+      font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      font-size: 0.88rem;
+      color: #e4eef8;
+      letter-spacing: 0.02em;
+      flex: 1;
+      text-align: center;
+      user-select: none;
+      -webkit-user-select: none;
+      word-break: break-all;
+      line-height: 1.4;
+    }
+
+    .bitcoin-address .addr-value .addr-ellipsis {
+      color: #5f7388;
+      padding: 0 0.15rem;
+    }
+
+    /* Full-address reveal toggle — small link-style button */
+    .bitcoin-reveal {
+      background: none;
+      border: none;
+      color: #8a9cb0;
+      font-family: inherit;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.35rem;
+      border-radius: 0.35rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-shrink: 0;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+
+    .bitcoin-reveal:hover {
+      color: #f7b45a;
+      background: rgba(247, 147, 26, 0.1);
+    }
+
+    .bitcoin-reveal i {
+      font-size: 0.65rem;
+      width: auto;
+      color: inherit;
+      transition: transform 0.18s ease;
+    }
+
+    .bitcoin-reveal[aria-expanded="true"] i {
+      transform: rotate(180deg);
+    }
+
+    /* Copy button — the primary action */
     .bitcoin-copy {
-      background: rgba(80, 160, 255, 0.12);
-      border: 1px solid rgba(80, 160, 255, 0.4);
-      color: #9fc6e8;
-      font-size: 0.78rem;
+      background: rgba(247, 147, 26, 0.14);
+      border: 1px solid rgba(247, 147, 26, 0.5);
+      color: #f7b45a;
+      font-size: 0.82rem;
       font-weight: 600;
       font-family: inherit;
       letter-spacing: 0.02em;
-      padding: 0.55rem 0.9rem;
+      padding: 0.7rem 1rem;
       border-radius: 0.7rem;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
-      flex-shrink: 0;
-      min-width: 5.2rem;
       justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      width: 100%;
     }
 
     .bitcoin-copy:hover {
-      background: rgba(80, 160, 255, 0.22);
-      border-color: rgba(80, 160, 255, 0.7);
+      background: rgba(247, 147, 26, 0.24);
+      border-color: rgba(247, 147, 26, 0.8);
       transform: translateY(-1px);
     }
 
@@ -524,35 +583,35 @@
     }
 
     .bitcoin-copy i {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       width: auto;
       color: inherit;
     }
 
-    /* bitcoin: URI link */
+    /* bitcoin: URI link — secondary, subdued */
     .bitcoin-uri {
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      background: rgba(247, 147, 26, 0.08);
-      border: 1px solid rgba(247, 147, 26, 0.28);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 0.7rem;
       padding: 0.6rem 0.9rem;
       text-decoration: none;
-      color: #f7b45a;
-      font-size: 0.82rem;
+      color: #a0b8cf;
+      font-size: 0.78rem;
       font-weight: 500;
-      transition: background 0.18s ease, border-color 0.18s ease;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
     }
 
     .bitcoin-uri:hover {
-      background: rgba(247, 147, 26, 0.16);
-      border-color: rgba(247, 147, 26, 0.55);
-      color: #fcd34d;
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.16);
+      color: #d1e0ef;
     }
 
     .bitcoin-uri i {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       width: auto;
       color: inherit;
       flex-shrink: 0;
@@ -564,7 +623,7 @@
       align-items: flex-start;
       gap: 0.5rem;
       font-size: 0.72rem;
-      line-height: 1.5;
+      line-height: 1.55;
       color: #8a9cb0;
     }
 
@@ -572,8 +631,17 @@
       color: #f0b34b;
       font-size: 0.8rem;
       width: auto;
-      margin-top: 0.1rem;
+      margin-top: 0.15rem;
       flex-shrink: 0;
+    }
+
+    .bitcoin-warning code {
+      font-family: 'SFMono-Regular', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+      font-size: 0.7rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.05rem 0.3rem;
+      border-radius: 0.25rem;
+      color: #c8d8e8;
     }
 
     /* ── footer ───────────────────────────────────────────────── */
@@ -666,14 +734,22 @@
       .bitcoin-panel {
         padding: 0.95rem 1rem;
       }
-      .bitcoin-panel .panel-row {
-        flex-wrap: wrap;
-      }
       .bitcoin-address {
-        flex-basis: 100%;
+        flex-wrap: wrap;
+        gap: 0.4rem 0.6rem;
       }
-      .bitcoin-copy {
-        flex: 1;
+      .bitcoin-address .addr-value {
+        flex-basis: 100%;
+        text-align: left;
+        font-size: 0.82rem;
+        order: 2;
+      }
+      .bitcoin-address .addr-label {
+        order: 1;
+      }
+      .bitcoin-address .bitcoin-reveal {
+        order: 3;
+        margin-left: auto;
       }
     }
 
@@ -1037,28 +1113,43 @@
             </div>
           </a>
         </li>
-        <!-- Bitcoin — expands to panel with plain-text, URI, and copy -->
+        <!-- Bitcoin — expands to panel; address shown first-8 / last-8
+             by default, full on reveal via the toggle. -->
         <li>
           <button class="link-item" data-brand="bitcoin" type="button" id="bitcoinToggle" aria-expanded="false" aria-controls="bitcoinPanel" style="width: 100%; text-align: left; font-family: inherit; cursor: pointer;">
             <i class="fa-brands fa-bitcoin"></i>
             <div class="link-text">
               <span class="link-label">Bitcoin</span>
-              <span class="link-endpoint">bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5</span>
+              <span class="link-endpoint">bc1qhwes…3afmgq5</span>
             </div>
             <i class="fa-solid fa-chevron-down" id="bitcoinChevron" style="width: auto; font-size: 0.85rem; color: #64798e; transition: transform 0.25s ease;"></i>
           </button>
 
           <div class="bitcoin-panel" id="bitcoinPanel">
-            <!-- Plain-text address + copy button -->
-            <div class="panel-row">
-              <span class="bitcoin-address" id="bitcoinAddress" title="bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5">bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5</span>
-              <button class="bitcoin-copy" type="button" id="bitcoinCopy" aria-label="Copy Bitcoin address to clipboard">
-                <i class="fa-regular fa-copy"></i>
-                <span>Copy</span>
+            <!-- Address display: first-8 / last-8 by default; full on demand -->
+            <div class="bitcoin-address" id="bitcoinAddress">
+              <span class="addr-label">Address</span>
+              <span class="addr-value" id="bitcoinAddrValue">
+                bc1qhwes<span class="addr-ellipsis">…</span>3afmgq5
+              </span>
+              <button class="bitcoin-reveal" type="button" id="bitcoinReveal"
+                      aria-expanded="false" aria-controls="bitcoinAddrValue"
+                      data-full="bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5"
+                      data-short="bc1qhwes…3afmgq5">
+                <i class="fa-solid fa-chevron-down"></i>
+                <span id="bitcoinRevealLabel">Show full</span>
               </button>
             </div>
 
-            <!-- bitcoin: URI link with warning -->
+            <!-- Copy button — primary action -->
+            <button class="bitcoin-copy" type="button" id="bitcoinCopy"
+                    data-address="bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5"
+                    aria-label="Copy full Bitcoin address to clipboard">
+              <i class="fa-regular fa-copy"></i>
+              <span>Copy full address</span>
+            </button>
+
+            <!-- bitcoin: URI link — secondary, subdued -->
             <a class="bitcoin-uri" href="bitcoin:bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5" rel="noopener noreferrer">
               <i class="fa-brands fa-bitcoin"></i>
               <span>Open in wallet (bitcoin: URI)</span>
@@ -1066,7 +1157,14 @@
 
             <div class="bitcoin-warning">
               <i class="fa-solid fa-triangle-exclamation"></i>
-              <span>This opens only if your browser or OS has a wallet registered for the <code>bitcoin:</code> scheme. If nothing happens, copy the address instead. Bitcoin transfers are irreversible — always verify the full address in your wallet before sending.</span>
+              <span>
+                Bitcoin transfers are <strong>irreversible</strong>. After copying,
+                verify the full address in your wallet before sending — check that it starts with
+                <code>bc1qhwes</code> and ends with <code>3afmgq5</code>, or use
+                <strong>Show full</strong> above to read it in full.
+                The <code>bitcoin:</code> link only works if your browser or OS has a wallet
+                registered for that scheme; if nothing happens, use the copy button.
+              </span>
             </div>
           </div>
         </li>
@@ -1140,13 +1238,15 @@
       }
     })();
 
-    // ── Bitcoin panel: toggle + copy-to-clipboard ──
+    // ── Bitcoin panel: toggle, reveal-full-address, copy-to-clipboard ──
     (function () {
-      const BITCOIN_ADDRESS = 'bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5';
-
       const toggleBtn = document.getElementById('bitcoinToggle');
       const panel = document.getElementById('bitcoinPanel');
       const chevron = document.getElementById('bitcoinChevron');
+      const addressBox = document.getElementById('bitcoinAddress');
+      const addrValue = document.getElementById('bitcoinAddrValue');
+      const revealBtn = document.getElementById('bitcoinReveal');
+      const revealLabel = document.getElementById('bitcoinRevealLabel');
       const copyBtn = document.getElementById('bitcoinCopy');
 
       if (!toggleBtn || !panel) return;
@@ -1158,17 +1258,36 @@
         if (chevron) chevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
       });
 
+      // ── show-full-address toggle ──
+      if (revealBtn && addrValue) {
+        revealBtn.addEventListener('click', function () {
+          const isRevealed = revealBtn.getAttribute('aria-expanded') === 'true';
+          if (isRevealed) {
+            addrValue.textContent = revealBtn.getAttribute('data-short');
+            revealBtn.setAttribute('aria-expanded', 'false');
+            if (revealLabel) revealLabel.textContent = 'Show full';
+            if (addressBox) addressBox.classList.remove('revealed');
+          } else {
+            addrValue.textContent = revealBtn.getAttribute('data-full');
+            revealBtn.setAttribute('aria-expanded', 'true');
+            if (revealLabel) revealLabel.textContent = 'Hide';
+            if (addressBox) addressBox.classList.add('revealed');
+          }
+        });
+      }
+
       // ── copy-to-clipboard (full address only lands in the clipboard) ──
       if (copyBtn) {
+        const fullAddress = copyBtn.getAttribute('data-address');
         copyBtn.addEventListener('click', async function () {
           const original = copyBtn.innerHTML;
           try {
             if (navigator.clipboard && window.isSecureContext) {
-              await navigator.clipboard.writeText(BITCOIN_ADDRESS);
+              await navigator.clipboard.writeText(fullAddress);
             } else {
               // fallback for non-secure contexts
               const ta = document.createElement('textarea');
-              ta.value = BITCOIN_ADDRESS;
+              ta.value = fullAddress;
               ta.setAttribute('readonly', '');
               ta.style.position = 'absolute';
               ta.style.left = '-9999px';
@@ -1178,16 +1297,16 @@
               document.body.removeChild(ta);
             }
             copyBtn.classList.add('copied');
-            copyBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied</span>';
+            copyBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Copied — verify in wallet</span>';
             setTimeout(function () {
               copyBtn.classList.remove('copied');
               copyBtn.innerHTML = original;
-            }, 1800);
+            }, 2600);
           } catch (err) {
-            copyBtn.innerHTML = '<i class="fa-solid fa-xmark"></i><span>Failed</span>';
+            copyBtn.innerHTML = '<i class="fa-solid fa-xmark"></i><span>Copy failed — select manually</span>';
             setTimeout(function () {
               copyBtn.innerHTML = original;
-            }, 1800);
+            }, 2600);
           }
         });
       }
