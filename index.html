@@ -14,6 +14,8 @@
       The only files are this HTML document and ./app.js, both
       served from this origin.
     • All links open in a new tab with rel="noopener noreferrer".
+      Links that point to third-party destinations also carry
+      referrerpolicy="no-referrer" for defense in depth.
     • No infinite scroll. Just a clean, static page.
     • Surprise features: animated aurora, live clock, easter egg.
     • Every link shows its full endpoint URL underneath the label.
@@ -22,17 +24,23 @@
       script has been removed entirely, and all references to it
       have been stripped from this file.
     • PRIVACY BANNER is temporarily hidden. CSS is kept (commented
-      below) so it can be restored without rewriting styles. The
-      banner text has been rewritten to reflect the zero-external-
-      resource posture.
+      below) so it can be restored without rewriting styles.
     • AI CHECKER has been removed from Projects & Tools.
     • EXPLAINED (explained.jao.life) added as the featured link at
       the top of Projects & Tools.
+    • NEWS (news.jao.life) added to Projects & Tools, after
+      Explained. News is a server-side RSS aggregator: it fetches
+      feeds at the edge, so visitor IPs never reach the source
+      publications, and snippet links go direct to the publisher
+      with no redirector. The label reflects that.
     • BITCOIN added as a seventh Support option. The address is
       shown first-8 / last-8 by default; a "show full address"
       toggle reveals the entire string on demand.
     • ALL ICONS REMOVED. No Font Awesome, no inline SVG, no icon
-      font. The page is now purely typographic.
+      font. The page is purely typographic.
+    • Avatar is a bare text node ("JO"), not an image, icon, or
+      injected pseudo-element. CSS defensively overrides any
+      background-image or content that might be set elsewhere.
     • CSP is set via meta tag below AND should be set as an HTTP
       header by the host (headers take precedence).
     ═══════════════════════════════════════════════════════════════
@@ -256,11 +264,13 @@
       margin-bottom: 2rem;
     }
 
+    /* Avatar: a bare text node ("JO"). Defensive CSS below cancels
+       any background-image or content that might be injected from
+       another rule or extension. */
     .profile-avatar {
       width: 88px;
       height: 88px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #263445, #17212e);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -275,6 +285,18 @@
       cursor: pointer;
       user-select: none;
       -webkit-user-select: none;
+      background-color: #1b2531;
+      background-image: linear-gradient(135deg, #263445, #17212e);
+      content: normal;
+    }
+
+    .profile-avatar::before,
+    .profile-avatar::after {
+      content: none;
+    }
+
+    .profile-avatar img {
+      display: none !important;
     }
 
     .profile-avatar:hover {
@@ -803,7 +825,7 @@
 
     <!-- ═══════════ PROFILE ═══════════ -->
     <div class="profile-section">
-      <div class="profile-avatar" aria-hidden="true">JO</div>
+      <div class="profile-avatar">JO</div>
       <div class="profile-name">John Ogletree</div>
       <div class="profile-handle">@john0ogletree</div>
     </div>
@@ -894,7 +916,7 @@
     <div class="link-group">
       <div class="group-header">
         <span>Projects &amp; Tools</span>
-        <span class="group-count">7</span>
+        <span class="group-count">8</span>
       </div>
       <ul class="link-list">
         <!-- Explained — featured hub -->
@@ -903,6 +925,15 @@
             <div class="link-text">
               <span class="link-label">Explained — topics I've broken down</span>
               <span class="link-endpoint">explained.jao.life</span>
+            </div>
+          </a>
+        </li>
+        <!-- News — server-side RSS aggregator, no visitor tracking -->
+        <li>
+          <a class="link-item" href="https://news.jao.life/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">
+            <div class="link-text">
+              <span class="link-label">News — RSS aggregator, all feeds in one place</span>
+              <span class="link-endpoint">news.jao.life</span>
             </div>
           </a>
         </li>
