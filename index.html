@@ -14,10 +14,8 @@
       The only files are this HTML document and ./app.js, both
       served from this origin.
     • All links open in a new tab with rel="noopener noreferrer".
-      Links that point to third-party destinations also carry
-      referrerpolicy="no-referrer" for defense in depth.
     • No infinite scroll. Just a clean, static page.
-    • Surprise features: animated aurora, live clock, easter egg.
+    • Animated aurora and live clock.
     • Every link shows its full endpoint URL underneath the label.
     • Links are grouped into clear categories.
     • SUPPORT is static HTML. The old external support.jao.life
@@ -29,10 +27,8 @@
     • EXPLAINED (explained.jao.life) added as the featured link at
       the top of Projects & Tools.
     • NEWS (news.jao.life) added to Projects & Tools, after
-      Explained. News is a server-side RSS aggregator: it fetches
-      feeds at the edge, so visitor IPs never reach the source
-      publications, and snippet links go direct to the publisher
-      with no redirector. The label reflects that.
+      Explained.
+    • DISCORD, MASTODON, and X (TWITTER) added to Social.
     • BITCOIN added as a seventh Support option. The address is
       shown first-8 / last-8 by default; a "show full address"
       toggle reveals the entire string on demand.
@@ -41,6 +37,9 @@
     • Avatar is a bare text node ("JO"), not an image, icon, or
       injected pseudo-element. CSS defensively overrides any
       background-image or content that might be set elsewhere.
+    • EASTER EGG removed. The keyboard listener ("jjj") and the
+      avatar 5-tap listener are gone, along with the toast element
+      and its CSS.
     • CSP is set via meta tag below AND should be set as an HTTP
       header by the host (headers take precedence).
     ═══════════════════════════════════════════════════════════════
@@ -282,7 +281,6 @@
       letter-spacing: -0.02em;
       color: #b9cadb;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
       user-select: none;
       -webkit-user-select: none;
       background-color: #1b2531;
@@ -680,31 +678,6 @@
       opacity: 0.3;
     }
 
-    /* ── easter egg ───────────────────────────────────────────── */
-    .easter-egg {
-      position: fixed;
-      bottom: 1.2rem;
-      left: 50%;
-      transform: translateX(-50%) translateY(140%);
-      background: linear-gradient(135deg, #1e2b3a, #15202b);
-      color: #b9d4f0;
-      padding: 0.9rem 1.6rem;
-      border-radius: 2rem;
-      font-size: 0.85rem;
-      border: 1px solid #3a5570;
-      box-shadow: 0 18px 36px -12px black;
-      z-index: 999;
-      transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1);
-      pointer-events: none;
-      max-width: 90vw;
-      text-align: center;
-      letter-spacing: 0.02em;
-    }
-
-    .easter-egg.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
     /* ── responsive ───────────────────────────────────────────── */
     @media (max-width: 520px) {
       .link-card {
@@ -783,7 +756,6 @@
       .profile-avatar,
       .link-item,
       .link-item::after,
-      .easter-egg,
       .bitcoin-panel {
         animation: none !important;
         transition: none !important;
@@ -834,7 +806,7 @@
     <div class="link-group">
       <div class="group-header">
         <span>Social</span>
-        <span class="group-count">8</span>
+        <span class="group-count">11</span>
       </div>
       <ul class="link-list">
         <!-- GitHub -->
@@ -852,6 +824,33 @@
             <div class="link-text">
               <span class="link-label">Bluesky</span>
               <span class="link-endpoint">bsky.app/profile/john0ogletree.bsky.social</span>
+            </div>
+          </a>
+        </li>
+        <!-- Mastodon -->
+        <li>
+          <a class="link-item" href="https://mastodon.social/@john0ogletree" target="_blank" rel="noopener noreferrer">
+            <div class="link-text">
+              <span class="link-label">Mastodon</span>
+              <span class="link-endpoint">mastodon.social/@john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- X (Twitter) -->
+        <li>
+          <a class="link-item" href="https://x.com/john0ogletree" target="_blank" rel="noopener noreferrer">
+            <div class="link-text">
+              <span class="link-label">X (Twitter)</span>
+              <span class="link-endpoint">x.com/john0ogletree</span>
+            </div>
+          </a>
+        </li>
+        <!-- Discord -->
+        <li>
+          <a class="link-item" href="https://discord.gg/zKdgzzRyzQ" target="_blank" rel="noopener noreferrer">
+            <div class="link-text">
+              <span class="link-label">Discord</span>
+              <span class="link-endpoint">discord.gg/zKdgzzRyzQ</span>
             </div>
           </a>
         </li>
@@ -928,11 +927,11 @@
             </div>
           </a>
         </li>
-        <!-- News — server-side RSS aggregator, no visitor tracking -->
+        <!-- News -->
         <li>
-          <a class="link-item" href="https://news.jao.life/" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">
+          <a class="link-item" href="https://news.jao.life/" target="_blank" rel="noopener noreferrer">
             <div class="link-text">
-              <span class="link-label">News — RSS aggregator, all feeds in one place</span>
+              <span class="link-label">News</span>
               <span class="link-endpoint">news.jao.life</span>
             </div>
           </a>
@@ -1150,11 +1149,6 @@
       <span class="footer-sep">|</span>
       <span>privacy-focused</span>
     </div>
-  </div>
-
-  <!-- ═══════════ EASTER EGG ═══════════ -->
-  <div class="easter-egg" id="easterEgg">
-    You found the hidden message. Built with care, no trackers. ✨
   </div>
 
   <!-- All JavaScript lives in app.js (same origin). No inline JS. -->
