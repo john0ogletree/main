@@ -21,13 +21,33 @@
     ───────────────
     No sessionStorage. No cookies. No localStorage.
 
-    SOCIALS
-    ───────
-    Twelve platforms: Bluesky, Cara, Discord, Facebook,
-    Instagram, Lemon8, Parler, Patreon, Threads, TikTok, X,
-    YouTube.
+    SUPPORT IS NOW AN OVERLAY
+    ─────────────────────────
+    The Support section is no longer inline. It is provided by
+    support.jao.life/support.js, which mounts a full-width bar
+    at the bottom of the viewport and opens a modal on click.
+    That file is the single source of truth for the support
+    content and is reused across every jao.life subdomain.
 
-    Zero external resources. Same CSP. Same single file.
+    Page sections, in order:
+      • Social     (12 items)
+      • Projects   (8 items)
+      • Writing    (3 items)
+      — footer —
+
+    EXTERNAL RESOURCES
+    ──────────────────
+    The only external resource on this page is support.js,
+    loaded from support.jao.life — a first-party subdomain.
+    It is loaded WITHOUT Subresource Integrity, which means the
+    browser will execute whatever that origin serves at request
+    time. The trust boundary is the hosting configuration of
+    support.jao.life itself. If that subdomain is compromised,
+    so is every page that loads this script.
+
+    All other links point to their destinations; nothing else
+    is fetched from a second origin during page load.
+
     ═══════════════════════════════════════════════════════════════
   -->
 
@@ -35,7 +55,7 @@
         content="default-src 'none';
                  style-src 'self' 'unsafe-inline';
                  font-src 'none';
-                 script-src 'self' 'unsafe-inline';
+                 script-src 'self' 'unsafe-inline' https://support.jao.life;
                  img-src 'self' data:;
                  connect-src 'none';
                  form-action 'none';
@@ -83,7 +103,8 @@
       font-size: var(--base-size);
       line-height: 1.55;
       letter-spacing: 0.02em;
-      padding: 3.5rem 1.25rem 5rem;
+      /* bottom padding leaves room for the fixed support bar */
+      padding: 3.5rem 1.25rem 6rem;
       overflow-x: hidden;
       position: relative;
       -webkit-font-smoothing: antialiased;
@@ -363,189 +384,6 @@
       transform: translateX(2px);
     }
 
-    /* ── bitcoin panel ────────────────────────────────────────── */
-    .btc {
-      display: none;
-      margin: 6px 0 6px 3.2ch;
-      padding: 16px 16px 14px;
-      background:
-        linear-gradient(180deg,
-          rgba(255,216,154,0.06) 0%,
-          rgba(255,216,154,0.015) 100%);
-      border: 1px solid var(--phosphor-faint);
-      border-radius: 4px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,232,180,0.14),
-        0 2px 6px rgba(0,0,0,0.55);
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .btc.open { display: flex; }
-
-    .btc-addr-row {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 0.84rem;
-    }
-
-    .btc-addr-label {
-      color: var(--phosphor-faint);
-      flex-shrink: 0;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-    }
-
-    .btc-addr {
-      color: var(--phosphor-bright);
-      font-family: inherit;
-      user-select: none;
-      -webkit-user-select: none;
-      word-break: break-all;
-      flex: 1;
-      min-width: 0;
-      letter-spacing: 0.02em;
-    }
-
-    .btc-addr .ell {
-      color: var(--phosphor-faint);
-    }
-
-    .btc-reveal {
-      background: none;
-      border: none;
-      padding: 0;
-      color: var(--phosphor);
-      font-family: inherit;
-      font-size: 0.78rem;
-      cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      flex-shrink: 0;
-      letter-spacing: 0.06em;
-      text-transform: lowercase;
-    }
-
-    .btc-reveal:hover {
-      color: var(--phosphor-bright);
-    }
-
-    .btc-reveal:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--phosphor);
-      border-radius: 2px;
-    }
-
-    .btc-copy {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 9px 18px;
-      background: linear-gradient(
-        180deg,
-        #3a3226 0%,
-        #2a2518 45%,
-        #1c1810 55%,
-        #241e14 100%
-      );
-      border: 1px solid var(--phosphor-dim);
-      border-radius: 20px;
-      color: var(--phosphor-bright);
-      font-family: inherit;
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow:
-        inset 0 1px 0 rgba(255,232,180,0.3),
-        inset 0 -1px 0 rgba(0,0,0,0.6),
-        0 2px 4px rgba(0,0,0,0.55);
-      transition: filter 120ms ease;
-      align-self: flex-start;
-    }
-
-    .btc-copy:hover {
-      filter: brightness(1.25);
-    }
-
-    .btc-copy:active {
-      filter: brightness(0.9);
-      box-shadow:
-        inset 0 2px 4px rgba(0,0,0,0.6),
-        0 1px 2px rgba(0,0,0,0.5);
-    }
-
-    .btc-copy:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--phosphor);
-    }
-
-    .btc-copy.copied {
-      border-color: var(--phosphor-bright);
-      color: #fff;
-    }
-
-    .btc-uri {
-      display: inline-block;
-      color: var(--phosphor);
-      font-size: 0.82rem;
-      text-decoration: none;
-      align-self: flex-start;
-      border-bottom: 1px dashed var(--phosphor-faint);
-      padding-bottom: 1px;
-      transition: color 120ms ease, border-color 120ms ease;
-    }
-
-    .btc-uri:hover {
-      color: var(--phosphor-bright);
-      border-bottom-color: var(--phosphor);
-    }
-
-    .btc-uri:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--phosphor);
-      border-radius: 2px;
-    }
-
-    .btc-warn {
-      display: flex;
-      gap: 10px;
-      padding: 10px 12px;
-      border: 1px solid var(--phosphor-faint);
-      border-left: 3px solid var(--phosphor);
-      background: rgba(255,216,154,0.05);
-      border-radius: 0 3px 3px 0;
-      font-size: 0.78rem;
-      line-height: 1.65;
-      color: var(--phosphor-dim);
-    }
-
-    .btc-warn::before {
-      content: '!';
-      color: var(--phosphor-bright);
-      flex-shrink: 0;
-      font-weight: 700;
-    }
-
-    .btc-warn strong {
-      color: var(--phosphor);
-      font-weight: 700;
-    }
-
-    .btc-warn code {
-      font-family: inherit;
-      font-size: 0.76rem;
-      padding: 1px 5px;
-      background: rgba(255,216,154,0.1);
-      border: 1px solid var(--phosphor-faint);
-      border-radius: 2px;
-      color: var(--phosphor-bright);
-    }
-
     /* ── footer ───────────────────────────────────────────────── */
     .foot {
       margin-top: 3.5rem;
@@ -581,7 +419,7 @@
        ═══════════════════════════════════════════════════════════ */
     @media (max-width: 620px) {
       body {
-        padding: 2rem 0.9rem 3rem;
+        padding: 2rem 0.9rem 6rem;
       }
 
       .title {
@@ -656,59 +494,6 @@
         right: 8px;
         font-size: 0.58rem;
         color: var(--phosphor-dim);
-      }
-
-      .list > li:has(#bitcoinToggle),
-      .list > li:has(#bitcoinPanel) {
-        grid-column: 1 / -1;
-      }
-
-      .li:has(#bitcoinChevron) {
-        min-height: 52px;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 12px;
-        gap: 12px;
-      }
-
-      .li:has(#bitcoinChevron) .ln {
-        margin-bottom: 0;
-        align-self: center;
-      }
-
-      .li:has(#bitcoinChevron) .content {
-        flex: 1;
-      }
-
-      .li:has(#bitcoinChevron) .status {
-        position: static;
-        font-size: 0.75rem;
-      }
-
-      .li:has(#bitcoinChevron) .url {
-        display: block;
-        font-size: 0.68rem;
-        white-space: normal;
-        overflow: visible;
-        text-overflow: clip;
-        word-break: break-all;
-      }
-
-      .btc {
-        margin-left: 0;
-        margin-top: 6px;
-        padding: 12px;
-      }
-
-      .btc-copy {
-        width: 100%;
-        align-self: stretch;
-      }
-
-      .btc-uri {
-        align-self: stretch;
-        text-align: center;
       }
     }
 
@@ -991,122 +776,36 @@
     </section>
 
     <!-- ═══════════ SUPPORT ═══════════ -->
-    <section class="section">
-      <div class="section-head">
-        <span class="section-title">SUPPORT</span>
-        <span class="section-rule" aria-hidden="true"></span>
-        <span class="section-count">7 ITEMS</span>
-      </div>
-      <ul class="list">
-        <li><a class="li" href="https://ko-fi.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">10</span>
-          <span class="content">
-            <span class="label">Ko-fi</span>
-            <span class="url">ko-fi.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://buymeacoffee.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">20</span>
-          <span class="content">
-            <span class="label">Buy Me a Coffee</span>
-            <span class="url">buymeacoffee.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://patreon.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">30</span>
-          <span class="content">
-            <span class="label">Patreon</span>
-            <span class="url">patreon.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://github.com/sponsors/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">40</span>
-          <span class="content">
-            <span class="label">GitHub Sponsors</span>
-            <span class="url">github.com/sponsors/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://paypal.me/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">50</span>
-          <span class="content">
-            <span class="label">PayPal</span>
-            <span class="url">paypal.me/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://liberapay.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">60</span>
-          <span class="content">
-            <span class="label">Liberapay</span>
-            <span class="url">liberapay.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-
-        <li>
-          <button class="li" type="button" id="bitcoinToggle"
-                  aria-expanded="false" aria-controls="bitcoinPanel">
-            <span class="ln">70</span>
-            <span class="content">
-              <span class="label">BITCOIN</span>
-              <span class="url">bc1qhwes…3afmgq5</span>
-            </span>
-            <span class="status" id="bitcoinChevron" aria-hidden="true">▾</span>
-          </button>
-
-          <div class="btc" id="bitcoinPanel">
-            <div class="btc-addr-row" id="bitcoinAddress">
-              <span class="btc-addr-label">ADDR</span>
-              <span class="btc-addr" id="bitcoinAddrValue">bc1qhwes<span class="ell">…</span>3afmgq5</span>
-              <button class="btc-reveal" type="button" id="bitcoinReveal"
-                      aria-expanded="false" aria-controls="bitcoinAddrValue"
-                      data-full="bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5"
-                      data-short="bc1qhwes…3afmgq5">
-                <span id="bitcoinRevealLabel">show full</span>
-              </button>
-            </div>
-
-            <button class="btc-copy" type="button" id="bitcoinCopy"
-                    data-address="bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5"
-                    aria-label="Copy full Bitcoin address to clipboard">
-              COPY ADDRESS
-            </button>
-
-            <a class="btc-uri" href="bitcoin:bc1qhweshz5mp27zuml49nkz52q4v68usmz3afmgq5"
-               rel="noopener noreferrer">
-              &gt; open in wallet (bitcoin: URI)
-            </a>
-
-            <div class="btc-warn">
-              <span>
-                Bitcoin transfers are <strong>irreversible</strong>. After copying,
-                verify the full address in your wallet before sending — check that it
-                starts with <code>bc1qhwes</code> and ends with <code>3afmgq5</code>,
-                or use <strong>show full</strong> above to read it in full.
-                The <code>bitcoin:</code> link only works if your browser or OS has
-                a wallet registered for that scheme; if nothing happens, use the
-                copy button.
-              </span>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </section>
+    <!-- Support is provided by the overlay bar mounted by
+         support.jao.life/support.js (see the script tag at the
+         bottom of this document). No inline markup required. -->
 
     <!-- ═══════════ FOOTER ═══════════ -->
     <footer class="foot">
       <span class="prompt">]</span>LIST — link-in-bio · official · privacy-focused.
       No trackers, no analytics, no cookies, no third-party scripts.
-      This page loads nothing from any domain it doesn't control.
+      The only resource loaded from a second origin is the support
+      component at support.jao.life, which is first-party.
       <br>
       <span class="prompt">]</span><span class="cursor"></span>
     </footer>
 
   </div>
+
+  <!-- ═══════════ SUPPORT OVERLAY (first-party, no SRI) ═══════════
+       Mounts the full-width support bar and its modal. This is the
+       single source of truth for the support content across all
+       jao.life subdomains.
+
+       Loaded cross-origin from support.jao.life WITHOUT
+       Subresource Integrity. The browser will execute whatever
+       that origin serves at request time. The trust boundary is
+       the hosting configuration of support.jao.life itself — if
+       that subdomain is compromised, so is every page that loads
+       this script. -->
+  <script src="https://support.jao.life/support.js"
+          crossorigin="anonymous"
+          defer></script>
 
   <!-- ═══════════ INLINE JS ═══════════ -->
   <script>
@@ -1123,78 +822,6 @@
       }
       tick();
       setInterval(tick, 1000);
-    })();
-
-    /* ── Bitcoin: toggle, reveal, copy ─────────────────────────── */
-    (function () {
-      var toggleBtn  = document.getElementById('bitcoinToggle');
-      var panel      = document.getElementById('bitcoinPanel');
-      var chevron    = document.getElementById('bitcoinChevron');
-      var addressBox = document.getElementById('bitcoinAddress');
-      var addrValue  = document.getElementById('bitcoinAddrValue');
-      var revealBtn  = document.getElementById('bitcoinReveal');
-      var revealLbl  = document.getElementById('bitcoinRevealLabel');
-      var copyBtn    = document.getElementById('bitcoinCopy');
-
-      if (!toggleBtn || !panel) return;
-
-      toggleBtn.addEventListener('click', function () {
-        var isOpen = panel.classList.toggle('open');
-        toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-        if (chevron) {
-          chevron.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-        }
-      });
-
-      if (revealBtn && addrValue) {
-        revealBtn.addEventListener('click', function () {
-          var open = revealBtn.getAttribute('aria-expanded') === 'true';
-          if (open) {
-            addrValue.textContent = revealBtn.getAttribute('data-short');
-            revealBtn.setAttribute('aria-expanded', 'false');
-            if (revealLbl) revealLbl.textContent = 'show full';
-            if (addressBox) addressBox.classList.remove('revealed');
-          } else {
-            addrValue.textContent = revealBtn.getAttribute('data-full');
-            revealBtn.setAttribute('aria-expanded', 'true');
-            if (revealLbl) revealLbl.textContent = 'hide';
-            if (addressBox) addressBox.classList.add('revealed');
-          }
-        });
-      }
-
-      if (copyBtn) {
-        var fullAddress = copyBtn.getAttribute('data-address');
-        copyBtn.addEventListener('click', async function () {
-          var original = copyBtn.textContent;
-          try {
-            if (navigator.clipboard && window.isSecureContext) {
-              await navigator.clipboard.writeText(fullAddress);
-            } else {
-              var ta = document.createElement('textarea');
-              ta.value = fullAddress;
-              ta.setAttribute('readonly', '');
-              ta.style.position = 'absolute';
-              ta.style.left = '-9999px';
-              document.body.appendChild(ta);
-              ta.select();
-              document.execCommand('copy');
-              document.body.removeChild(ta);
-            }
-            copyBtn.classList.add('copied');
-            copyBtn.textContent = 'COPIED — VERIFY IN WALLET';
-            setTimeout(function () {
-              copyBtn.classList.remove('copied');
-              copyBtn.textContent = original;
-            }, 2600);
-          } catch (err) {
-            copyBtn.textContent = 'COPY FAILED';
-            setTimeout(function () {
-              copyBtn.textContent = original;
-            }, 2600);
-          }
-        });
-      }
     })();
   </script>
 </body>
