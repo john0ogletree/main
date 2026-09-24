@@ -7,46 +7,169 @@
 
   <!--
     ═══════════════════════════════════════════════════════════════
-    PRIVACY-FOCUSED LINK-IN-BIO · "APPLE IIe" EDITION
+    jao.life — LINK INDEX
     ═══════════════════════════════════════════════════════════════
-    Retro meets Y2K meets Apple II. Amber phosphor, monospace
-    throughout, a numbered link menu, a blinking block cursor.
 
-    HIGH CONTRAST IS THE ONLY MODE
-    ──────────────────────────────
-    Bright amber (#ffd89a), no phosphor glow on any text, 16px
-    base font, faded scanlines, light vignette.
+    A single-page link index. Amber-on-black, monospace, high
+    contrast by default.
 
-    FULLY STATELESS
-    ───────────────
-    No sessionStorage. No cookies. No localStorage.
+    ─── WHAT THIS PAGE DOES ────────────────────────────────────
 
-    SUPPORT IS NOW AN OVERLAY
-    ─────────────────────────
-    The Support section is no longer inline. It is provided by
-    support.jao.life/support.js, which mounts a full-width bar
-    at the bottom of the viewport and opens a modal on click.
-    That file is the single source of truth for the support
-    content and is reused across every jao.life subdomain.
+    Displays a list of links, grouped into three sections. On
+    viewports wider than 620px, each link shows its full
+    destination URL beneath the label. On narrower viewports the
+    tile layout omits the URL, because a truncated URL in a
+    ~155px-wide tile reads as broken rather than informative.
 
-    Page sections, in order:
-      • Social     (12 items)
-      • Projects   (8 items)
-      • Writing    (3 items)
-      — footer —
+    Shows a live local clock, updated every second.
 
-    EXTERNAL RESOURCES
-    ──────────────────
-    The only external resource on this page is support.js,
-    loaded from support.jao.life — a first-party subdomain.
-    It is loaded WITHOUT Subresource Integrity, which means the
-    browser will execute whatever that origin serves at request
-    time. The trust boundary is the hosting configuration of
-    support.jao.life itself. If that subdomain is compromised,
-    so is every page that loads this script.
+    Loads one external script from support.jao.life, which draws
+    a bar at the bottom of the screen. Clicking the bar opens a
+    modal with payment links. See "EXTERNAL RESOURCES" below.
 
-    All other links point to their destinations; nothing else
-    is fetched from a second origin during page load.
+    ─── WHAT THIS PAGE DOES NOT DO ─────────────────────────────
+
+    It does not set cookies.
+    It does not use localStorage or sessionStorage.
+    It does not use IndexedDB or the Cache API.
+    It does not read canvas, WebGL, audio context, font
+      enumeration, screen dimensions, or timing values — none of
+      the things commonly used to fingerprint a browser.
+    It does not request your location, camera, microphone,
+      clipboard, notifications, Bluetooth, USB, or any other
+      permission.
+    It does not make network requests other than the ones listed
+      under "EXTERNAL RESOURCES" below.
+    It does not run analytics of any kind.
+    It does not embed third-party content.
+    It does not track you across pages or sessions.
+
+    ─── EXTERNAL RESOURCES ─────────────────────────────────────
+
+    This page loads exactly one thing from a second origin:
+
+      https://support.jao.life/support.js
+
+    That script runs with full access to this page's DOM. It can
+    read and modify anything on the page. It is loaded WITHOUT
+    Subresource Integrity, meaning the browser will execute
+    whatever that origin serves at request time, with no check
+    that it matches what I intended to publish.
+
+    What this means in plain terms:
+
+      • If support.jao.life serves the file I expect, nothing
+        unusual happens.
+      • If support.jao.life is compromised — DNS hijack, hosting
+        account breach, misconfigured CDN, or a TLS certificate
+        issued in error — then this page executes whatever the
+        attacker serves.
+      • The browser will not warn you. There is no visible signal
+        on the page if that file changes.
+
+    SRI would close this gap. I chose not to use it because
+    regenerating a hash on every edit is easy to get wrong and
+    the failure mode — the page silently refusing to load its own
+    support widget — is worse than the risk it mitigates for a
+    personal site. That is a judgment call, not a guarantee. If
+    you want the stricter version, the file is served at the URL
+    above and the hash can be computed with:
+
+      openssl dgst -sha384 -binary support.js | openssl base64 -A
+
+    ─── LINKS TO OTHER SITES ───────────────────────────────────
+
+    Every link to an external site opens in a new tab and carries
+    rel="noopener noreferrer". The noreferrer part means the
+    destination site will not see that you came from this page.
+    The noopener part means the destination cannot access this
+    page through the browser's window.opener mechanism.
+
+    Once you click a link, you leave this page's promises behind.
+    What that site does is its own business, not mine.
+
+    ─── WHAT THE FULL URLS ARE FOR ─────────────────────────────
+
+    On desktop, every entry shows its destination URL beneath the
+    label. This is not decoration. It's so that you can see where
+    a link goes before you click it, and so that a link that has
+    been tampered with — by me, by an attacker, by a bad deploy —
+    would look visibly wrong against the label above it.
+
+    On mobile, URLs are omitted from the tile layout, so this
+    tamper-evidence property does not apply there. That is a real
+    reduction in what the page can offer, and it's the reason the
+    mobile layout is described as a compromise rather than an
+    improvement.
+
+    ─── WHAT THIS PAGE DOES NOT CLAIM ──────────────────────────
+
+    It does not claim to be anonymous. Loading a page reveals your
+    IP address and User-Agent string to whoever serves it.
+
+    It does not claim to be secure against a determined attacker
+    who controls the network between you and the server.
+
+    It does not claim that the destinations it links to share any
+    of its own properties. A link to a site full of trackers is
+    still a link to a site full of trackers.
+
+    It does not claim that this comment block is enforced. It is
+    a description of intent. The only things enforced by the
+    browser are the Content-Security-Policy below and the
+    attributes on the elements themselves.
+
+    ─── CSP ────────────────────────────────────────────────────
+
+    A Content-Security-Policy meta tag is set below. It is a real
+    restriction the browser enforces. What it says, in plain
+    terms:
+
+      default-src 'none'         — fetch nothing by default.
+      script-src  'self'         — allow scripts from this origin,
+                  'unsafe-inline'  and allow inline <script> blocks
+                  https://…          and allow support.jao.life.
+      style-src   'self'         — allow styles from this origin
+                  'unsafe-inline'    and inline <style> blocks.
+      font-src    'none'         — load no fonts.
+      img-src     'self' data:   — allow same-origin images and
+                                   data: URIs.
+      connect-src 'none'         — no fetch, XHR, WebSocket, or
+                                   EventSource from this page.
+      form-action 'none'         — no form submissions.
+      base-uri    'none'         — no <base> tag rewrites.
+      frame-ancestors 'none'     — this page may not be framed.
+      upgrade-insecure-requests  — rewrite any accidental http://
+                                   subresource to https://.
+
+    Note the 'unsafe-inline' on script-src. That is a real
+    weakening. It's there because the clock script is inline. It
+    means that if an attacker could inject a <script> tag into
+    this page, the browser would run it. An external-script-only
+    policy would prevent that. This page trades that protection
+    for a single-file deployment.
+
+    ─── WHAT IS NOT SAID ELSEWHERE ON THE PAGE ─────────────────
+
+    The intro text on the page says "No trackers, no analytics,
+    no cookies, no third-party scripts." Each of those is true
+    as written:
+
+      • No trackers          — nothing here tracks you.
+      • No analytics         — no metrics are collected or sent.
+      • No cookies           — document.cookie is never written.
+      • No third-party scripts — support.jao.life is first-party,
+                                 a subdomain of this domain, not a
+                                 third party. The word "third-party"
+                                 is doing real work in that sentence
+                                 and is not a euphemism for
+                                 "first-party but cross-origin."
+
+    If that distinction feels like a technicality to you, it is
+    one. support.jao.life is a second origin and the script runs
+    with full page access. The sentence is literally true and
+    slightly more comfortable than it should be. That is why this
+    comment block exists.
 
     ═══════════════════════════════════════════════════════════════
   -->
@@ -103,7 +226,6 @@
       font-size: var(--base-size);
       line-height: 1.55;
       letter-spacing: 0.02em;
-      /* bottom padding leaves room for the fixed support bar */
       padding: 3.5rem 1.25rem 6rem;
       overflow-x: hidden;
       position: relative;
@@ -409,6 +531,81 @@
       animation: blink 1.06s steps(1, end) infinite;
     }
 
+    /* the "what this page actually does" disclosure */
+    .disclosure {
+      margin-top: 2.5rem;
+      padding: 16px 18px;
+      background: rgba(255,216,154,0.03);
+      border: 1px solid var(--phosphor-faint);
+      border-radius: 4px;
+      font-size: 0.74rem;
+      line-height: 1.75;
+      color: var(--phosphor-dim);
+    }
+
+    .disclosure h2 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--phosphor-bright);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed var(--phosphor-faint);
+    }
+
+    .disclosure h3 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--phosphor);
+      margin: 14px 0 6px;
+    }
+
+    .disclosure h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .disclosure p {
+      margin: 0 0 8px;
+    }
+
+    .disclosure p:last-child {
+      margin-bottom: 0;
+    }
+
+    .disclosure ul {
+      list-style: none;
+      margin: 0 0 8px;
+      padding: 0;
+    }
+
+    .disclosure li {
+      padding-left: 1.4ch;
+      text-indent: -1.4ch;
+    }
+
+    .disclosure li::before {
+      content: '- ';
+      color: var(--phosphor-faint);
+    }
+
+    .disclosure code {
+      font-family: inherit;
+      font-size: 0.72rem;
+      padding: 1px 5px;
+      background: rgba(255,216,154,0.08);
+      border: 1px solid var(--phosphor-faint);
+      border-radius: 2px;
+      color: var(--phosphor-bright);
+    }
+
+    .disclosure strong {
+      color: var(--phosphor);
+      font-weight: 700;
+    }
+
     @keyframes blink {
       0%, 50%   { opacity: 1; }
       51%, 100% { opacity: 0; }
@@ -495,6 +692,11 @@
         font-size: 0.58rem;
         color: var(--phosphor-dim);
       }
+
+      .disclosure {
+        padding: 14px 14px;
+        font-size: 0.72rem;
+      }
     }
 
     @media (max-width: 380px) {
@@ -551,10 +753,12 @@
       <h1 class="title">JOHN OGLETREE</h1>
       <div class="handle">@john0ogletree</div>
       <p class="intro">
-        <strong>PRIVACY-FOCUSED LINK-IN-BIO.</strong>
+        <strong>A page of links.</strong>
         No trackers, no analytics, no cookies, no third-party scripts.
-        Every link below is a real endpoint — the full URL is shown
-        beneath each label so you always know where you're going.
+        On desktop, each link shows its full destination beneath the
+        label — on mobile the tile layout omits it. What this page
+        actually loads, and what it doesn't, is written out at the
+        bottom.
       </p>
     </header>
 
@@ -777,32 +981,87 @@
 
     <!-- ═══════════ SUPPORT ═══════════ -->
     <!-- Support is provided by the overlay bar mounted by
-         support.jao.life/support.js (see the script tag at the
-         bottom of this document). No inline markup required. -->
+         support.jao.life/support.js. See the disclosure below for
+         what that actually means. -->
 
     <!-- ═══════════ FOOTER ═══════════ -->
     <footer class="foot">
-      <span class="prompt">]</span>LIST — link-in-bio · official · privacy-focused.
-      No trackers, no analytics, no cookies, no third-party scripts.
-      The only resource loaded from a second origin is the support
-      component at support.jao.life, which is first-party.
+      <span class="prompt">]</span>LIST — end of index.
       <br>
       <span class="prompt">]</span><span class="cursor"></span>
     </footer>
 
+    <!-- ═══════════ DISCLOSURE ═══════════ -->
+    <section class="disclosure" aria-labelledby="disclosure-title">
+      <h2 id="disclosure-title">What this page actually does</h2>
+
+      <h3>It loads one external script</h3>
+      <p>
+        <code>support.jao.life/support.js</code> draws the bar at
+        the bottom of this screen. That file is served from a
+        second origin (a subdomain of this domain) and runs with
+        full access to this page.
+      </p>
+      <p>
+        <strong>It is loaded without Subresource Integrity.</strong>
+        That means the browser does not verify the file matches
+        what I intended to publish. If that subdomain is ever
+        compromised, this page will run whatever it serves. That
+        is the honest state of things, and it is why this section
+        exists.
+      </p>
+
+      <h3>It loads nothing else</h3>
+      <ul>
+        <li>No fonts.</li>
+        <li>No images.</li>
+        <li>No analytics.</li>
+        <li>No cookies.</li>
+        <li>No localStorage, sessionStorage, or IndexedDB.</li>
+        <li>No third-party scripts, stylesheets, or pixels.</li>
+      </ul>
+      <p>
+        The only network request this page makes on load, beyond
+        the page itself, is for the script named above.
+      </p>
+
+      <h3>Full URLs are shown on desktop only</h3>
+      <p>
+        On viewports wider than 620px, each link shows its
+        destination URL beneath the label. On narrower viewports
+        — phones — the tile layout omits it, because a truncated
+        URL in a ~155px-wide tile reads as broken rather than
+        informative.
+      </p>
+      <p>
+        That means the tamper-evidence property the URLs provide
+        (a link that has been altered would look visibly wrong
+        against its label) does not apply on mobile. It's a real
+        reduction in what the page can offer, and it's the reason
+        the mobile layout is described as a compromise rather
+        than an improvement.
+      </p>
+
+      <h3>It does not protect you</h3>
+      <p>
+        Loading any page reveals your IP address and User-Agent to
+        whoever serves it. That is true here too. This page does
+        not pretend otherwise.
+      </p>
+      <p>
+        Every link to another site opens in a new tab with
+        <code>rel="noopener noreferrer"</code>, which means the
+        destination cannot see that you came from here. Once you
+        click, you are on that site's terms, not mine.
+      </p>
+    </section>
+
   </div>
 
   <!-- ═══════════ SUPPORT OVERLAY (first-party, no SRI) ═══════════
-       Mounts the full-width support bar and its modal. This is the
-       single source of truth for the support content across all
-       jao.life subdomains.
-
-       Loaded cross-origin from support.jao.life WITHOUT
-       Subresource Integrity. The browser will execute whatever
-       that origin serves at request time. The trust boundary is
-       the hosting configuration of support.jao.life itself — if
-       that subdomain is compromised, so is every page that loads
-       this script. -->
+       Mounts the full-width support bar and its modal. Loaded
+       cross-origin from support.jao.life WITHOUT Subresource
+       Integrity. See the disclosure above for what that means. -->
   <script src="https://support.jao.life/support.js"
           crossorigin="anonymous"
           defer></script>
