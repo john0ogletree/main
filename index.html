@@ -5,175 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
 
-  <!--
-    ═══════════════════════════════════════════════════════════════
-    jao.life — LINK INDEX
-    ═══════════════════════════════════════════════════════════════
-
-    A single-page link index. Amber-on-black, monospace, high
-    contrast by default.
-
-    ─── WHAT THIS PAGE DOES ────────────────────────────────────
-
-    Displays a list of links, grouped into three sections. On
-    viewports wider than 620px, each link shows its full
-    destination URL beneath the label. On narrower viewports the
-    tile layout omits the URL, because a truncated URL in a
-    ~155px-wide tile reads as broken rather than informative.
-
-    Shows a live local clock, updated every second.
-
-    Loads one external script from support.jao.life, which draws
-    a bar at the bottom of the screen. Clicking the bar opens a
-    modal with payment links. See "EXTERNAL RESOURCES" below.
-
-    ─── WHAT THIS PAGE DOES NOT DO ─────────────────────────────
-
-    It does not set cookies.
-    It does not use localStorage or sessionStorage.
-    It does not use IndexedDB or the Cache API.
-    It does not read canvas, WebGL, audio context, font
-      enumeration, screen dimensions, or timing values — none of
-      the things commonly used to fingerprint a browser.
-    It does not request your location, camera, microphone,
-      clipboard, notifications, Bluetooth, USB, or any other
-      permission.
-    It does not make network requests other than the ones listed
-      under "EXTERNAL RESOURCES" below.
-    It does not run analytics of any kind.
-    It does not embed third-party content.
-    It does not track you across pages or sessions.
-
-    ─── EXTERNAL RESOURCES ─────────────────────────────────────
-
-    This page loads exactly one thing from a second origin:
-
-      https://support.jao.life/support.js
-
-    That script runs with full access to this page's DOM. It can
-    read and modify anything on the page. It is loaded WITHOUT
-    Subresource Integrity, meaning the browser will execute
-    whatever that origin serves at request time, with no check
-    that it matches what I intended to publish.
-
-    What this means in plain terms:
-
-      • If support.jao.life serves the file I expect, nothing
-        unusual happens.
-      • If support.jao.life is compromised — DNS hijack, hosting
-        account breach, misconfigured CDN, or a TLS certificate
-        issued in error — then this page executes whatever the
-        attacker serves.
-      • The browser will not warn you. There is no visible signal
-        on the page if that file changes.
-
-    SRI would close this gap. I chose not to use it because
-    regenerating a hash on every edit is easy to get wrong and
-    the failure mode — the page silently refusing to load its own
-    support widget — is worse than the risk it mitigates for a
-    personal site. That is a judgment call, not a guarantee. If
-    you want the stricter version, the file is served at the URL
-    above and the hash can be computed with:
-
-      openssl dgst -sha384 -binary support.js | openssl base64 -A
-
-    ─── LINKS TO OTHER SITES ───────────────────────────────────
-
-    Every link to an external site opens in a new tab and carries
-    rel="noopener noreferrer". The noreferrer part means the
-    destination site will not see that you came from this page.
-    The noopener part means the destination cannot access this
-    page through the browser's window.opener mechanism.
-
-    Once you click a link, you leave this page's promises behind.
-    What that site does is its own business, not mine.
-
-    ─── WHAT THE FULL URLS ARE FOR ─────────────────────────────
-
-    On desktop, every entry shows its destination URL beneath the
-    label. This is not decoration. It's so that you can see where
-    a link goes before you click it, and so that a link that has
-    been tampered with — by me, by an attacker, by a bad deploy —
-    would look visibly wrong against the label above it.
-
-    On mobile, URLs are omitted from the tile layout, so this
-    tamper-evidence property does not apply there. That is a real
-    reduction in what the page can offer, and it's the reason the
-    mobile layout is described as a compromise rather than an
-    improvement.
-
-    ─── WHAT THIS PAGE DOES NOT CLAIM ──────────────────────────
-
-    It does not claim to be anonymous. Loading a page reveals your
-    IP address and User-Agent string to whoever serves it.
-
-    It does not claim to be secure against a determined attacker
-    who controls the network between you and the server.
-
-    It does not claim that the destinations it links to share any
-    of its own properties. A link to a site full of trackers is
-    still a link to a site full of trackers.
-
-    It does not claim that this comment block is enforced. It is
-    a description of intent. The only things enforced by the
-    browser are the Content-Security-Policy below and the
-    attributes on the elements themselves.
-
-    ─── CSP ────────────────────────────────────────────────────
-
-    A Content-Security-Policy meta tag is set below. It is a real
-    restriction the browser enforces. What it says, in plain
-    terms:
-
-      default-src 'none'         — fetch nothing by default.
-      script-src  'self'         — allow scripts from this origin,
-                  'unsafe-inline'  and allow inline <script> blocks
-                  https://…          and allow support.jao.life.
-      style-src   'self'         — allow styles from this origin
-                  'unsafe-inline'    and inline <style> blocks.
-      font-src    'none'         — load no fonts.
-      img-src     'self' data:   — allow same-origin images and
-                                   data: URIs.
-      connect-src 'none'         — no fetch, XHR, WebSocket, or
-                                   EventSource from this page.
-      form-action 'none'         — no form submissions.
-      base-uri    'none'         — no <base> tag rewrites.
-      frame-ancestors 'none'     — this page may not be framed.
-      upgrade-insecure-requests  — rewrite any accidental http://
-                                   subresource to https://.
-
-    Note the 'unsafe-inline' on script-src. That is a real
-    weakening. It's there because the clock script is inline. It
-    means that if an attacker could inject a <script> tag into
-    this page, the browser would run it. An external-script-only
-    policy would prevent that. This page trades that protection
-    for a single-file deployment.
-
-    ─── WHAT IS NOT SAID ELSEWHERE ON THE PAGE ─────────────────
-
-    The intro text on the page says "No trackers, no analytics,
-    no cookies, no third-party scripts." Each of those is true
-    as written:
-
-      • No trackers          — nothing here tracks you.
-      • No analytics         — no metrics are collected or sent.
-      • No cookies           — document.cookie is never written.
-      • No third-party scripts — support.jao.life is first-party,
-                                 a subdomain of this domain, not a
-                                 third party. The word "third-party"
-                                 is doing real work in that sentence
-                                 and is not a euphemism for
-                                 "first-party but cross-origin."
-
-    If that distinction feels like a technicality to you, it is
-    one. support.jao.life is a second origin and the script runs
-    with full page access. The sentence is literally true and
-    slightly more comfortable than it should be. That is why this
-    comment block exists.
-
-    ═══════════════════════════════════════════════════════════════
-  -->
-
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'none';
                  style-src 'self' 'unsafe-inline';
@@ -189,7 +20,6 @@
   <title>JOHN OGLETREE · LINKS</title>
 
   <style>
-    /* ── reset ────────────────────────────────────────────────── */
     *, *::before, *::after {
       margin: 0;
       padding: 0;
@@ -201,7 +31,6 @@
       text-size-adjust: 100%;
     }
 
-    /* ── tokens ───────────────────────────────────────────────── */
     :root {
       --phosphor:        #ffd89a;
       --phosphor-dim:    #d4a05a;
@@ -212,7 +41,6 @@
       --base-size:       16px;
     }
 
-    /* ── base ─────────────────────────────────────────────────── */
     html, body {
       min-height: 100%;
     }
@@ -233,7 +61,6 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ── CRT overlay ──────────────────────────────────────────── */
     .crt {
       position: fixed;
       inset: 0;
@@ -280,7 +107,6 @@
       );
     }
 
-    /* ── the page container ───────────────────────────────────── */
     .screen {
       position: relative;
       z-index: 1;
@@ -288,7 +114,6 @@
       margin: 0 auto;
     }
 
-    /* ── header ───────────────────────────────────────────────── */
     .header {
       margin-bottom: 2.5rem;
     }
@@ -341,7 +166,6 @@
       font-weight: 400;
     }
 
-    /* ── section headers ──────────────────────────────────────── */
     .section {
       margin-top: 2.5rem;
     }
@@ -394,7 +218,6 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* ── link list ────────────────────────────────────────────── */
     .list {
       list-style: none;
       display: flex;
@@ -506,7 +329,6 @@
       transform: translateX(2px);
     }
 
-    /* ── footer ───────────────────────────────────────────────── */
     .foot {
       margin-top: 3.5rem;
       padding-top: 1.5rem;
@@ -531,7 +353,6 @@
       animation: blink 1.06s steps(1, end) infinite;
     }
 
-    /* the "what this page actually does" disclosure */
     .disclosure {
       margin-top: 2.5rem;
       padding: 16px 18px;
@@ -611,9 +432,6 @@
       51%, 100% { opacity: 0; }
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       MOBILE — 2-COLUMN GRID OF COMPACT TILES
-       ═══════════════════════════════════════════════════════════ */
     @media (max-width: 620px) {
       body {
         padding: 2rem 0.9rem 6rem;
@@ -715,7 +533,6 @@
       }
     }
 
-    /* ── a11y ─────────────────────────────────────────────────── */
     ::selection {
       background: var(--phosphor);
       color: var(--bg-deep);
@@ -743,7 +560,6 @@
 
   <div class="screen">
 
-    <!-- ═══════════ HEADER ═══════════ -->
     <header class="header">
       <div class="sys-line">
         <span>LINKS</span>
@@ -762,7 +578,6 @@
       </p>
     </header>
 
-    <!-- ═══════════ SOCIAL ═══════════ -->
     <section class="section">
       <div class="section-head">
         <span class="section-title">SOCIAL</span>
@@ -877,7 +692,6 @@
       </ul>
     </section>
 
-    <!-- ═══════════ PROJECTS & TOOLS ═══════════ -->
     <section class="section">
       <div class="section-head">
         <span class="section-title">PROJECTS &amp; TOOLS</span>
@@ -952,7 +766,6 @@
       </ul>
     </section>
 
-    <!-- ═══════════ WRITING & OTHER ═══════════ -->
     <section class="section">
       <div class="section-head">
         <span class="section-title">WRITING &amp; OTHER</span>
@@ -987,19 +800,12 @@
       </ul>
     </section>
 
-    <!-- ═══════════ SUPPORT ═══════════ -->
-    <!-- Support is provided by the overlay bar mounted by
-         support.jao.life/support.js. See the disclosure below for
-         what that actually means. -->
-
-    <!-- ═══════════ FOOTER ═══════════ -->
     <footer class="foot">
       <span class="prompt">]</span>LIST — end of index.
       <br>
       <span class="prompt">]</span><span class="cursor"></span>
     </footer>
 
-    <!-- ═══════════ DISCLOSURE ═══════════ -->
     <section class="disclosure" aria-labelledby="disclosure-title">
       <h2 id="disclosure-title">What this page actually does</h2>
 
@@ -1066,17 +872,11 @@
 
   </div>
 
-  <!-- ═══════════ SUPPORT OVERLAY (first-party, no SRI) ═══════════
-       Mounts the full-width support bar and its modal. Loaded
-       cross-origin from support.jao.life WITHOUT Subresource
-       Integrity. See the disclosure above for what that means. -->
   <script src="https://support.jao.life/support.js"
           crossorigin="anonymous"
           defer></script>
 
-  <!-- ═══════════ INLINE JS ═══════════ -->
   <script>
-    /* ── live clock ────────────────────────────────────────────── */
     (function () {
       var el = document.getElementById('clock');
       if (!el) return;
