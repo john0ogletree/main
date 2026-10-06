@@ -9,7 +9,7 @@
         content="default-src 'none';
                  style-src 'self' 'unsafe-inline';
                  font-src 'none';
-                 script-src 'self' 'unsafe-inline' https://support.jao.life;
+                 script-src 'self' 'unsafe-inline';
                  img-src 'self' data:;
                  connect-src 'none';
                  form-action 'none';
@@ -809,34 +809,18 @@
     <section class="disclosure" aria-labelledby="disclosure-title">
       <h2 id="disclosure-title">What this page actually does</h2>
 
-      <h3>It loads one external script</h3>
-      <p>
-        <code>support.jao.life/support.js</code> draws the bar at
-        the bottom of this screen. That file is served from a
-        second origin (a subdomain of this domain) and runs with
-        full access to this page.
-      </p>
-      <p>
-        <strong>It is loaded without Subresource Integrity.</strong>
-        That means the browser does not verify the file matches
-        what I intended to publish. If that subdomain is ever
-        compromised, this page will run whatever it serves. That
-        is the honest state of things, and it is why this section
-        exists.
-      </p>
-
-      <h3>It loads nothing else</h3>
+      <h3>It loads nothing external</h3>
       <ul>
         <li>No fonts.</li>
         <li>No images.</li>
         <li>No analytics.</li>
         <li>No cookies.</li>
         <li>No localStorage, sessionStorage, or IndexedDB.</li>
-        <li>No third-party scripts, stylesheets, or pixels.</li>
+        <li>No scripts, stylesheets, or pixels from any other origin.</li>
       </ul>
       <p>
-        The only network request this page makes on load, beyond
-        the page itself, is for the script named above.
+        The only request this page makes is for the page itself.
+        Everything it runs is written into this one file.
       </p>
 
       <h3>Full URLs are shown on desktop only</h3>
@@ -871,10 +855,6 @@
     </section>
 
   </div>
-
-  <script src="https://support.jao.life/support.js"
-          crossorigin="anonymous"
-          defer></script>
 
   <script>
     (function () {
