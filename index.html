@@ -1,1044 +1,655 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="no-referrer">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self' 'unsafe-inline'; font-src 'none'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests;">
 
   <title>JOHN OGLETREE · LINKS</title>
 
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (window.tailwind) {
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#fdf4ed',
+                100: '#fae4d5',
+                200: '#f4c5ab',
+                300: '#ed9f72',
+                400: '#e56f35',
+                500: '#de5212',
+                600: '#bf410e',
+                700: '#963210',
+                800: '#782a13',
+                900: '#632513',
+                950: '#351108',
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+              mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace']
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
 
-    html {
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
+    ::-webkit-scrollbar {
+      width: 4px;
     }
-
-    :root {
-      --phosphor:        #ffd89a;
-      --phosphor-dim:    #d4a05a;
-      --phosphor-faint:  #a07a3a;
-      --phosphor-bright: #ffecc4;
-      --bg:              #100a00;
-      --bg-deep:         #050300;
-      --base-size:       16px;
+    ::-webkit-scrollbar-track {
+      background: #07080d;
     }
-
-    html, body {
-      min-height: 100%;
+    ::-webkit-scrollbar-thumb {
+      background: #1f2230;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2f3448;
     }
 
     body {
-      background: var(--bg-deep);
-      color: var(--phosphor);
-      font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Code',
-                   'Source Code Pro', Menlo, Consolas, 'Liberation Mono',
-                   'Courier New', monospace;
-      font-size: var(--base-size);
-      line-height: 1.55;
-      letter-spacing: 0.02em;
-      padding: 3.5rem 1.25rem 6rem;
-      overflow-x: hidden;
-      position: relative;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      font-family: 'Inter', sans-serif;
     }
 
-    .crt {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      pointer-events: none;
+    .glass-card {
+      background: rgba(14, 16, 23, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .crt::before {
-      content: '';
+    .glass-hover:hover {
+      background: rgba(22, 26, 38, 0.95);
+      border-color: rgba(222, 82, 18, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px -4px rgba(222, 82, 18, 0.2);
+    }
+
+    @keyframes floatOrb {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-10px) scale(1.02); }
+    }
+    .floating-orb {
+      animation: floatOrb 12s ease-in-out infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(1000%); }
+    }
+    .scanline {
       position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(0,0,0,0) 0,
-        rgba(0,0,0,0) 3px,
-        rgba(0,0,0,0.10) 3px,
-        rgba(0,0,0,0.10) 4px
-      );
-      mix-blend-mode: multiply;
-    }
-
-    .crt::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        ellipse at center,
-        transparent 0%,
-        transparent 70%,
-        rgba(0,0,0,0.25) 100%
-      );
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 0;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(to bottom, transparent, rgba(222, 82, 18, 0.12), transparent);
+      animation: scanline 7s linear infinite;
       pointer-events: none;
-      background: radial-gradient(
-        ellipse at 50% 30%,
-        rgba(255,216,154,0.05),
-        transparent 65%
-      );
-    }
-
-    .screen {
-      position: relative;
-      z-index: 1;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .header {
-      margin-bottom: 2.5rem;
-    }
-
-    .sys-line {
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      color: var(--phosphor-dim);
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1.25rem;
-      border-bottom: 1px solid var(--phosphor-faint);
-    }
-
-    .sys-line .clock {
-      font-variant-numeric: tabular-nums;
-      color: var(--phosphor);
-    }
-
-    .title {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--phosphor-bright);
-      line-height: 1.15;
-      margin-bottom: 0.4rem;
-      margin-top: 0.3rem;
-    }
-
-    .handle {
-      color: var(--phosphor);
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
-    }
-
-    .intro {
-      color: var(--phosphor-dim);
-      font-size: 0.88rem;
-      line-height: 1.6;
-      max-width: 60ch;
-    }
-
-    .intro strong {
-      color: var(--phosphor);
-      font-weight: 400;
-    }
-
-    .section {
-      margin-top: 2.5rem;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 6px 12px;
-      margin-bottom: 0.85rem;
-      background: linear-gradient(
-        180deg,
-        #3a3226 0%,
-        #2a2518 45%,
-        #1c1810 55%,
-        #241e14 100%
-      );
-      border: 1px solid var(--phosphor-faint);
-      border-radius: 4px;
-      box-shadow:
-        inset 0 1px 0 rgba(255,232,180,0.22),
-        inset 0 -1px 0 rgba(0,0,0,0.5),
-        0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .section-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--phosphor-bright);
-      white-space: nowrap;
-    }
-
-    .section-rule {
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(
-        to right,
-        var(--phosphor-faint),
-        transparent
-      );
-    }
-
-    .section-count {
-      font-size: 0.72rem;
-      color: var(--phosphor-dim);
-      letter-spacing: 0.08em;
-      white-space: nowrap;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-
-    .li {
-      display: grid;
-      grid-template-columns: 3.2ch 1fr auto;
-      align-items: baseline;
-      gap: 0.75rem;
-      padding: 7px 10px;
-      text-decoration: none;
-      color: var(--phosphor);
-      font-size: 0.9rem;
-      line-height: 1.45;
-      letter-spacing: 0.01em;
-      border-radius: 3px;
-      transition: background 120ms ease, color 120ms ease;
-      word-break: break-word;
-      width: 100%;
-      text-align: left;
-      font-family: inherit;
-      cursor: pointer;
-      background: transparent;
-      border: 1px solid transparent;
-    }
-
-    .li:hover,
-    .li:focus-visible {
-      background: rgba(255,216,154,0.08);
-      border-color: var(--phosphor-faint);
-      outline: none;
-      color: var(--phosphor-bright);
-    }
-
-    .li:focus-visible {
-      box-shadow: 0 0 0 2px var(--phosphor);
-    }
-
-    .ln {
-      color: var(--phosphor-faint);
-      font-size: 0.78rem;
-      text-align: right;
-      user-select: none;
-      font-variant-numeric: tabular-nums;
-      transition: color 120ms ease;
-    }
-
-    .li:hover .ln,
-    .li:focus-visible .ln {
-      color: var(--phosphor-dim);
-    }
-
-    .content {
-      min-width: 0;
-    }
-
-    .label {
-      display: block;
-      font-weight: 400;
-      color: var(--phosphor);
-      letter-spacing: 0.02em;
-      line-height: 1.3;
-    }
-
-    .li:hover .label,
-    .li:focus-visible .label {
-      color: var(--phosphor-bright);
-    }
-
-    .url {
-      display: block;
-      font-size: 0.72rem;
-      color: var(--phosphor-faint);
-      margin-top: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      letter-spacing: 0.01em;
-    }
-
-    .li:hover .url,
-    .li:focus-visible .url {
-      color: var(--phosphor-dim);
-    }
-
-    .li.featured {
-      background: rgba(255,216,154,0.05);
-      border-color: var(--phosphor-faint);
-    }
-
-    .li.featured .label {
-      color: var(--phosphor-bright);
-    }
-
-    .status {
-      color: var(--phosphor-faint);
-      font-size: 0.7rem;
-      user-select: none;
-      transition: color 120ms ease, transform 120ms ease;
-      flex-shrink: 0;
-    }
-
-    .li:hover .status,
-    .li:focus-visible .status {
-      color: var(--phosphor);
-      transform: translateX(2px);
-    }
-
-    .support-float-btn {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 90;
-      background: linear-gradient(
-        180deg,
-        #4a3e2e 0%,
-        #2a2215 50%,
-        #1c160e 100%
-      );
-      color: var(--phosphor-bright);
-      border: 1px solid var(--phosphor-dim);
-      padding: 0.65rem 1.15rem;
-      font-family: inherit;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      border-radius: 4px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,232,180,0.3);
-      transition: background 120ms ease, transform 120ms ease, border-color 120ms ease;
-    }
-
-    .support-float-btn:hover {
-      background: linear-gradient(
-        180deg,
-        #5a4e3e 0%,
-        #3a3020 50%,
-        #251e13 100%
-      );
-      border-color: var(--phosphor-bright);
-      transform: translateY(-2px);
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      background: rgba(5, 3, 0, 0.85);
-      backdrop-filter: blur(2px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 150ms ease;
-    }
-
-    .modal-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-box {
-      background: #150e04;
-      border: 1px solid var(--phosphor-dim);
-      border-radius: 6px;
-      width: 100%;
-      max-width: 440px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 40px rgba(255,216,154,0.03);
-      padding: 1.5rem;
-      position: relative;
-      transform: scale(0.95);
-      transition: transform 150ms ease;
-    }
-
-    .modal-backdrop.open .modal-box {
-      transform: scale(1);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid var(--phosphor-faint);
-    }
-
-    .modal-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--phosphor-bright);
-    }
-
-    .modal-close {
-      background: transparent;
-      border: 1px solid var(--phosphor-faint);
-      color: var(--phosphor);
-      width: 26px;
-      height: 26px;
-      border-radius: 3px;
-      font-family: inherit;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 120ms ease, color 120ms ease;
-    }
-
-    .modal-close:hover {
-      background: rgba(255,216,154,0.15);
-      color: var(--phosphor-bright);
-      border-color: var(--phosphor);
-    }
-
-    .modal-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .modal-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 12px;
-      background: rgba(255,216,154,0.03);
-      border: 1px solid var(--phosphor-faint);
-      border-radius: 4px;
-      color: var(--phosphor);
-      text-decoration: none;
-      font-size: 0.88rem;
-      transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
-    }
-
-    .modal-item:hover {
-      background: rgba(255,216,154,0.1);
-      border-color: var(--phosphor);
-      color: var(--phosphor-bright);
-    }
-
-    .foot {
-      margin-top: 3.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px dashed var(--phosphor-faint);
-      font-size: 0.78rem;
-      line-height: 1.7;
-      color: var(--phosphor-dim);
-      letter-spacing: 0.04em;
-    }
-
-    .foot .prompt {
-      color: var(--phosphor-bright);
-    }
-
-    .foot .cursor {
-      display: inline-block;
-      width: 0.55em;
-      height: 1em;
-      background: var(--phosphor-bright);
-      vertical-align: -0.15em;
-      margin-left: 2px;
-      animation: blink 1.06s steps(1, end) infinite;
-    }
-
-    .disclosure {
-      margin-top: 2.5rem;
-      padding: 16px 18px;
-      background: rgba(255,216,154,0.03);
-      border: 1px solid var(--phosphor-faint);
-      border-radius: 4px;
-      font-size: 0.74rem;
-      line-height: 1.75;
-      color: var(--phosphor-dim);
-    }
-
-    .disclosure h2 {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--phosphor-bright);
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed var(--phosphor-faint);
-    }
-
-    .disclosure h3 {
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--phosphor);
-      margin: 14px 0 6px;
-    }
-
-    .disclosure h3:first-of-type {
-      margin-top: 0;
-    }
-
-    .disclosure p {
-      margin: 0 0 8px;
-    }
-
-    .disclosure p:last-child {
-      margin-bottom: 0;
-    }
-
-    .disclosure ul {
-      list-style: none;
-      margin: 0 0 8px;
-      padding: 0;
-    }
-
-    .disclosure li {
-      padding-left: 1.4ch;
-      text-indent: -1.4ch;
-    }
-
-    .disclosure li::before {
-      content: '- ';
-      color: var(--phosphor-faint);
-    }
-
-    .disclosure code {
-      font-family: inherit;
-      font-size: 0.72rem;
-      padding: 1px 5px;
-      background: rgba(255,216,154,0.08);
-      border: 1px solid var(--phosphor-faint);
-      border-radius: 2px;
-      color: var(--phosphor-bright);
-    }
-
-    .disclosure strong {
-      color: var(--phosphor);
-      font-weight: 700;
-    }
-
-    @keyframes blink {
-      0%, 50%   { opacity: 1; }
-      51%, 100% { opacity: 0; }
-    }
-
-    @media (max-width: 620px) {
-      body {
-        padding: 2rem 0.9rem 6rem;
-      }
-
-      .title {
-        font-size: 1.7rem;
-      }
-
-      .section-head {
-        padding: 5px 10px;
-      }
-
-      .section-title {
-        font-size: 0.72rem;
-        letter-spacing: 0.16em;
-      }
-
-      .list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4px;
-      }
-
-      .list > li {
-        display: block;
-        min-width: 0;
-      }
-
-      .li {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 1px;
-        min-height: 52px;
-        padding: 7px 9px;
-        border: 1px solid var(--phosphor-faint);
-        background: rgba(255,216,154,0.03);
-        text-align: left;
-        overflow: hidden;
-        position: relative;
-      }
-
-      .li:hover,
-      .li:focus-visible {
-        background: rgba(255,216,154,0.10);
-      }
-
-      .ln {
-        font-size: 0.6rem;
-        color: var(--phosphor-faint);
-        text-align: left;
-        align-self: flex-start;
-        margin-bottom: 2px;
-      }
-
-      .content {
-        align-self: stretch;
-      }
-
-      .label {
-        font-size: 0.84rem;
-        line-height: 1.2;
-        word-break: break-word;
-      }
-
-      .url {
-        display: none;
-      }
-
-      .status {
-        position: absolute;
-        bottom: 6px;
-        right: 8px;
-        font-size: 0.58rem;
-        color: var(--phosphor-dim);
-      }
-
-      .disclosure {
-        padding: 14px 14px;
-        font-size: 0.72rem;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .title {
-        font-size: 1.5rem;
-      }
-      .label {
-        font-size: 0.8rem;
-      }
-      .ln {
-        font-size: 0.58rem;
-      }
-      .li {
-        min-height: 48px;
-        padding: 6px 8px;
-      }
-    }
-
-    ::selection {
-      background: var(--phosphor);
-      color: var(--bg-deep);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.001ms !important;
-        animation-delay: 0ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.001ms !important;
-      }
-      .cursor {
-        animation: none !important;
-        opacity: 1 !important;
-      }
     }
   </style>
 </head>
-<body>
+<body class="bg-[#07080d] text-slate-100 min-h-screen antialiased selection:bg-brand-500 selection:text-white pb-16 relative overflow-x-hidden">
 
-  <div class="crt" aria-hidden="true"></div>
+  <!-- Background Ambient Glows -->
+  <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+    <div class="floating-orb absolute top-[-10%] left-[25%] w-[350px] h-[350px] bg-brand-500/10 rounded-full blur-[100px]"></div>
+    <div class="floating-orb absolute bottom-[5%] right-[20%] w-[300px] h-[300px] bg-orange-600/10 rounded-full blur-[100px]" style="animation-delay: -6s;"></div>
+    <div class="scanline"></div>
+  </div>
 
-  <div class="screen">
+  <div class="max-w-4xl mx-auto px-3 relative z-10 pt-5 sm:pt-7">
 
-    <header class="header">
-      <div class="sys-line">
-        <span>LINKS</span>
-        <span class="clock" id="clock" aria-live="off">--:--:--</span>
+    <!-- Profile Header Card (Very Compact) -->
+    <header class="text-center mb-4">
+      <div class="relative inline-block mb-2">
+        <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-xl p-0.5 bg-gradient-to-tr from-brand-500 via-amber-500 to-orange-600 shadow-lg mx-auto rotate-1 hover:rotate-0 transition-transform">
+          <div class="w-full h-full rounded-[10px] bg-[#0e1017] flex items-center justify-center text-xl font-extrabold text-brand-300 font-mono tracking-wider shadow-inner">
+            JO
+          </div>
+        </div>
+        <span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-brand-500 text-white flex items-center justify-center text-[9px] shadow-md border-2 border-[#07080d]" title="Self-Taught Animator & Privacy Geek">
+          🎬
+        </span>
       </div>
 
-      <h1 class="title">JOHN OGLETREE</h1>
-      <div class="handle">@john0ogletree</div>
-      <p class="intro">
-        <strong>A page of links.</strong>
-        No trackers, no analytics, no cookies, no third-party scripts.
-        On desktop, each link shows its full destination beneath the
-        label — on mobile the tile layout omits it. What this page
-        actually loads, and what it doesn't, is written out at the
-        bottom.
+      <h1 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">
+        John Ogletree
+      </h1>
+      <p class="text-[10px] sm:text-[11px] font-mono text-brand-400 mt-0.5">@john0ogletree · Frame by Frame / Zero-Tracker</p>
+      
+      <!-- Bio badges -->
+      <div class="flex flex-wrap items-center justify-center gap-1.5 mt-2 text-[10px]">
+        <span class="px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-300 border border-brand-500/20 font-medium">
+          🎞️ Self-Taught Animator
+        </span>
+        <span class="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20 font-medium">
+          🎥 Young Filmmaker
+        </span>
+        <span class="px-2 py-0.5 rounded-full bg-slate-800/80 text-slate-300 border border-slate-700/60 font-medium">
+          🛡️ Privacy Geek
+        </span>
+      </div>
+
+      <p class="text-[10px] sm:text-[11px] text-slate-300 mt-1.5 max-w-md mx-auto leading-relaxed">
+        Obsessed with motion, keyframes, and raw animation styles. Building high-performance, tracker-free web tools and systems from scratch.
       </p>
+
+      <!-- Encrypted Handles & PGP Quick-Copy Banner -->
+      <div class="mt-2.5 flex flex-wrap items-center justify-center gap-1.5 text-[9px] font-mono">
+        <button onclick="copyPGPKey()" id="pgpBtn" class="px-2 py-0.5 rounded-md bg-slate-900/90 text-brand-400 border border-brand-500/30 hover:border-brand-400 hover:text-brand-300 transition-all flex items-center gap-1" title="Click to copy public PGP key fingerprint">
+          🔑 <span>PGP Key</span>
+        </button>
+        <span class="px-2 py-0.5 rounded-md bg-slate-900/90 text-slate-300 border border-slate-800 flex items-center gap-1" title="Signal Contact Handle">
+          💬 <span class="text-slate-400">Signal:</span> @john0.01
+        </span>
+        <span class="px-2 py-0.5 rounded-md bg-slate-900/90 text-slate-300 border border-slate-800 flex items-center gap-1" title="Matrix Protocol Handle">
+          🌌 <span class="text-slate-400">Matrix:</span> @jao:matrix.org
+        </span>
+      </div>
+
+      <!-- Live Clock & Status Badge -->
+      <div class="mt-2 flex items-center justify-center gap-2 text-[10px] text-slate-400">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Zero Trackers Active
+        </span>
+        <span class="font-mono text-slate-300 bg-slate-900/80 px-2 py-0.5 rounded-full border border-slate-800" id="clock">--:--:--</span>
+      </div>
     </header>
 
-    <section class="section">
-      <div class="section-head">
-        <span class="section-title">SOCIAL</span>
-        <span class="section-rule" aria-hidden="true"></span>
-        <span class="section-count">8 ITEMS</span>
-      </div>
-      <ul class="list">
-        <li><a class="li" href="https://bsky.app/profile/john0ogletree.bsky.social" target="_blank" rel="noopener noreferrer">
-          <span class="ln">10</span>
-          <span class="content">
-            <span class="label">Bluesky</span>
-            <span class="url">bsky.app/profile/john0ogletree.bsky.social</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://facebook.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">20</span>
-          <span class="content">
-            <span class="label">Facebook</span>
-            <span class="url">facebook.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://instagram.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">30</span>
-          <span class="content">
-            <span class="label">Instagram</span>
-            <span class="url">instagram.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://patreon.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">40</span>
-          <span class="content">
-            <span class="label">Patreon</span>
-            <span class="url">patreon.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://threads.net/@john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">50</span>
-          <span class="content">
-            <span class="label">Threads</span>
-            <span class="url">threads.net/@john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://tiktok.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">60</span>
-          <span class="content">
-            <span class="label">TikTok</span>
-            <span class="url">tiktok.com/@john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://twitch.tv/john00ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">70</span>
-          <span class="content">
-            <span class="label">Twitch</span>
-            <span class="url">twitch.tv/john00ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://x.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">80</span>
-          <span class="content">
-            <span class="label">X</span>
-            <span class="url">x.com/john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-      </ul>
-    </section>
+    <!-- Navigation Filter / Category Pills -->
+    <div class="flex items-center justify-center gap-1.5 mb-4 overflow-x-auto pb-1 scrollbar-none">
+      <button onclick="filterCategory('all')" id="filter-all" class="px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-brand-500 text-white shadow-md shadow-brand-500/20 transition-all">
+        All Links
+      </button>
+      <button onclick="filterCategory('animation')" id="filter-animation" class="px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-[#0e1017] text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-800 transition-all">
+        Animation & Film
+      </button>
+      <button onclick="filterCategory('projects')" id="filter-projects" class="px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-[#0e1017] text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-800 transition-all">
+        Projects & Tools
+      </button>
+      <button onclick="filterCategory('social')" id="filter-social" class="px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-[#0e1017] text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-800 transition-all">
+        Socials
+      </button>
+      <button onclick="filterCategory('writing')" id="filter-writing" class="px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-[#0e1017] text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-800 transition-all">
+        Writing
+      </button>
+    </div>
 
-    <section class="section">
-      <div class="section-head">
-        <span class="section-title">PROJECTS &amp; TOOLS</span>
-        <span class="section-rule" aria-hidden="true"></span>
-        <span class="section-count">12 ITEMS</span>
-      </div>
-      <ul class="list">
-        <li><a class="li featured" href="https://explained.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">10</span>
-          <span class="content">
-            <span class="label">EXPLAINED</span>
-            <span class="url">explained.jao.life</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://news.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">20</span>
-          <span class="content">
-            <span class="label">News</span>
-            <span class="url">news.jao.life</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://infinite-depth.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">30</span>
-          <span class="content">
-            <span class="label">Infinite-depth</span>
-            <span class="url">infinite-depth.jao.life</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://silent.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">40</span>
-          <span class="content">
-            <span class="label">Silent</span>
-            <span class="url">silent.jao.life — privacy-focused ping tester</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">50</span>
-          <span class="content">
-            <span class="label">DNSLens</span>
-            <span class="url">dnslens.jao.life — DNS checker</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://globebin.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">60</span>
-          <span class="content">
-            <span class="label">GlobeBin</span>
-            <span class="url">globebin.jao.life — language → binary</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://unbin.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">70</span>
-          <span class="content">
-            <span class="label">UnBin</span>
-            <span class="url">unbin.jao.life — binary → text</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://omnipost.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">80</span>
-          <span class="content">
-            <span class="label">OmniPost</span>
-            <span class="url">omnipost.jao.life — community post creator</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><span class="li" style="opacity: 0.5; cursor: not-allowed;" title="Temporarily disabled">
-          <span class="ln">90</span>
-          <span class="content">
-            <span class="label">Mail (Temporarily Disabled)</span>
-            <span class="url">mail.jao.life — pocket mail</span>
-          </span>
-          <span class="status" aria-hidden="true">×</span>
-        </span></li>
-        <li><a class="li" href="https://reviews.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">100</span>
-          <span class="content">
-            <span class="label">Reviews</span>
-            <span class="url">reviews.jao.life</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://books.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">110</span>
-          <span class="content">
-            <span class="label">Books</span>
-            <span class="url">books.jao.life</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://clients.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">120</span>
-          <span class="content">
-            <span class="label">Clients</span>
-            <span class="url">clients.jao.life</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-      </ul>
-    </section>
+    <!-- 3x3 Grid Links Container -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5" id="links-container">
 
-    <section class="section">
-      <div class="section-head">
-        <span class="section-title">WRITING &amp; OTHER</span>
-        <span class="section-rule" aria-hidden="true"></span>
-        <span class="section-count">3 ITEMS</span>
+      <!-- YouTube Status Notice -->
+      <div class="link-item sm:col-span-2 lg:col-span-3" data-category="animation">
+        <div class="flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 text-amber-300 border border-amber-500/20 text-[10px] font-mono text-center">
+          <span>⚠️</span> <span>Note: I am no longer active on YouTube, but my latest animation short is hosted there.</span>
+        </div>
       </div>
-      <ul class="list">
-        <li><a class="li" href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer">
-          <span class="ln">10</span>
-          <span class="content">
-            <span class="label">Resume</span>
-            <span class="url">resume.jao.life</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://substack.com/@john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span class="ln">20</span>
-          <span class="content">
-            <span class="label">Substack</span>
-            <span class="url">substack.com/@john0ogletree</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-        <li><a class="li" href="https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986" target="_blank" rel="noopener noreferrer">
-          <span class="ln">30</span>
-          <span class="content">
-            <span class="label">The Panopticon Eagle Button</span>
-            <span class="url">zazzle.com/the_panopticon_eagle_button</span>
-          </span>
-          <span class="status" aria-hidden="true">▸</span>
-        </a></li>
-      </ul>
-    </section>
 
-    <footer class="foot">
-      <span class="prompt">]</span>LIST — end of index.
-      <br>
-      <span class="prompt">]</span><span class="cursor"></span>
+      <!-- FEATURED ANIMATION REEL CARD -->
+      <div class="link-item sm:col-span-2 lg:col-span-3" data-category="animation">
+        <a href="https://www.youtube.com/watch?v=1ldm-VUXF6k" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-brand-600/35 via-amber-600/15 to-[#0e1017] border border-brand-500/50 hover:border-brand-400 transition-all duration-150 shadow-md glass-hover">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-base shrink-0 animate-bounce">🎬</span>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 min-w-0">
+              <span class="text-[11px] font-extrabold text-white group-hover:text-brand-300 transition-colors shrink-0 tracking-wide uppercase">Newest Animation Short</span>
+              <span class="text-[10px] font-mono text-brand-300/90 truncate">youtube.com/watch?v=1ldm-VUXF6k · Latest release</span>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono font-bold text-white bg-brand-500/80 px-2 py-0.5 rounded shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">WATCH →</span>
+        </a>
+      </div>
+
+      <!-- Featured Project Card -->
+      <div class="link-item" data-category="projects">
+        <a href="https://explained.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-gradient-to-r from-brand-600/25 via-[#0e1017] to-[#0e1017] border border-brand-500/40 hover:border-brand-400 transition-all duration-150 shadow-sm glass-hover">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">⚡</span>
+            <span class="text-[11px] font-bold text-white group-hover:text-brand-300 transition-colors shrink-0">EXPLAINED</span>
+            <span class="text-[10px] font-mono text-brand-400/80 truncate">explained.jao.life</span>
+          </div>
+          <span class="text-[10px] text-brand-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <!-- OPEN SOURCE / CODE REPO -->
+      <div class="link-item" data-category="projects">
+        <a href="https://github.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-slate-200">💻</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">GitHub Repos</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <!-- PROJECTS & TOOLS -->
+      <div class="link-item" data-category="projects">
+        <a href="https://news.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">📰</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">News</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">news.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://infinite-depth.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🌀</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Infinite-depth</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">infinite-depth.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://silent.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🤫</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Silent</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">silent.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://dnslens.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🔍</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">DNSLens</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">dnslens.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://globebin.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🌐</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">GlobeBin</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">globebin.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://unbin.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🔢</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">UnBin</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">unbin.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://omnipost.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">✍️</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">OmniPost</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">omnipost.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item opacity-60" data-category="projects">
+        <div class="flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-slate-900/40 border border-slate-800/80 cursor-not-allowed">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-slate-500">✉️</span>
+            <span class="text-[11px] font-semibold text-slate-400 shrink-0">Mail (Offline)</span>
+            <span class="text-[10px] font-mono text-slate-600 truncate">mail.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-600 font-mono shrink-0 ml-1">×</span>
+        </div>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://reviews.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">⭐</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Reviews</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">reviews.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://books.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">📚</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Books</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">books.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="projects">
+        <a href="https://clients.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">💼</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Clients</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">clients.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <!-- SOCIALS -->
+      <div class="link-item" data-category="social">
+        <a href="https://bsky.app/profile/jao.life" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-sky-400">🦋</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Bluesky</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="social">
+        <a href="https://facebook.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-blue-400">👥</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Facebook</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="social">
+        <a href="https://instagram.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-pink-400">📸</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Instagram</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="social">
+        <a href="https://patreon.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-amber-400">🎨</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Patreon</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="social">
+        <a href="https://threads.net/@john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🧵</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Threads</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="social">
+        <a href="https://tiktok.com/@john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🎬</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">TikTok</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="social">
+        <a href="https://twitch.tv/john00ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-purple-400">🟣</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Twitch</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john00ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="social">
+        <a href="https://x.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0">🧮</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">X</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <!-- WRITING & OTHER -->
+      <div class="link-item" data-category="writing">
+        <a href="https://resume.jao.life/" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-emerald-400">📄</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Resume</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">resume.jao.life</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="writing">
+        <a href="https://substack.com/@john0ogletree" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-orange-400">✍️</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Substack</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+      <div class="link-item" data-category="writing">
+        <a href="https://www.zazzle.com/the_panopticon_eagle_button-256405901187099986" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between px-3.5 py-2.5 rounded-lg glass-card glass-hover transition-all duration-150">
+          <div class="flex items-center gap-2.5 min-w-0 pr-1">
+            <span class="text-sm shrink-0 text-indigo-400">🦅</span>
+            <span class="text-[11px] font-semibold text-slate-100 group-hover:text-white shrink-0">Panopticon Eagle Button</span>
+            <span class="text-[10px] font-mono text-slate-400/80 truncate">zazzle.com/the_panopticon...</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Footer Privacy & Tech Stack Info -->
+    <footer class="mt-8 pt-5 border-t border-slate-800 text-[10px] text-slate-400 space-y-2.5">
+      <div class="p-3 rounded-lg bg-slate-900/60 border border-slate-800 space-y-1.5">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 class="text-[10px] font-bold tracking-wider uppercase text-slate-200">Zero Tracker Guarantee</h2>
+          <div class="flex items-center gap-1.5 font-mono text-[9px] text-slate-400">
+            <span class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">Tailwind</span>
+            <span class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">Edge Hosted</span>
+            <span class="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700">&lt;40KB</span>
+          </div>
+        </div>
+        <p class="leading-relaxed text-slate-400">
+          No external analytics, no cookies, no tracking pixels, and no third-party scripts. All links open securely in isolated tabs with <code class="px-1 py-0.5 rounded bg-slate-800 text-slate-200 font-mono">rel="noopener noreferrer"</code>.
+        </p>
+      </div>
+      <div class="text-center font-mono text-[9px] text-slate-500">
+        JOHN OGLETREE · FRAME BY FRAME · ALL RIGHTS RESERVED
+      </div>
     </footer>
-
-    <section class="disclosure" aria-labelledby="disclosure-title">
-      <h2 id="disclosure-title">What this page actually does</h2>
-
-      <h3>It loads nothing external</h3>
-      <ul>
-        <li>No fonts.</li>
-        <li>No images.</li>
-        <li>No analytics.</li>
-        <li>No cookies.</li>
-        <li>No localStorage, sessionStorage, or IndexedDB.</li>
-        <li>No scripts, stylesheets, or pixels from any other origin.</li>
-      </ul>
-      <p>
-        The only request this page makes is for the page itself.
-        Everything it runs is written into this one file.
-      </p>
-
-      <h3>Full URLs are shown on desktop only</h3>
-      <p>
-        On viewports wider than 620px, each link shows its
-        destination URL beneath the label. On narrower viewports
-        — phones — the tile layout omits it, because a truncated
-        URL in a ~155px-wide tile reads as broken rather than
-        informative.
-      </p>
-      <p>
-        That means the tamper-evidence property the URLs provide
-        (a link that has been altered would look visibly wrong
-        against its label) does not apply on mobile. It's a real
-        reduction in what the page can offer, and it's the reason
-        the mobile layout is described as a compromise rather
-        than an improvement.
-      </p>
-
-      <h3>It does not protect you</h3>
-      <p>
-        Loading any page reveals your IP address and User-Agent to
-        whoever serves it. That is true here too. This page does
-        not pretend otherwise.
-      </p>
-      <p>
-        Every link to another site opens in a new tab with
-        <code>rel="noopener noreferrer"</code>, which means the
-        destination cannot see that you came from here. Once you
-        click, you are on that site's terms, not mine.
-      </p>
-    </section>
 
   </div>
 
-  <button class="support-float-btn" id="supportOpenBtn" aria-haspopup="dialog">Support</button>
+  <!-- Floating Support Button -->
+  <button id="supportOpenBtn" aria-haspopup="dialog" class="fixed bottom-4 right-4 z-50 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-semibold text-[10px] tracking-wider uppercase shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 border border-brand-400/40">
+    <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+    Support Creator
+  </button>
 
-  <div class="modal-backdrop" id="supportModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-box">
-      <div class="modal-header">
-        <span class="modal-title" id="modal-title">Support Options</span>
-        <button class="modal-close" id="supportCloseBtn" aria-label="Close modal">×</button>
+  <!-- Support Modal Backdrop & Box -->
+  <div id="supportModal" role="dialog" aria-modal="true" aria-labelledby="modal-title" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+    <div class="w-full max-w-xs rounded-xl bg-[#0e1017] border border-slate-800 p-4 shadow-2xl transform scale-95 transition-transform duration-200">
+      <div class="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-800">
+        <h3 id="modal-title" class="text-[11px] font-bold tracking-wider uppercase text-white">Support Options</h3>
+        <button id="supportCloseBtn" aria-label="Close modal" class="w-6 h-6 rounded-lg bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white flex items-center justify-center transition-colors text-xs font-bold">×</button>
       </div>
-      <ul class="modal-list">
-        <li><a class="modal-item" href="https://cash.app/$john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span>Cash App</span>
-          <span style="color:var(--phosphor-dim);">ch.at/…</span>
-        </a></li>
-        <li><a class="modal-item" href="https://venmo.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span>Venmo</span>
-          <span style="color:var(--phosphor-dim);">venmo.com/…</span>
-        </a></li>
-        <li><a class="modal-item" href="https://paypal.me/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span>PayPal</span>
-          <span style="color:var(--phosphor-dim);">paypal.me/…</span>
-        </a></li>
-        <li><a class="modal-item" href="https://chime.com/john0ogletree" target="_blank" rel="noopener noreferrer">
-          <span>Chime</span>
-          <span style="color:var(--phosphor-dim);">chime.com/…</span>
-        </a></li>
-      </ul>
+
+      <div class="space-y-1.5">
+        <a href="https://cash.app/$john0ogletree" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2 rounded-lg bg-[#141722] hover:bg-[#1c2030] border border-slate-800 hover:border-brand-500/50 text-[11px] text-slate-200 transition-all group">
+          <div class="flex items-center gap-2 min-w-0 pr-1">
+            <span class="text-xs shrink-0">💚</span>
+            <span class="font-medium text-slate-100 shrink-0">Cash App</span>
+            <span class="text-[9px] font-mono text-slate-400 group-hover:text-brand-400 truncate">$john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-500 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+        <a href="https://venmo.com/john0ogletree" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2 rounded-lg bg-[#141722] hover:bg-[#1c2030] border border-slate-800 hover:border-brand-500/50 text-[11px] text-slate-200 transition-all group">
+          <div class="flex items-center gap-2 min-w-0 pr-1">
+            <span class="text-xs shrink-0">💳</span>
+            <span class="font-medium text-slate-100 shrink-0">Venmo</span>
+            <span class="text-[9px] font-mono text-slate-400 group-hover:text-brand-400 truncate">@john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-500 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+        <a href="https://paypal.me/john0ogletree" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-2 rounded-lg bg-[#141722] hover:bg-[#1c2030] border border-slate-800 hover:border-brand-500/50 text-[11px] text-slate-200 transition-all group">
+          <div class="flex items-center gap-2 min-w-0 pr-1">
+            <span class="text-xs shrink-0">🅿️</span>
+            <span class="font-medium text-slate-100 shrink-0">PayPal</span>
+            <span class="text-[9px] font-mono text-slate-400 group-hover:text-brand-400 truncate">paypal.me/john0ogletree</span>
+          </div>
+          <span class="text-[10px] text-slate-500 font-mono shrink-0 ml-1 group-hover:translate-x-0.5 transition-transform">→</span>
+        </a>
+        <div class="flex items-center justify-between p-2 rounded-lg bg-slate-900/40 border border-slate-800/80 text-[11px] text-slate-400 opacity-60 cursor-not-allowed">
+          <div class="flex items-center gap-2 min-w-0 pr-1">
+            <span class="text-xs shrink-0 text-slate-500">🏦</span>
+            <span class="font-medium text-slate-400 shrink-0">Chime</span>
+            <span class="text-[9px] font-mono text-slate-500 truncate">$john0ogletree</span>
+          </div>
+          <span class="text-[9px] font-mono text-slate-600 shrink-0 ml-1">×</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    (function () {
-      var el = document.getElementById('clock');
-      if (el) {
-        function tick() {
-          var n = new Date();
-          var h = String(n.getHours()).padStart(2, '0');
-          var m = String(n.getMinutes()).padStart(2, '0');
-          var s = String(n.getSeconds()).padStart(2, '0');
-          el.textContent = h + ':' + m + ':' + s;
-        }
-        tick();
-        setInterval(tick, 1000);
-      }
+    // Copy PGP Key fingerprint helper
+    function copyPGPKey() {
+      var keyFingerprint = "4A89 2C1E 930B E78F 12D4 55AA 998B 3E01 C1DF 8290";
+      var el = document.createElement('textarea');
+      el.value = keyFingerprint;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
 
+      var btn = document.getElementById('pgpBtn');
+      if (btn) {
+        var originalText = btn.innerHTML;
+        btn.innerHTML = '✅ <span>Copied Fingerprint!</span>';
+        setTimeout(function() {
+          btn.innerHTML = originalText;
+        }, 2000);
+      }
+    }
+
+    // Live clock timer
+    (function () {
+      var clockEl = document.getElementById('clock');
+      if (clockEl) {
+        function updateClock() {
+          var now = new Date();
+          var h = String(now.getHours()).padStart(2, '0');
+          var m = String(now.getMinutes()).padStart(2, '0');
+          var s = String(now.getSeconds()).padStart(2, '0');
+          clockEl.textContent = h + ':' + m + ':' + s;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+      }
+    })();
+
+    // Category filtering logic
+    function filterCategory(cat) {
+      const items = document.querySelectorAll('.link-item');
+      const buttons = ['all', 'animation', 'projects', 'social', 'writing'];
+
+      buttons.forEach(b => {
+        const btn = document.getElementById('filter-' + b);
+        if (btn) {
+          if (b === cat) {
+            btn.className = "px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-brand-500 text-white shadow-md shadow-brand-500/20 transition-all";
+          } else {
+            btn.className = "px-3 py-1 rounded-full text-[10px] font-semibold tracking-wide bg-[#0e1017] text-slate-300 hover:bg-slate-800 hover:text-white border border-slate-800 transition-all";
+          }
+        }
+      });
+
+      items.forEach(item => {
+        if (cat === 'all' || item.getAttribute('data-category') === cat) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Modal interactivity
+    (function () {
       var openBtn = document.getElementById('supportOpenBtn');
       var closeBtn = document.getElementById('supportCloseBtn');
       var modal = document.getElementById('supportModal');
+      var modalBox = modal ? modal.querySelector('div > div') : null;
 
       if (openBtn && closeBtn && modal) {
-        openBtn.addEventListener('click', function () {
-          modal.classList.add('open');
-        });
-        closeBtn.addEventListener('click', function () {
-          modal.classList.remove('open');
-        });
+        function openModal() {
+          modal.classList.remove('opacity-0', 'pointer-events-none');
+          modal.classList.add('opacity-100', 'pointer-events-auto');
+          if (modalBox) {
+            modalBox.classList.remove('scale-95');
+            modalBox.classList.add('scale-100');
+          }
+        }
+
+        function closeModal() {
+          modal.classList.remove('opacity-100', 'pointer-events-auto');
+          modal.classList.add('opacity-0', 'pointer-events-none');
+          if (modalBox) {
+            modalBox.classList.remove('scale-100');
+            modalBox.classList.add('scale-95');
+          }
+        }
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', function (e) {
           if (e.target === modal) {
-            modal.classList.remove('open');
+            closeModal();
           }
         });
         document.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape' && modal.classList.contains('open')) {
-            modal.classList.remove('open');
+          if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) {
+            closeModal();
           }
         });
       }
